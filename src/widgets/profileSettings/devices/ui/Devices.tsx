@@ -29,6 +29,22 @@ const Component = () => {
     const {t} = useTranslation()
     const [deleteSessionDevice, {isLoading: deleteLoading, error: deleteError}] =
         useDeleteSessionMutation()
+    const [sortedDevices, setSortedDevices] = useState<any>([]); // Создайте состояние для отсортированных устройств
+
+
+
+    useEffect(() => {
+        if (data && data.length > 0) {
+            const sorted = data.slice().sort((a, b) => {
+                const dateA = new Date(a.lastActive);
+                const dateB = new Date(b.lastActive);
+                return dateB.getTime() - dateA.getTime();
+            });
+
+            setSortedDevices(sorted);
+            console.log(sorted)
+        }
+    }, [data, isLoading]);
 
 
 
@@ -46,33 +62,33 @@ const Component = () => {
     }
 
     useEffect(() => {
-        if (data && data[0].deviceName === 'phone') {
+        if (data && data[0].deviceType === 'mobile') {
             setIcon(<PhoneIcon/>)
-        } else if (data && data[0].osName === 'IOS') {
+        } else if (data && data[0].osName === 'iOS') {
             setIcon(<MackIcon/>)
         } else {
             setIcon(<ChromeIcon/>)
         }
-    }, [data])
+    }, [data,isLoading])
 
     return (
         <div>
-            {data && data.length > 0 ? (
+            {sortedDevices && sortedDevices.length > 0 ? (
                 <>
                     <Typography variant="h3">Current Device</Typography>
                     <CardsCurrentDevice
-                        key={data[0].deviceId}
+                        key={sortedDevices[0].deviceId}
                         icon={icon}
-                        IP={data[0].ip}
-                        deviceName={data[0].osName}
+                        IP={sortedDevices[0].ip}
+                        deviceName={sortedDevices[0].osName}
                     />
                     <div className={s.button}>
-                        <Button onClick={onClickHandler} variant="outline" disabled={!data || data.length === 0}>
+                        <Button onClick={onClickHandler} variant="outline" disabled={!sortedDevices || sortedDevices.length === 0}>
                             {t.devices.Terminate_sessions}
                         </Button>
                     </div>
 
-                    {data.slice(0).map(device => (
+                    {sortedDevices.slice(1).map((device:Device) => (
                         <React.Fragment key={device.deviceId}>
                             <div className={s.spacer}></div>
                             <Typography variant="h3">Active Sessions</Typography>

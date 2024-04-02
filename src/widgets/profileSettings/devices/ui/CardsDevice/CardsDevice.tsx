@@ -5,15 +5,18 @@ import { LogOut } from 'lucide-react'
 
 import s from './CardsDevice.module.scss'
 
+import { LogOutIcon } from '@/shared/assets'
 import { Typography } from '@/shared/components'
 import { useTranslation } from '@/shared/lib'
+import { LogOutButton } from '@/widgets/logOut'
 
 type Props = {
   icon: ReactNode
   deviceName: string
   IP: string
-  visited?: string
-  handleDeleteSession?: () => void
+  visited?: Date
+  deviceId?: number
+  handleDeleteSession?: (deviceId: number) => void
 }
 
 export const CardsCurrentDevice = ({ IP, deviceName, icon, visited }: Props) => {
@@ -38,10 +41,14 @@ export const CardsActiveDevice = ({
   icon,
   visited,
   handleDeleteSession,
+  deviceId,
 }: Props) => {
   const lastActiveDate = visited ? new Date(visited) : null
   const formattedDate = lastActiveDate ? format(lastActiveDate, 'yyyy-MM-dd') : ''
   const { t } = useTranslation()
+  const onClikHandler = () => {
+    handleDeleteSession && handleDeleteSession(deviceId!)
+  }
 
   return (
     <div className={s.cardsDevice}>
@@ -55,10 +62,9 @@ export const CardsActiveDevice = ({
         </Typography>
         <Typography variant="small_text">Last Active: {formattedDate}</Typography>
       </div>
-      <div className={s.button}>
-        <LogOut onClick={handleDeleteSession} />
-        <Typography>{t.devices.log_out}</Typography>
-      </div>
+      <li className={s.button} onClick={onClikHandler}>
+        <LogOutIcon /> {t.sidebar.log_out}
+      </li>
     </div>
   )
 }

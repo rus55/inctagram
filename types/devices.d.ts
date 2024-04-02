@@ -1,7 +1,7 @@
 type Device = {
     deviceId: number,
     ip: string,
-    lastActive: string,
+    lastActive: Date,
     browserName: string,
     browserVersion: string,
     deviceName: string,

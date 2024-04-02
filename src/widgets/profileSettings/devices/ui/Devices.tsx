@@ -21,23 +21,21 @@ import {
 
 const Component = () => {
   const { accessToken } = useAuth()
-  const [icon, setIcon] = useState<React.ReactNode>(null)
-
   const { data, isLoading, error } = useGetDevicesQuery({ accessToken })
   const [deleteDevice, { isLoading: deleteLoadingAll, error: deleteErrorAll }] =
     useDeleteAllMutation()
   const { t } = useTranslation()
   const [deleteSessionDevice, { isLoading: deleteLoading, error: deleteError }] =
     useDeleteSessionMutation()
-  const [sortedDevices, setSortedDevices] = useState<any>([]) // Создайте состояние для отсортированных устройств
+  const [sortedDevices, setSortedDevices] = useState<Device[]>()
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      const sorted = data.slice().sort((a, b) => {
-        const dateA = new Date(a.lastActive)
-        const dateB = new Date(b.lastActive)
-
-        return dateB.getTime() - dateA.getTime()
+    if (data) {
+      const parsedData = data.map((item: Device) => ({
+        ...item,
+      }))
+      const sorted = parsedData.sort((a, b) => {
+        return a.deviceId - b.deviceId
       })
 
       setSortedDevices(sorted)
@@ -52,28 +50,20 @@ const Component = () => {
     deleteDevice({ accessToken })
   }
 
-  const handleDeleteSession = () => {
-    data && deleteSessionDevice({ deviceId: data[0].deviceId, accessToken })
+  const handleDeleteSession = (deviceId: number) => {
+    data && deleteSessionDevice({ deviceId, accessToken })
   }
-
-  useEffect(() => {
-    if (data && data[0].deviceType === 'mobile') {
-      setIcon(<PhoneIcon />)
-    } else if (data && data[0].osName === 'iOS') {
-      setIcon(<MackIcon />)
-    } else {
-      setIcon(<ChromeIcon />)
-    }
-  }, [data, isLoading])
 
   return (
     <div>
-      {sortedDevices && sortedDevices.length > 0 ? (
+      {sortedDevices && (
         <>
-          <Typography variant="h3">Current Device</Typography>
+          <Typography className={s.typorhy} variant="h3">
+            Current Device
+          </Typography>
           <CardsCurrentDevice
             key={sortedDevices[0].deviceId}
-            icon={icon}
+            icon={sortedDevices[0].deviceType === 'mobile' ? <PhoneIcon /> : <MackIcon />}
             IP={sortedDevices[0].ip}
             deviceName={sortedDevices[0].osName}
           />
@@ -86,25 +76,31 @@ const Component = () => {
               {t.devices.Terminate_sessions}
             </Button>
           </div>
+        </>
+      )}
 
-          {sortedDevices.slice(1).map((device: Device) => (
+      {sortedDevices && (
+        <>
+          {sortedDevices.slice(1).map(device => (
             <React.Fragment key={device.deviceId}>
-              <div className={s.spacer}></div>
-              <Typography variant="h3">Active Sessions</Typography>
+              <Typography className={s.typorhy} variant="h3">
+                Active Devices
+              </Typography>
               <CardsActiveDevice
                 key={device.deviceId}
                 visited={device.lastActive}
-                icon={icon}
+                icon={device.deviceType === 'mobile' ? <PhoneIcon /> : <MackIcon />}
                 deviceName={device.osName}
                 IP={device.ip}
+                deviceId={device.deviceId}
                 handleDeleteSession={handleDeleteSession}
               />
             </React.Fragment>
           ))}
         </>
-      ) : (
-        ''
       )}
+
+      <div className={s.spacer}></div>
     </div>
   )
 }

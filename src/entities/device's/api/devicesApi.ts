@@ -34,7 +34,10 @@ export const devicesApi = createApi({
       },
       invalidatesTags: ['Devices'],
     }),
-    deleteSession: builder.mutation<void, { deviceId: number; accessToken: string | undefined }>({
+    deleteSession: builder.mutation<
+      void,
+      { deviceId: number | undefined; accessToken: string | undefined }
+    >({
       query: ({ deviceId, accessToken }) => {
         return {
           url: `/sessions/${deviceId}`,

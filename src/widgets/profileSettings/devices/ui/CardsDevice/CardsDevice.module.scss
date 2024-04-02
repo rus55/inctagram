@@ -42,11 +42,39 @@
       margin-bottom: 0.4rem;
     }
   }
+
   .button {
     display: flex;
-    justify-content: flex-end;
+    gap: 12px;
     align-items: center;
-    height: 100%;
-    width: 65%;
+    justify-content: flex-end;
+    margin-left: 23rem;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 24px;
+    color: #fff;
+    text-decoration: none;
+
+    &:active {
+      color: var(--color-accent-500);
+      fill: var(--color-accent-500);
+      stroke: var(--color-accent-500);
+    }
+
+    &:hover {
+      color: var(--color-accent-100);
+      stroke: var(--color-accent-100);
+    }
+
+    &:focus-visible {
+      border-radius: 2px;
+      outline: 2px solid var(--color-accent-700);
+    }
+
+    &:disabled {
+      color: var(--color-dark-100);
+      stroke: var(--color-dark-100);
+    }
   }
 }

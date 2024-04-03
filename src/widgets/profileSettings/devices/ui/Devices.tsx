@@ -27,10 +27,10 @@ const Component = () => {
   const { t } = useTranslation()
   const [deleteSessionDevice, { isLoading: deleteLoading, error: deleteError }] =
     useDeleteSessionMutation()
-  const [sortedDevices, setSortedDevices] = useState<Device[]>()
+  const [sortedDevices, setSortedDevices] = useState<Device[]>([])
 
   useEffect(() => {
-    if (data) {
+    if (data && data.length > 0) {
       const parsedData = data.map((item: Device) => ({
         ...item,
       }))
@@ -39,9 +39,8 @@ const Component = () => {
       })
 
       setSortedDevices(sorted)
-      console.log(sorted)
     }
-  }, [data, isLoading])
+  }, [data])
 
   useFetchLoader(isLoading || deleteLoading || deleteLoadingAll)
 
@@ -56,7 +55,7 @@ const Component = () => {
 
   return (
     <div>
-      {sortedDevices && (
+      {sortedDevices.length > 0 && (
         <>
           <Typography className={s.typorhy} variant="h3">
             Current Device
@@ -79,7 +78,7 @@ const Component = () => {
         </>
       )}
 
-      {sortedDevices && (
+      {sortedDevices.length > 0 && (
         <>
           {sortedDevices.slice(1).map(device => (
             <React.Fragment key={device.deviceId}>

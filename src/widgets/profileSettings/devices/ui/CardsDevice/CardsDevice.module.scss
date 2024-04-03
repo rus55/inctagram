@@ -45,10 +45,10 @@
 
   .button {
     display: flex;
-    gap: 12px;
+    gap: 5px;
     align-items: center;
     justify-content: flex-end;
-    margin-left: 23rem;
+    margin-left: 24rem;
     font-size: 14px;
     font-weight: 500;
     font-style: normal;
@@ -63,6 +63,7 @@
     }
 
     &:hover {
+      cursor: pointer;
       color: var(--color-accent-100);
       stroke: var(--color-accent-100);
     }

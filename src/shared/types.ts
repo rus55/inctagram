@@ -50,3 +50,15 @@ export interface IEmailToken {
   accessToken: string
   email?: string
 }
+
+export interface ISubscriptionBody {
+  typeSubscription: 'DAY' | 'WEEKLY' | 'MONTHLY'
+  paymentType: string
+  amount: number
+  baseUrl: string
+}
+
+export interface ISubscriptionBodyWithToken {
+  body: ISubscriptionBody
+  accessToken: string | undefined
+}

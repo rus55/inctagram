@@ -7,6 +7,11 @@ import styles from './AccountManagement.module.scss'
 import { useAppSelector } from '@/app/appStore'
 import { selectSubscription, setTime } from '@/app/services/subscription-slice'
 import { useSubscribeMutation } from '@/entities/subscription'
+import {
+  useAutoRenewalMutation,
+  useCurrentSubscriptionQuery,
+  useGetPaymentsQuery,
+} from '@/entities/subscription/api/subscriptionApi'
 import { PayPal, Stripe } from '@/shared/assets'
 import { Button, SuperCheckbox, Typography } from '@/shared/components'
 import { Modal } from '@/shared/components/modals'
@@ -15,6 +20,7 @@ import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { addLangValue } from '@/shared/lib/utils/addLangValue'
 import { calculateDates } from '@/shared/lib/utils/сalculateDates'
+import { ISubscriptionBody } from '@/shared/types'
 import { TabsLayout } from '@/widgets/layouts'
 
 enum PERIOD {
@@ -38,6 +44,9 @@ const Component = () => {
   const [isChecked, setChecked] = useState<boolean>(false)
 
   const [subscribe, { isLoading, isError }] = useSubscribeMutation()
+  const [autoRenewal] = useAutoRenewalMutation()
+  // const { data: curData } = useCurrentSubscriptionQuery(accessToken)
+  const { data: payments } = useGetPaymentsQuery(accessToken)
 
   const [periodDays, setPeriodDays] = useState<PERIOD>(amountDays)
 
@@ -71,7 +80,7 @@ const Component = () => {
   }
 
   const handlerSubscribe: MouseEventHandler<HTMLButtonElement> = async e => {
-    const body = {
+    const body: ISubscriptionBody = {
       typeSubscription: data[valuePrice as ValuePriceType].period,
       paymentType: e.currentTarget.name.toUpperCase(),
       amount: Number(data[valuePrice as ValuePriceType].amount),
@@ -126,6 +135,11 @@ const Component = () => {
     localStorage.setItem('price', t.subscription.day)
   }
 
+  const onCheckbox = () => {
+    autoRenewal(accessToken)
+    setChecked(!isChecked)
+  }
+
   useEffect(() => {
     if (router.query.success) {
       setOpenModal(true)
@@ -138,7 +152,6 @@ const Component = () => {
 
     dispatch(
       setTime({
-        isSubscription: true,
         currentPrice: valuePrice as ValuePriceType,
         amountDays,
         subscriptionTo: calculateDates(periodDays).toLocaleDateString(
@@ -167,7 +180,7 @@ const Component = () => {
             className={styles.checkbox}
             label={t.auto_renewal}
             checked={isChecked}
-            onCheckedChange={() => setChecked(!isChecked)}
+            onCheckedChange={onCheckbox}
           />
         </div>
       )}

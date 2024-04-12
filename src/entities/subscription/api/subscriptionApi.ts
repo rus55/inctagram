@@ -1,13 +1,14 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '@/entities/posts'
+import { ISubscriptionBodyWithToken } from '@/shared/types'
 
 export const subscriptionApi = createApi({
   reducerPath: 'subscription',
   baseQuery: baseQueryWithReauth,
   tagTypes: ['subscription'],
   endpoints: builder => ({
-    subscribe: builder.mutation<any, any>({
+    subscribe: builder.mutation<{ url: string }, ISubscriptionBodyWithToken>({
       query: ({ body, accessToken }) => ({
         url: '/subscriptions',
         method: 'POST',
@@ -21,7 +22,7 @@ export const subscriptionApi = createApi({
       invalidatesTags: ['subscription'],
     }),
     currentSubscription: builder.query({
-      query: ({ accessToken }) => ({
+      query: accessToken => ({
         method: 'GET',
         url: `/subscriptions/current-subscriptions`,
         headers: {
@@ -31,9 +32,20 @@ export const subscriptionApi = createApi({
       }),
     }),
     getPayments: builder.query({
-      query: ({ accessToken }) => ({
+      query: accessToken => ({
         method: 'GET',
         url: `/subscriptions/my-payments`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }),
+    }),
+    autoRenewal: builder.mutation({
+      query: accessToken => ({
+        url: '/subscriptions/canceled-auto-renewal',
+        method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + accessToken,
@@ -43,5 +55,9 @@ export const subscriptionApi = createApi({
   }),
 })
 
-export const { useSubscribeMutation, useCurrentSubscriptionQuery, useGetPaymentsQuery } =
-  subscriptionApi
+export const {
+  useSubscribeMutation,
+  useAutoRenewalMutation,
+  useCurrentSubscriptionQuery,
+  useGetPaymentsQuery,
+} = subscriptionApi

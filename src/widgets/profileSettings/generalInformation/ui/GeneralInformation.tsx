@@ -100,7 +100,7 @@ const Information = () => {
 
   useEffect(() => {
     if (profile) {
-      trigger()
+      // trigger()
       setTimeout(() => {
         date && handleDate(date)
       })

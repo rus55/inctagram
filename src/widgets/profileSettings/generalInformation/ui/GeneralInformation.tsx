@@ -91,7 +91,7 @@ const Information = () => {
     if (profile?.aboutMe && !body.aboutMe) {
       body.aboutMe = ' '
     }
-
+   
     putProfile({
       body,
       accessToken,
@@ -100,6 +100,7 @@ const Information = () => {
 
   useEffect(() => {
     if (profile) {
+      // trigger()
       setTimeout(() => {
         date && handleDate(date)
       })
@@ -137,6 +138,8 @@ const Information = () => {
 
   useFetchLoader(isLoading || isPutLoading || isLoadingCountries)
 
+
+
   return (
     <div className={s.container}>
       <main className={s.mainContainer}>
@@ -165,6 +168,7 @@ const Information = () => {
                 },
               })}
               error={errors.userName?.message?.toString()}
+              
             />
             <Input
               label={t.profile.first_name}

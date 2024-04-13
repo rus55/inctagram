@@ -5,7 +5,6 @@ import { authReducer, authApi } from '../entities/auth'
 
 import { appSlice, postSlice } from '@/app/services'
 import { croppersSlice } from '@/app/services/cropper-slice'
-import { subscriptionSlice } from '@/app/services/subscription-slice'
 import { countriesApi } from '@/entities/countries/'
 import { postsApi } from '@/entities/posts'
 import { profileApi } from '@/entities/profile'
@@ -19,7 +18,6 @@ const store = configureStore({
     [postSlice.name]: postSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [croppersSlice.name]: croppersSlice.reducer,
-    [subscriptionSlice.name]: subscriptionSlice.reducer,
     // [authGoogleApi.reducerPath]: authGoogleApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [countriesApi.reducerPath]: countriesApi.reducer,

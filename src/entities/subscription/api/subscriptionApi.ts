@@ -24,7 +24,7 @@ export const subscriptionApi = createApi({
     currentSubscription: builder.query({
       query: accessToken => ({
         method: 'GET',
-        url: `/subscriptions/current-subscriptions`,
+        url: `/subscriptions/current-payment-subscriptions`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + accessToken,

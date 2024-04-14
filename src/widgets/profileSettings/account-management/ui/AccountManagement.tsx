@@ -44,7 +44,9 @@ const Component = () => {
 
   const router = useRouter()
 
-  const detectionEndDay = payments
+  console.log(payments);
+
+  const detectionEndDay = payments?.length
     ? new Date(payments[payments.length - 1].endDateOfSubscription).toLocaleDateString(
         router.locale === 'en' ? 'en-EN' : 'ru-RU'
       )

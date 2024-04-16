@@ -44,12 +44,8 @@ const Component = () => {
 
   const router = useRouter()
 
-  console.log(payments);
-
   const detectionEndDay = payments?.length
-    ? new Date(payments[payments.length - 1].endDateOfSubscription).toLocaleDateString(
-        router.locale === 'en' ? 'en-EN' : 'ru-RU'
-      )
+    ? new Date(payments[payments.length - 1].endDateOfSubscription).toLocaleDateString('ru-RU')
     : ''
 
   const [day, month, year] = detectionEndDay.split('.').map(Number)
@@ -57,7 +53,7 @@ const Component = () => {
     router.locale === 'ru' ? new Date(year, month - 1, day) : new Date(detectionEndDay)
   const nextDay = new Date(
     subscriptionExpirationDate.setDate(subscriptionExpirationDate.getDate() + 1)
-  ).toLocaleDateString(router.locale === 'en' ? 'en-EN' : 'ru-RU')
+  ).toLocaleDateString('ru-RU')
 
   const typeAccount = [
     { label: t.account_type.personal, value: t.account_type.personal },

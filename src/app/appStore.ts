@@ -6,6 +6,7 @@ import { authReducer, authApi } from '../entities/auth'
 import { appSlice, postSlice } from '@/app/services'
 import { croppersSlice } from '@/app/services/cropper-slice'
 import { countriesApi } from '@/entities/countries/'
+import { devicesApi } from "@/entities/device's"
 import { postsApi } from '@/entities/posts'
 import { profileApi } from '@/entities/profile'
 import { publicPostsApi } from '@/entities/publicPosts'
@@ -22,6 +23,7 @@ const store = configureStore({
     [countriesApi.reducerPath]: countriesApi.reducer,
     [publicPostsApi.reducerPath]: publicPostsApi.reducer,
     [postsApi.reducerPath]: postsApi.reducer,
+    [devicesApi.reducerPath]: devicesApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -30,7 +32,8 @@ const store = configureStore({
       profileApi.middleware,
       countriesApi.middleware,
       publicPostsApi.middleware,
-      postsApi.middleware
+      postsApi.middleware,
+      devicesApi.middleware
     ),
 })
 

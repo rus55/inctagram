@@ -231,5 +231,9 @@ export const en = {
     save_draft: 'Save draft',
     add_img_message: 'You have added the maximum number of photos allowed!',
   },
+  devices: {
+    log_out: 'Log Out',
+    Terminate_sessions: 'Terminate all other sessions',
+  },
 }
 export type LangType = typeof en

@@ -230,4 +230,8 @@ export const ru: LangType = {
     save_draft: 'Сохранить',
     add_img_message: 'Ты добавил максимально допустимое количество фотографий!',
   },
+  devices: {
+    log_out: 'Выйти',
+    Terminate_sessions: 'Завершить все остальные сеансы',
+  },
 }

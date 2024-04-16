@@ -123,7 +123,7 @@ const Component = () => {
 
   return (
     <div className={styles.container}>
-      {curData?.data.length && (
+      {curData?.data.length > 0 && (
         <InfoPanel
           t={t}
           detectionEndDay={detectionEndDay}

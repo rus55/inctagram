@@ -1,18 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 
+import { useAutoRenewalMutation } from '@/entities/subscription/api/subscriptionApi'
 import { SuperCheckbox, Typography } from '@/shared/components'
+import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { LangType } from '@/shared/locales/en'
 import styles from '@/widgets/profileSettings/account-management/ui/AccountManagement.module.scss'
 
 type Props = {
   t: LangType
-  detectionEndDay: string
-  nextDay: string
-  isChecked: boolean
-  onCheckbox: () => void
+  detectionEndDay: string | undefined
+  nextDay: string | undefined
 }
 
-export const InfoPanel = ({ t, detectionEndDay, nextDay, onCheckbox, isChecked }: Props) => {
+export const InfoPanel = ({ t, detectionEndDay, nextDay }: Props) => {
+  const { accessToken } = useAuth()
+
+  const [isChecked, setChecked] = useState<boolean>(true)
+  const [autoRenewal, { data: renewalData }] = useAutoRenewalMutation()
+
+  const onCheckbox = () => {
+    autoRenewal(accessToken)
+    setChecked(!isChecked)
+  }
+
   return (
     <div>
       <Typography variant={'h3'}>{t.current_subscription}:</Typography>

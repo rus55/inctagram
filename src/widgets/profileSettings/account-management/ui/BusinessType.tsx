@@ -1,26 +1,47 @@
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 
 import { PayPal, Stripe } from '@/shared/assets'
 import { Button, Typography } from '@/shared/components'
 import { RadioGr } from '@/shared/components/radio-group'
 import { LangType } from '@/shared/locales/en'
+import { ISubscriptionBody } from '@/shared/types'
 import styles from '@/widgets/profileSettings/account-management/ui/AccountManagement.module.scss'
 
 type Props = {
   t: LangType
-  onChangPrice: (value: ValuePriceType) => void
-  businessPrice: { label: string; value: string }[]
+  setValuePrice: (value: ValuePriceType) => void
   valuePrice: ValuePriceType
-  handlerSubscribe: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  addSubscribe: (body: ISubscriptionBody) => void
 }
 
-export const BusinessType = ({
-  t,
-  businessPrice,
-  valuePrice,
-  onChangPrice,
-  handlerSubscribe,
-}: Props) => {
+export const BusinessType = ({ t, valuePrice, addSubscribe, setValuePrice }: Props) => {
+  const businessPrice = [
+    { label: t.subscription.day, value: t.subscription.day },
+    { label: t.subscription.week, value: t.subscription.week },
+    { label: t.subscription.month, value: t.subscription.month },
+  ]
+  const data: DataType = {
+    [t.subscription.day]: { amount: '10', period: 'DAY' },
+    [t.subscription.week]: { amount: '50', period: 'WEEKLY' },
+    [t.subscription.month]: { amount: '100', period: 'MONTHLY' },
+  }
+
+  const handlerSubscribe: MouseEventHandler<HTMLButtonElement> = e => {
+    const body: ISubscriptionBody = {
+      typeSubscription: data[valuePrice as ValuePriceType].period,
+      paymentType: e.currentTarget.name.toUpperCase(),
+      amount: Number(data[valuePrice as ValuePriceType].amount),
+      baseUrl: window.location.href,
+    }
+
+    addSubscribe(body)
+  }
+
+  const onChangPrice = (value: ValuePriceType) => {
+    localStorage.setItem('price', value)
+    setValuePrice(value)
+  }
+
   return (
     <div className={styles.businessContainer}>
       <Typography variant={'h3'}>{t.text_subscription_costs}:</Typography>

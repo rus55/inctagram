@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -6,7 +6,6 @@ import styles from './AccountManagement.module.scss'
 
 import { useSubscribeMutation } from '@/entities/subscription'
 import {
-  useAutoRenewalMutation,
   useCurrentSubscriptionQuery,
   useGetPaymentsQuery,
 } from '@/entities/subscription/api/subscriptionApi'
@@ -24,6 +23,7 @@ import { InfoPanel } from '@/widgets/profileSettings/account-management/ui/InfoP
 const Component = () => {
   const { t } = useTranslation()
   const { accessToken } = useAuth()
+  const router = useRouter()
 
   const [valuePrice, setValuePrice] = useState<ValuePriceType>(() => {
     return (localStorage.getItem('price') || t.subscription.day) as ValuePriceType
@@ -32,54 +32,30 @@ const Component = () => {
     return (localStorage.getItem('type') || t.account_type.personal) as ValueType
   })
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [isChecked, setChecked] = useState<boolean>(true)
 
   const [subscribe, { isLoading, isError }] = useSubscribeMutation()
-  const [autoRenewal] = useAutoRenewalMutation()
   const { data: curData } = useCurrentSubscriptionQuery(accessToken)
   const { data: payments, isLoading: isLoadPayments } = useGetPaymentsQuery(accessToken)
-
-  useFetchLoader(isLoading)
-  useFetchLoader(isLoadPayments)
-
-  const router = useRouter()
-
-  const detectionEndDay = payments?.length
-    ? new Date(payments[payments.length - 1].endDateOfSubscription).toLocaleDateString('ru-RU')
-    : ''
-
-  const [day, month, year] = detectionEndDay.split('.').map(Number)
-  const subscriptionExpirationDate =
-    router.locale === 'ru' ? new Date(year, month - 1, day) : new Date(detectionEndDay)
-  const nextDay = new Date(
-    subscriptionExpirationDate.setDate(subscriptionExpirationDate.getDate() + 1)
-  ).toLocaleDateString('ru-RU')
 
   const typeAccount = [
     { label: t.account_type.personal, value: t.account_type.personal },
     { label: t.account_type.business, value: t.account_type.business },
   ]
 
-  const businessPrice = [
-    { label: t.subscription.day, value: t.subscription.day },
-    { label: t.subscription.week, value: t.subscription.week },
-    { label: t.subscription.month, value: t.subscription.month },
-  ]
+  useFetchLoader(isLoading)
+  useFetchLoader(isLoadPayments)
 
-  const data: DataType = {
-    [t.subscription.day]: { amount: '10', period: 'DAY' },
-    [t.subscription.week]: { amount: '50', period: 'WEEKLY' },
-    [t.subscription.month]: { amount: '100', period: 'MONTHLY' },
+  let detectionEndDay
+  let nextDay
+
+  if (payments?.length > 0) {
+    const endDate = new Date(payments[payments.length - 1].endDateOfSubscription)
+
+    detectionEndDay = endDate.toLocaleDateString('ru-RU')
+    nextDay = new Date(endDate.setDate(endDate.getDate() + 1)).toLocaleDateString('ru-RU')
   }
 
-  const handlerSubscribe: MouseEventHandler<HTMLButtonElement> = async e => {
-    const body: ISubscriptionBody = {
-      typeSubscription: data[valuePrice as ValuePriceType].period,
-      paymentType: e.currentTarget.name.toUpperCase(),
-      amount: Number(data[valuePrice as ValuePriceType].amount),
-      baseUrl: window.location.href,
-    }
-
+  const addSubscribe = async (body: ISubscriptionBody) => {
     const result = await subscribe({
       body,
       accessToken,
@@ -100,16 +76,6 @@ const Component = () => {
     localStorage.setItem('price', t.subscription.day)
   }
 
-  const onChangPrice = (value: ValuePriceType) => {
-    localStorage.setItem('price', value)
-    setValuePrice(value)
-  }
-
-  const onCheckbox = () => {
-    autoRenewal(accessToken)
-    setChecked(!isChecked)
-  }
-
   useEffect(() => {
     if (router.query.success) {
       setOpenModal(true)
@@ -119,37 +85,32 @@ const Component = () => {
   useEffect(() => {
     setValueType(addLangValue<ValueType>(t.lg as LangType, valueType))
     setValuePrice(addLangValue<ValuePriceType>(t.lg as LangType, valuePrice))
-  }, [router.locale, payments])
+  }, [router.locale])
 
   return (
     <div className={styles.container}>
       {curData?.data.length > 0 && (
-        <InfoPanel
-          t={t}
-          detectionEndDay={detectionEndDay}
-          nextDay={nextDay}
-          isChecked={isChecked}
-          onCheckbox={onCheckbox}
-        />
+        <InfoPanel t={t} detectionEndDay={detectionEndDay} nextDay={nextDay} />
       )}
-      <div>
-        <Typography variant={'h3'}>{t.text_account}:</Typography>
-        <div className={styles.wrapper}>
-          <RadioGr
-            onValueChange={value => onChangTypeAccount(value as ValueType)}
-            options={typeAccount}
-            value={valueType}
-          />
+      {!isLoadPayments && (
+        <div>
+          <Typography variant={'h3'}>{t.text_account}:</Typography>
+          <div className={styles.wrapper}>
+            <RadioGr
+              onValueChange={value => onChangTypeAccount(value as ValueType)}
+              options={typeAccount}
+              value={valueType}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {valueType === t.account_type.business && (
         <BusinessType
           t={t}
-          onChangPrice={onChangPrice}
-          businessPrice={businessPrice}
+          setValuePrice={setValuePrice}
           valuePrice={valuePrice}
-          handlerSubscribe={handlerSubscribe}
+          addSubscribe={addSubscribe}
         />
       )}
       {router.query.success && openModal ? (

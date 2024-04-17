@@ -17,7 +17,7 @@ import { useAppDispatch } from '@/shared/lib'
 import s from '@/widgets/addPostModal/AddPostModal.module.scss'
 import {
   AddNewPhotoTool,
-  PostPhotoModificationTools
+  PostPhotoModificationTools,
 } from '@/widgets/addPostModal/modificationTools/tools/post-modification-tools'
 import { CroppedAreaPixel } from '@/widgets/addProfilePhoto/addAvaWithoutRotation/AddAvatarModalWithoutRotation'
 type Props = {
@@ -53,9 +53,9 @@ export const AddPostModalData = ({ selectPhoto, closePostModal, setImageScr }: P
   }
   const handleOnCropComplete =
     (id: string) =>
-      (_croppedArea: Record<'x' | 'y', number>, croppedAreaPixels: CroppedAreaPixel) => {
-        dispatch(updateCroppedAreaPixels({ croppedAreaPixels: croppedAreaPixels, id }))
-      }
+    (_croppedArea: Record<'x' | 'y', number>, croppedAreaPixels: CroppedAreaPixel) => {
+      dispatch(updateCroppedAreaPixels({ croppedAreaPixels: croppedAreaPixels, id }))
+    }
   const customStyles = {
     style: {
       containerStyle: {
@@ -107,7 +107,11 @@ export const AddPostModalData = ({ selectPhoto, closePostModal, setImageScr }: P
           )
         })}
       </Swiper>
-      <AddNewPhotoTool selectNewPhoto={selectPhoto} closePostModal={closePostModal} setImageScr={setImageScr} />
+      <AddNewPhotoTool
+        selectNewPhoto={selectPhoto}
+        closePostModal={closePostModal}
+        setImageScr={setImageScr}
+      />
     </div>
   )
 }

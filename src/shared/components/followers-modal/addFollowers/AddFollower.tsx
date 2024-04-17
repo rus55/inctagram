@@ -1,4 +1,4 @@
-import s from './RemoveFollower.module.scss'
+import s from './AddFollower.module.scss'
 
 import { IconUser } from '@/shared/assets'
 import { Button, Typography } from '@/shared/components'
@@ -10,20 +10,27 @@ type Props = {
   avatar: string
   name: string
   isMob: boolean
-  onRemove: () => void
+  onAdd: () => void
 }
-export const RemoveFollower = ({ avatar, name, isMob, onRemove }: Props) => {
+export const AddFollowers = ({ avatar, name, isMob, onAdd }: Props) => {
   const { isOpen, openModal, closeModal } = useModal()
   const { t } = useTranslation()
 
   return (
     <>
+      {/*<Button*/}
+      {/*    variant={'link'}*/}
+      {/*    onClick={() => openModal()}*/}
+      {/*    style={isMob ? {fontSize: '14px', padding: '5px 10px', color: '#fff'} : {color: '#fff'}}*/}
+      {/*>*/}
+      {/*    {t.followers_modal.button_remove}*/}
+      {/*</Button>*/}
       <Button
-        variant={'link'}
+        variant={'primary'}
         onClick={() => openModal()}
         style={isMob ? { fontSize: '14px', padding: '5px 10px', color: '#fff' } : { color: '#fff' }}
       >
-        {t.followers_modal.button_remove}
+        {t.following_modal.follow_button}
       </Button>
 
       <Modal open={isOpen} size={'sm'} title={t.followers_modal.button_remove} onClose={closeModal}>
@@ -32,11 +39,11 @@ export const RemoveFollower = ({ avatar, name, isMob, onRemove }: Props) => {
             {!avatar && <IconUser />}
           </div>
           <Typography>
-            {t.delete_followers.remove_text} {name}?
+            {t.add_following.text} {name}?
           </Typography>
         </div>
         <div className={s.buttonBox}>
-          <Button variant={'outline'} onClick={onRemove} style={{ width: '27px' }}>
+          <Button variant={'outline'} onClick={onAdd} style={{ width: '27px' }}>
             {t.delete_photo_of_profile.button_yes}
           </Button>
           <Button variant={'primary'} onClick={closeModal}>

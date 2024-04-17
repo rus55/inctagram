@@ -35,9 +35,7 @@ export const ImageListWidget = ({ userId }: Props) => {
 
     if (!data) {
       setImages([])
-    }
-    //if add new post
-    else if (images.length && images[0]?.id < imagesData[0]?.id) {
+    } else if (images.length && images[0]?.id < imagesData[0]?.id) {
       setImages(imagesData)
     } else {
       setImages(prev => {

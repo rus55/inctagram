@@ -89,7 +89,7 @@ export const en = {
 
   messages: {
     password_validate_message:
-      'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [  ] ^ _` { | } ~ ',
+      'Password must contain 0-9, a-zа-я, A-ZА-Я, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [  ] ^ _` { | } ~ ',
     user_max_length: 'Maximum number of characters 30',
     user_min_length: 'Minimum number of characters 6',
     password_min_length: 'Minimum number of characters 6',
@@ -122,6 +122,11 @@ export const en = {
   },
   notification_menu: {
     title: 'Notification',
+  },
+  add_following: {
+    // title_of_delete_modal: 'Удалить подписку',
+    // delete_button: 'Отписаться',
+    text: 'Are you sure you want to subscribe to',
   },
   profile: {
     user_name: 'Username',
@@ -185,6 +190,7 @@ export const en = {
   delete_followers: {
     remove_text: 'Do you really want to remove',
   },
+
   registered_users: {
     title: 'Registered Users:',
   },
@@ -249,5 +255,9 @@ export const en = {
   auto_renewal: 'Auto-Renewal',
   expire_at: 'Expire at',
   next_payment: 'Next payment',
+  devices: {
+    log_out: 'Log Out',
+    Terminate_sessions: 'Terminate all other sessions',
+  },
 }
 export type LangType = typeof en

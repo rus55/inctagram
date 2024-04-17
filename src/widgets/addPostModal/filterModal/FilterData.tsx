@@ -50,11 +50,11 @@ export const FilteringData: FC<Props> = ({ isOpenFilter }) => {
                     alt={''}
                     style={{
                       filter: post.filterClass,
+                      objectFit: 'contain',
                     }}
+                    fill
                     className={s.postImg}
                     ref={imageRef}
-                    width={100}
-                    height={100}
                   />
                 </div>
               </SwiperSlide>

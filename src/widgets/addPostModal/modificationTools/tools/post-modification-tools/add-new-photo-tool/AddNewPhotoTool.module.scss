@@ -18,13 +18,13 @@
 .box {
   opacity: 0.8;
 }
-.boxTool{
+.boxTool {
   position: absolute;
   width: 100%;
   top: 87%;
   z-index: 12;
   left: 90%;
-  @media screen and (width<=910px){
+  @media screen and (width<=910px) {
     //top:
   }
 }

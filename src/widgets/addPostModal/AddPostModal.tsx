@@ -123,7 +123,7 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
   }
 
   const handleOpenFilter = async () => {
-    await croppers.forEach(cropper => {
+    croppers.forEach(cropper => {
       dispatch(setOriginalImage(cropper.image))
     })
     await addNewCropperForFilter()
@@ -168,7 +168,7 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
             setImageScr={setImageSrc}
           />
 
-          {imageSrc ? (
+          {!isOpen && imageSrc ? (
             <AddPostModalData
               selectPhoto={selectPhotoHandler}
               closePostModal={closePostModal}

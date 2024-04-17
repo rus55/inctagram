@@ -87,6 +87,13 @@ const Component = () => {
     setValuePrice(addLangValue<ValuePriceType>(t.lg as LangType, valuePrice))
   }, [router.locale])
 
+  useEffect(() => {
+    if (curData?.data.length > 0) {
+      localStorage.setItem('type', 'Business')
+      setValueType('Business')
+    }
+  }, [curData])
+
   return (
     <div className={styles.container}>
       {curData?.data.length > 0 && (

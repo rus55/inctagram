@@ -25,6 +25,7 @@
   @media screen and (width <= 768px) {
     font-size: var(--font-size-s);
   }
+
   @media screen and (width <= 378px) {
     font-size: var(--font-size-xs);
   }
@@ -36,6 +37,7 @@
     height: 16px;
   }
 }
+
 .titleModal {
   @media screen and (width<=378px) {
     font-size: var(--font-size-s);

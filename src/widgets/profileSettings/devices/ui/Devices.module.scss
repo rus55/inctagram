@@ -1,6 +1,7 @@
 .styles {
   display: flex;
 }
+
 .spacer {
   margin-bottom: 3rem;
 }
@@ -9,10 +10,12 @@
   display: flex;
   justify-content: flex-end;
   padding-top: 1rem;
-  @media (max-width: 768px) {
+
+  @media (width <= 768px) {
     justify-content: center;
   }
 }
+
 .typorhy {
   padding-bottom: 10px;
 }

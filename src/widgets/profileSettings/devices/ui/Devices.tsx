@@ -7,7 +7,6 @@ import {
   useDeleteSessionMutation,
   useGetDevicesQuery,
 } from "@/entities/device's"
-import { ChromeIcon } from '@/shared/assets/icons/ChromeIcon'
 import { MackIcon } from '@/shared/assets/icons/MackIcon'
 import { PhoneIcon } from '@/shared/assets/icons/PhoneIcon'
 import { Button, Typography } from '@/shared/components'
@@ -21,7 +20,7 @@ import {
 
 const Component = () => {
   const { accessToken } = useAuth()
-  const { data, isLoading, error } = useGetDevicesQuery({ accessToken })
+  const { data, isLoading } = useGetDevicesQuery({ accessToken })
   const [deleteDevice, { isLoading: deleteLoadingAll, error: deleteErrorAll }] =
     useDeleteAllMutation()
   const { t } = useTranslation()

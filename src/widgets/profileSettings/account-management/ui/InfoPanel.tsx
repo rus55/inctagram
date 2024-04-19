@@ -32,8 +32,12 @@ export const InfoPanel = ({ t, detectionEndDay, nextDay }: Props) => {
           <Typography variant={'regular_text_16'}>{detectionEndDay}</Typography>
         </div>
         <div className={styles.time}>
-          <Typography className={styles.colorText}>{t.next_payment}</Typography>
-          <Typography variant={'regular_text_16'}>{nextDay}</Typography>
+          {isChecked && (
+            <>
+              <Typography className={styles.colorText}>{t.next_payment}</Typography>
+              <Typography variant={'regular_text_16'}>{nextDay}</Typography>
+            </>
+          )}
         </div>
       </div>
       <SuperCheckbox

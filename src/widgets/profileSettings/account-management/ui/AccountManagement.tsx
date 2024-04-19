@@ -91,6 +91,9 @@ const Component = () => {
     if (curData?.data.length > 0) {
       localStorage.setItem('type', 'Business')
       setValueType('Business')
+    } else {
+      localStorage.setItem('type', 'Personal')
+      setValueType('Personal')
     }
   }, [curData])
 

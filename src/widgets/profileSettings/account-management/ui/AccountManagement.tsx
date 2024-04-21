@@ -89,11 +89,11 @@ const Component = () => {
 
   useEffect(() => {
     if (curData?.data.length > 0) {
-      localStorage.setItem('type', 'Business')
-      setValueType('Business')
+      localStorage.setItem('type', t.account_type.business)
+      setValueType(t.account_type.business as ValueType)
     } else {
-      localStorage.setItem('type', 'Personal')
-      setValueType('Personal')
+      localStorage.setItem('type', t.account_type.personal)
+      setValueType(t.account_type.personal as ValueType)
     }
   }, [curData])
 

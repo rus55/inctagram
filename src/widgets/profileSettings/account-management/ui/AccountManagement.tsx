@@ -100,7 +100,12 @@ const Component = () => {
   return (
     <div className={styles.container}>
       {curData?.data.length > 0 && (
-        <InfoPanel t={t} detectionEndDay={detectionEndDay} nextDay={nextDay} />
+        <InfoPanel
+          hasAutoRenewal={curData && curData.hasAutoRenewal}
+          t={t}
+          detectionEndDay={detectionEndDay}
+          nextDay={nextDay}
+        />
       )}
       {!isLoadPayments && (
         <div>

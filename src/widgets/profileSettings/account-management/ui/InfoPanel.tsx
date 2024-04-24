@@ -10,13 +10,14 @@ type Props = {
   t: LangType
   detectionEndDay: string | undefined
   nextDay: string | undefined
+  hasAutoRenewal: boolean | undefined
 }
 
-export const InfoPanel = ({ t, detectionEndDay, nextDay }: Props) => {
+export const InfoPanel = ({ t, detectionEndDay, nextDay, hasAutoRenewal }: Props) => {
   const { accessToken } = useAuth()
 
-  const [isChecked, setChecked] = useState<boolean>(true)
-  const [autoRenewal, { data: renewalData }] = useAutoRenewalMutation()
+  const [isChecked, setChecked] = useState<boolean>(hasAutoRenewal ?? true)
+  const [autoRenewal] = useAutoRenewalMutation()
 
   const onCheckbox = () => {
     autoRenewal(accessToken)

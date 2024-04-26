@@ -5,6 +5,7 @@ import ArrowLeft from '../../assets/icons/ArrowLeft'
 import { OptionsType, SelectCustom } from '../select'
 
 import s from './pagination.module.scss'
+import { useTranslation } from "@/shared/lib";
 
 export type PaginationProps = {
   totalCount: number | undefined
@@ -68,6 +69,7 @@ export const Pagination = (props: PaginationProps) => {
     options,
     portionValue,
   } = props
+  const { t } = useTranslation()
 
   const pagesCount = Math.ceil(totalCount / pageSize)
 
@@ -129,7 +131,7 @@ export const Pagination = (props: PaginationProps) => {
         </button>
       </div>
       <div className={s.selectWrapper}>
-        Show
+        {t.show}
         <SelectCustom
           className={'pagination'}
           options={options}
@@ -137,7 +139,7 @@ export const Pagination = (props: PaginationProps) => {
           defaultValue={pageSize.toString()}
           onValueChange={onPageSizeHandler}
         />
-        on page
+        {t.on_page}
       </div>
     </div>
   )

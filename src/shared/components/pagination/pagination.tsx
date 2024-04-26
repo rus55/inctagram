@@ -5,7 +5,8 @@ import ArrowLeft from '../../assets/icons/ArrowLeft'
 import { OptionsType, SelectCustom } from '../select'
 
 import s from './pagination.module.scss'
-import { useTranslation } from "@/shared/lib";
+
+import { useTranslation } from '@/shared/lib'
 
 export type PaginationProps = {
   totalCount: number | undefined

@@ -22,6 +22,14 @@ const Component = () => {
 
   useFetchLoader(isLoadPayments)
 
+  const hashTabType: { [key: string]: string } = {
+    'DAY': '1 day',
+    'WEEKLY': '7 days',
+    'MONTHLY': '1 month',
+    'STRIPE': 'Stripe',
+    'PAYPAL': 'PayPal'
+  }
+
   const onCurrentPageChange = (value: number | string) => {
     setCurrentPage(value)
   }
@@ -50,9 +58,9 @@ const Component = () => {
               <tr key={item.subscriptionId}>
                 <td>{new Date(item.dateOfPayment).toLocaleDateString('ru-RU')}</td>
                 <td>{new Date(item.endDateOfSubscription).toLocaleDateString('ru-RU')}</td>
-                <td>{item.price}</td>
-                <td>{item.subscriptionType}</td>
-                <td>{item.paymentType}</td>
+                <td>${item.price}</td>
+                <td>{hashTabType[item.subscriptionType]}</td>
+                <td>{hashTabType[item.paymentType]}</td>
               </tr>
             ))}
           </tbody>

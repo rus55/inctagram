@@ -38,8 +38,6 @@ const Component = () => {
     setPageSize(value)
   }
 
-  console.log(payments);
-
   useEffect(() => {
     setArray(getPageItems(currentPage as number, pageSize, payments || []))
   }, [payments])

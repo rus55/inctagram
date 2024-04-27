@@ -38,6 +38,8 @@ const Component = () => {
     setPageSize(value)
   }
 
+  console.log(payments);
+
   useEffect(() => {
     setArray(getPageItems(currentPage as number, pageSize, payments || []))
   }, [payments])
@@ -66,7 +68,7 @@ const Component = () => {
           </tbody>
         </table>
         <Pagination
-          totalCount={payments.length}
+          totalCount={payments ? payments.length : 0}
           currentPage={currentPage as number}
           pageSize={pageSize}
           onPageSizeChange={onPageSizeChange}

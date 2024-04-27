@@ -23,11 +23,11 @@ const Component = () => {
   useFetchLoader(isLoadPayments)
 
   const hashTabType: { [key: string]: string } = {
-    'DAY': '1 day',
-    'WEEKLY': '7 days',
-    'MONTHLY': '1 month',
-    'STRIPE': 'Stripe',
-    'PAYPAL': 'PayPal'
+    DAY: '1 day',
+    WEEKLY: '7 days',
+    MONTHLY: '1 month',
+    STRIPE: 'Stripe',
+    PAYPAL: 'PayPal',
   }
 
   const onCurrentPageChange = (value: number | string) => {

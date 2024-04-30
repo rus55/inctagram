@@ -40,7 +40,7 @@ const Component = () => {
 
   useEffect(() => {
     setArray(getPageItems(currentPage as number, pageSize, payments || []))
-  }, [payments])
+  }, [payments, currentPage, pageSize])
 
   return (
     !isLoadPayments && (

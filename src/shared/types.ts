@@ -62,3 +62,13 @@ export interface ISubscriptionBodyWithToken {
   body: ISubscriptionBody
   accessToken: string | undefined
 }
+
+export interface IPayments {
+  dateOfPayment: string
+  endDateOfSubscription: string
+  paymentType: string
+  price: number
+  subscriptionId: string
+  subscriptionType: string
+  userId: number
+}

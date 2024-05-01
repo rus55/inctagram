@@ -259,5 +259,13 @@ export const en = {
     log_out: 'Log Out',
     Terminate_sessions: 'Terminate all other sessions',
   },
+
+  date_of_payment: 'Date of Payment',
+  end_date_of_subscription: 'End date of subscription',
+  price: 'Price',
+  subscription_type: 'Subscription Type',
+  payment_type: 'Payment Type',
+  show: 'Show',
+  on_page: 'on page',
 }
 export type LangType = typeof en

@@ -258,4 +258,12 @@ export const ru: LangType = {
     log_out: 'Выйти',
     Terminate_sessions: 'Завершить все остальные сеансы',
   },
+
+  date_of_payment: 'Дата оплаты',
+  end_date_of_subscription: 'Дата окончания подписки',
+  price: 'Цена',
+  subscription_type: 'Тип подписки',
+  payment_type: 'Тип оплаты',
+  show: 'Показать',
+  on_page: 'на странице',
 }

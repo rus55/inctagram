@@ -231,6 +231,30 @@ export const en = {
     save_draft: 'Save draft',
     add_img_message: 'You have added the maximum number of photos allowed!',
   },
+  subscription: {
+    day: '$10 per 1 Day',
+    week: '$50 per 7 Day',
+    month: '$100 per month',
+  },
+  text_subscription_costs: 'Your subscription costs',
+  current_subscription: 'Current Subscription',
+
+  text_account: 'Account type',
+  account_type: {
+    personal: 'Personal',
+    business: 'Business',
+  },
+  text_success: 'Success',
+  payment_success: 'Payment was successful!',
+  button_ok: 'OK',
+
+  text_error: 'Error',
+  transaction_failed: 'Transaction failed. Please, write to support',
+  button_back: 'Back to payment',
+
+  auto_renewal: 'Auto-Renewal',
+  expire_at: 'Expire at',
+  next_payment: 'Next payment',
   devices: {
     log_out: 'Log Out',
     Terminate_sessions: 'Terminate all other sessions',

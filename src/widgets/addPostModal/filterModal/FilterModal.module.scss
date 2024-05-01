@@ -25,9 +25,9 @@
 }
 
 .box {
+  position: relative;
   display: flex;
   height: 504px;
-  position: relative;
 
   @media screen and (width<=910px) {
     min-width: 100%;

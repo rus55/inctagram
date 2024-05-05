@@ -47,8 +47,9 @@
   .avatar {
     width: 36px;
     height: 36px;
+    border: 1px solid var(--color-dark-100);
     border-radius: 50%;
-border: 1px solid var(--color-dark-100);
+
     @media (width<=768px) {
       width: 24px;
       height: 24px;

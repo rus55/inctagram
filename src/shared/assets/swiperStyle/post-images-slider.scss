@@ -9,7 +9,6 @@
   .swiper-pagination-custom,
   .swiper-horizontal > .swiper-pagination-bullets,
   .swiper-pagination-bullets.swiper-pagination-horizontal {
-
     @media screen and (width<=910px) {
       top: 86%;
       left: 30%;
@@ -21,10 +20,8 @@
 
     @media screen and (width<=459px) {
       top: 77%;
-
     }
   }
-  
 
   .swiper-button-prev::after,
   .swiper-button-next::after {
@@ -40,7 +37,7 @@
       font-weight: bold;
       color: rgb(255 255 255);
     }
-  
+
     .swiper-button-prev::after,
     .swiper-button-next::after {
       padding: 10px;

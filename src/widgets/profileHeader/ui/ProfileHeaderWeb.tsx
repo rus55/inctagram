@@ -31,6 +31,7 @@ export const ProfileHeaderWeb = ({ data, isAuth, userId, totalCount }: Props) =>
                 alt={''}
                 width={204}
                 height={204}
+                priority
               />
             ) : (
               <DefaultProfileImg style={{ width: '3rem', height: '3rem' }} />

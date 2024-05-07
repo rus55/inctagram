@@ -12,10 +12,11 @@ import { useLoginAdminMutation, useLoginMutation } from '@/entities/auth'
 import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
 import { Button } from '@/shared/components'
-import { useFetchLoader, useTranslation } from '@/shared/lib'
+import {useAppDispatch, useFetchLoader, useTranslation} from '@/shared/lib'
 import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
+import {adminSlice} from "@/app/services/admin-slice";
 
 export const SignInWidget: FC = () => {
   const [socialsLoading, setSocialsLoading] = useState(false)
@@ -35,24 +36,12 @@ export const SignInWidget: FC = () => {
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
   const [loginAdminMutation, { isSuccess: isSuccessAdmin }] = useLoginAdminMutation()
-  // const handleLoginAdmin = async () => {
-  //   try {
-  //     const result = await loginAdminMutation({ email: 'admin@gmail.com', password: 'admin' });
-  //     console.log()
-  //     // @ts-ignore
-  //     if (result.data.data.loginAdmin.logged) {
-  //       await router.push('/superAdmin');
-  //     } else {
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
+const dispatch = useAppDispatch()
   const router = useRouter()
 
   const onSubmit: SubmitHandler<IAuthInput> = data => {
     Login({ email: data.email, password: data.password })
+    dispatch(adminSlice(isSuccessAdmin))
     loginAdminMutation({ email: data.email, password: data.password })
   }
 

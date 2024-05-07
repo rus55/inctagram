@@ -34,18 +34,18 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
 
   return (
     <div className={s.wrapper}>
-      {/*<div className={s.header}>*/}
-      {/*    <HeaderWidget/>*/}
-      {/*</div>*/}
-      {/*<main className={s.main}>*/}
-      {/*    <div className={s.sidebar}>*/}
-      {/*        <Sidebar/>*/}
-      {/*    </div>*/}
+      <div className={s.header}>
+          <HeaderWidget/>
+      </div>
+      <main className={s.main}>
+          <div className={s.sidebar}>
+              {/*<Sidebar/>*/}
+          </div>
 
-      {/*    <div className={s.wrapperContent}>*/}
-      {/*        <Scroller>{children}</Scroller>*/}
-      {/*    </div>*/}
-      {/*</main>*/}
+          <div className={s.wrapperContent}>
+              <Scroller>{children}</Scroller>
+          </div>
+      </main>
       {/*<BottomNavigation/>*/}
     </div>
   )

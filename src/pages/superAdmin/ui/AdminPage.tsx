@@ -9,6 +9,6 @@ const AdminPage = () => {
   )
 }
 
-// AdminPage.getLayout = getSuperAdminLayoutLayout
+AdminPage.getLayout = getSuperAdminLayoutLayout
 
 export { AdminPage }

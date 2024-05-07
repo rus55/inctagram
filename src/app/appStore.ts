@@ -9,6 +9,7 @@ import { countriesApi } from '@/entities/countries/'
 import { postsApi } from '@/entities/posts'
 import { profileApi } from '@/entities/profile'
 import { publicPostsApi } from '@/entities/publicPosts'
+import {adminSlice} from "@/app/services/admin-slice";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     [postSlice.name]: postSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [croppersSlice.name]: croppersSlice.reducer,
+    [adminSlice.name]:adminSlice.reducer,
     // [authGoogleApi.reducerPath]: authGoogleApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [countriesApi.reducerPath]: countriesApi.reducer,

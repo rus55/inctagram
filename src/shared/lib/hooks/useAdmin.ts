@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useAppSelector } from './index'
+import { selectIsAdmin } from '@/app/services/admin-slice'
 
 export const useAdmin = () => {
-  const [isAdmin, setIsAdmin] = useState(false)
-
-  useEffect(() => {
-    setIsAdmin(true)
-  }, [])
-
-  return { isAdmin }
+  const isAdmin = useAppSelector(selectIsAdmin)
+  return {
+    isAdmin,
+  }
 }

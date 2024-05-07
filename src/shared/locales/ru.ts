@@ -119,6 +119,12 @@ export const ru: LangType = {
     settings: 'Настройки профиля',
     log_out: 'Выйти',
   },
+  sidebarAdmin: {
+    userList: 'Список пользователей',
+    paymentsList: 'Список платежей',
+    postsList: 'Список постов',
+    statistics: 'Статистика',
+  },
   notification_menu: {
     title: 'Уведомления',
   },

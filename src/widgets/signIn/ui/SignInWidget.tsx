@@ -12,11 +12,12 @@ import { useLoginAdminMutation, useLoginMutation } from '@/entities/auth'
 import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
 import { Button } from '@/shared/components'
-import {useAppDispatch, useFetchLoader, useTranslation} from '@/shared/lib'
+import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
 import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
-import {adminSlice} from "@/app/services/admin-slice";
+import { adminSlice } from '@/app/services/admin-slice'
+import { log } from 'console'
 
 export const SignInWidget: FC = () => {
   const [socialsLoading, setSocialsLoading] = useState(false)
@@ -35,28 +36,28 @@ export const SignInWidget: FC = () => {
   const { isClient } = useClient()
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
-  const [loginAdminMutation, { isSuccess: isSuccessAdmin }] = useLoginAdminMutation()
-const dispatch = useAppDispatch()
+  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin }] =
+    useLoginAdminMutation()
+  const dispatch = useAppDispatch()
   const router = useRouter()
 
   const onSubmit: SubmitHandler<IAuthInput> = data => {
-    Login({ email: data.email, password: data.password })
-    dispatch(adminSlice(isSuccessAdmin))
     loginAdminMutation({ email: data.email, password: data.password })
+    Login({ email: data.email, password: data.password })
   }
 
   const login = (url: string) => {
     setSocialsLoading(true)
     window.location.assign(url)
   }
+  useEffect(() => {
+    dispatch(adminSlice.actions.isAdmin(isSuccessAdmin))
+    isSuccessAdmin && router.push('/superAdmin')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessAdmin])
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess])
-
-  useEffect(() => {
-    isSuccessAdmin && router.push('/superAdmin')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 

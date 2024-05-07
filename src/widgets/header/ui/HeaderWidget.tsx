@@ -15,6 +15,7 @@ import { useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { DropDownNotification } from '@/widgets/dropDownNotification'
 import { LangSelectWidget } from '@/widgets/langSelect'
+import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 
 export const HeaderWidget: FC = () => {
   const [toggle, setToggle] = useState(false)
@@ -23,6 +24,7 @@ export const HeaderWidget: FC = () => {
   const { t } = useTranslation()
   const [logOut] = useLogOutMutation()
 
+  const isAdmin = useAdmin()
   const { isAuth, accessToken } = useAuth()
   const router = useRouter()
 

@@ -19,3 +19,4 @@ export const adminSlice = createSlice({
   },
 })
 export const { isAdmin } = adminSlice.actions
+export const selectIsAdmin = (state: RootState) => state.adminSlice.isAdmin

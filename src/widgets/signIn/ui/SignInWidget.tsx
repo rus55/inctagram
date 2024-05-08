@@ -1,3 +1,5 @@
+import { log } from 'console'
+
 import { FC, useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -8,6 +10,7 @@ import { SignInAuth } from '../signInAuth/SignInAuth'
 
 import styles from './SignInWidget.module.scss'
 
+import { adminSlice } from '@/app/services/admin-slice'
 import { useLoginAdminMutation, useLoginMutation } from '@/entities/auth'
 import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
@@ -16,8 +19,6 @@ import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
 import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
-import { adminSlice } from '@/app/services/admin-slice'
-import { log } from 'console'
 
 export const SignInWidget: FC = () => {
   const [socialsLoading, setSocialsLoading] = useState(false)
@@ -50,6 +51,7 @@ export const SignInWidget: FC = () => {
     setSocialsLoading(true)
     window.location.assign(url)
   }
+
   useEffect(() => {
     dispatch(adminSlice.actions.isAdmin(isSuccessAdmin))
     isSuccessAdmin && router.push('/superAdmin')

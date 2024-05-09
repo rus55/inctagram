@@ -3,14 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import styles from './AccountManagement.module.scss'
+import { setLocalStorageAndValue } from './setLocalStorageAndValue'
+import { StatusModal } from './StatusModal'
 
 import { useSubscribeMutation } from '@/entities/subscription'
 import {
   useCurrentSubscriptionQuery,
   useGetPaymentsQuery,
 } from '@/entities/subscription/api/subscriptionApi'
-import { Button, Typography } from '@/shared/components'
-import { Modal } from '@/shared/components/modals'
+import { Typography } from '@/shared/components'
 import { RadioGr } from '@/shared/components/radio-group'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
@@ -20,16 +21,21 @@ import { TabsLayout } from '@/widgets/layouts'
 import { BusinessType } from '@/widgets/profileSettings/account-management/ui/BusinessType'
 import { InfoPanel } from '@/widgets/profileSettings/account-management/ui/InfoPanel'
 
+const valueLS = {
+  price: 'price' as PriceType,
+  type: 'type' as PriceType,
+}
+
 const Component = () => {
   const { t } = useTranslation()
   const { accessToken } = useAuth()
   const router = useRouter()
 
   const [valuePrice, setValuePrice] = useState<ValuePriceType>(() => {
-    return (localStorage.getItem('price') || t.subscription.day) as ValuePriceType
+    return (localStorage.getItem(valueLS.price) || t.subscription.day) as ValuePriceType
   })
   const [valueType, setValueType] = useState<ValueType>(() => {
-    return (localStorage.getItem('type') || t.account_type.personal) as ValueType
+    return (localStorage.getItem(valueLS.type) || t.account_type.personal) as ValueType
   })
   const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -61,7 +67,7 @@ const Component = () => {
       accessToken,
     }).unwrap()
 
-    window.location.href = result.url
+    await router.push(result.url)
   }
 
   const onSuccess = () => {
@@ -72,8 +78,8 @@ const Component = () => {
 
   const onChangTypeAccount = (value: ValueType) => {
     setValueType(value)
-    localStorage.setItem('type', value)
-    localStorage.setItem('price', t.subscription.day)
+    localStorage.setItem(valueLS.type, value)
+    localStorage.setItem(valueLS.price, t.subscription.day)
   }
 
   useEffect(() => {
@@ -89,11 +95,9 @@ const Component = () => {
 
   useEffect(() => {
     if (curData?.data.length > 0) {
-      localStorage.setItem('type', t.account_type.business)
-      setValueType(t.account_type.business as ValueType)
+      setLocalStorageAndValue(t.account_type.business as ValueType, valueLS.type, setValueType)
     } else {
-      localStorage.setItem('type', t.account_type.personal)
-      setValueType(t.account_type.personal as ValueType)
+      setLocalStorageAndValue(t.account_type.personal as ValueType, valueLS.type, setValueType)
     }
   }, [curData])
 
@@ -129,20 +133,22 @@ const Component = () => {
         />
       )}
       {router.query.success && openModal ? (
-        <Modal size={'sm'} open={openModal} title={t.text_success}>
-          <Typography variant={'regular_text_16'}>{t.payment_success}</Typography>
-          <Button className={styles.successButton} fullWidth onClick={onSuccess}>
-            <Typography variant={'h3'}>{t.button_ok}</Typography>
-          </Button>
-        </Modal>
+        <StatusModal
+          openModal={openModal}
+          titleModal={t.text_success}
+          callback={onSuccess}
+          textButton={t.button_ok}
+          textTypography={t.payment_success}
+        />
       ) : null}
       {isError && router.query.success && openModal ? (
-        <Modal size={'sm'} open={openModal} title={t.text_error}>
-          <Typography variant={'regular_text_16'}>{t.transaction_failed}</Typography>
-          <Button className={styles.successButton} fullWidth onClick={onSuccess}>
-            <Typography variant={'h3'}>{t.button_back}</Typography>
-          </Button>
-        </Modal>
+        <StatusModal
+          openModal={openModal}
+          titleModal={t.text_error}
+          callback={onSuccess}
+          textButton={t.button_back}
+          textTypography={t.transaction_failed}
+        />
       ) : null}
     </div>
   )

@@ -92,7 +92,7 @@ export const ForgotPasswordWidget: FC = () => {
             <ReCAPTCHA
               onChange={(value: any) => setReCaptcha(value)}
               sitekey={process.env.captcha_site_key as string}
-              hl={t.lg}
+              hl={t.forgotpassword.lg}
               theme="dark"
             />
           </div>

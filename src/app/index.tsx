@@ -20,7 +20,7 @@ import { ReduxProvider } from './providers'
 import { useLoader } from '@/shared/lib'
 import { NotificationContainer } from '@/widgets/alertContainer'
 
-TimeAgo.addDefaultLocale(en)
+TimeAgo.addLocale(en)
 TimeAgo.addLocale(ru)
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

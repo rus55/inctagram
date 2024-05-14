@@ -1,0 +1,18 @@
+.styles {
+  display: flex;
+}
+.spacer {
+  margin-bottom: 3rem;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+.typorhy {
+  padding-bottom: 10px;
+}

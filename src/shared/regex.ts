@@ -1,4 +1,4 @@
-export const passwordValidation = /(^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W])(^\S+$).*$)/
+export const passwordValidation = /(^(?=.*\d)(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*[\W])(^\S+$).*$)/
 
 export const emailValidation = /^[\SA-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z\S]{2,4}$/i
 

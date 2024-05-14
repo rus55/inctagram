@@ -182,6 +182,11 @@ export const ru: LangType = {
     delete_button: 'Отписаться',
     text: 'Вы действительно хотите отписаться от',
   },
+  add_following: {
+    // title_of_delete_modal: 'Удалить подписку',
+    // delete_button: 'Отписаться',
+    text: 'Вы действительно хотите подписаться на',
+  },
   followers_modal: {
     title: 'Подписчики',
     modals_title: 'Подписчиков',
@@ -231,4 +236,40 @@ export const ru: LangType = {
     save_draft: 'Сохранить',
     add_img_message: 'Ты добавил максимально допустимое количество фотографий!',
   },
+  subscription: {
+    day: '10$ за один день',
+    week: '50$ за неделю',
+    month: '100$ за месяц',
+  },
+  text_subscription_costs: 'Стоимость подписки',
+  current_subscription: 'Текущая подписка',
+
+  text_account: 'Тип аккаунта',
+  account_type: {
+    personal: 'Персональный',
+    business: 'Бизнес',
+  },
+  text_success: 'Успешно',
+  payment_success: 'Оплата прошла успешно!',
+  button_ok: 'ОТЛИЧНО',
+
+  text_error: 'Ошибка',
+  transaction_failed: 'Транзакция не прошла. Пожалуйста, напишите в службу поддержки',
+  button_back: 'Назад к оплате',
+
+  auto_renewal: 'Автопродление',
+  expire_at: 'Истекает',
+  next_payment: 'Следующий платеж',
+  devices: {
+    log_out: 'Выйти',
+    Terminate_sessions: 'Завершить все остальные сеансы',
+  },
+
+  date_of_payment: 'Дата оплаты',
+  end_date_of_subscription: 'Дата окончания подписки',
+  price: 'Цена',
+  subscription_type: 'Тип подписки',
+  payment_type: 'Тип оплаты',
+  show: 'Показать',
+  on_page: 'на странице',
 }

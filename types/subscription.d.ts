@@ -7,6 +7,7 @@ type PriceRu = '10$ за один день' | '50$ за неделю' | '100$ з
 type ValuePriceType = PriceEn | PriceRu
 type KeyDataType = ValuePriceType | string
 type LangType = 'en' | 'ru'
+type PriceType = 'price' | 'type'
 
 type DataType = {
   [key in KeyDataType]: {amount: '10' | '50' | '100', period: 'DAY' | 'WEEKLY' | 'MONTHLY'}

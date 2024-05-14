@@ -1,4 +1,4 @@
-import React, { ComponentProps, ReactNode } from 'react'
+import React, { ComponentProps, ReactElement, ReactNode } from 'react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'

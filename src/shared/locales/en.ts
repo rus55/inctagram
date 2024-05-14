@@ -89,7 +89,7 @@ export const en = {
 
   messages: {
     password_validate_message:
-      'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [  ] ^ _` { | } ~ ',
+      'Password must contain 0-9, a-zа-я, A-ZА-Я, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [  ] ^ _` { | } ~ ',
     user_max_length: 'Maximum number of characters 30',
     user_min_length: 'Minimum number of characters 6',
     password_min_length: 'Minimum number of characters 6',
@@ -128,6 +128,11 @@ export const en = {
   },
   notification_menu: {
     title: 'Notification',
+  },
+  add_following: {
+    // title_of_delete_modal: 'Удалить подписку',
+    // delete_button: 'Отписаться',
+    text: 'Are you sure you want to subscribe to',
   },
   profile: {
     user_name: 'Username',
@@ -191,6 +196,7 @@ export const en = {
   delete_followers: {
     remove_text: 'Do you really want to remove',
   },
+
   registered_users: {
     title: 'Registered Users:',
   },
@@ -231,5 +237,41 @@ export const en = {
     save_draft: 'Save draft',
     add_img_message: 'You have added the maximum number of photos allowed!',
   },
+  subscription: {
+    day: '$10 per 1 Day',
+    week: '$50 per 7 Day',
+    month: '$100 per month',
+  },
+  text_subscription_costs: 'Your subscription costs',
+  current_subscription: 'Current Subscription',
+
+  text_account: 'Account type',
+  account_type: {
+    personal: 'Personal',
+    business: 'Business',
+  },
+  text_success: 'Success',
+  payment_success: 'Payment was successful!',
+  button_ok: 'OK',
+
+  text_error: 'Error',
+  transaction_failed: 'Transaction failed. Please, write to support',
+  button_back: 'Back to payment',
+
+  auto_renewal: 'Auto-Renewal',
+  expire_at: 'Expire at',
+  next_payment: 'Next payment',
+  devices: {
+    log_out: 'Log Out',
+    Terminate_sessions: 'Terminate all other sessions',
+  },
+
+  date_of_payment: 'Date of Payment',
+  end_date_of_subscription: 'End date of subscription',
+  price: 'Price',
+  subscription_type: 'Subscription Type',
+  payment_type: 'Payment Type',
+  show: 'Show',
+  on_page: 'on page',
 }
 export type LangType = typeof en

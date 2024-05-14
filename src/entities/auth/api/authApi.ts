@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { clearLocalUserData, setLoginUser } from '../model/authSlice'
-
+import { clearLocalUserData, setLoginUser } from '@/entities/auth'
 import { BACKEND_URL, BASE_WORK_URL } from '@/shared/constants/ext-urls'
 import { consoleErrors } from '@/shared/lib'
 import { IEmailBaseUrl, IEmailPassword, IEmailPasswordUser } from '@/shared/types'

@@ -47,6 +47,7 @@ export function DatePicker({
   const handleDate = (date?: Date) => {
     if (date && date instanceof Date) {
       setDateValue(format(date, 'yyyy-MM-dd'))
+
       onBlur(date)
     }
   }

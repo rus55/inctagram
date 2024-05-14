@@ -31,6 +31,7 @@ export const ProfileHeaderWeb = ({ data, isAuth, userId, totalCount }: Props) =>
                 alt={''}
                 width={204}
                 height={204}
+                priority
               />
             ) : (
               <DefaultProfileImg style={{ width: '3rem', height: '3rem' }} />
@@ -84,7 +85,7 @@ export const ProfileHeaderWeb = ({ data, isAuth, userId, totalCount }: Props) =>
             </div>
             <div className={s.info}>
               <Typography className={s.progressInfoValue} variant="bold_text_14">
-                {totalCount ?? 31}
+                {totalCount ?? 0}
               </Typography>
               <Typography className={s.progressInfoText} variant="regular_text_14">
                 {t.followers_modal.post}

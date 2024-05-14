@@ -26,6 +26,10 @@
   left: 90%;
 
   width: 100%;
+
+  @media screen and (width<=910px) {
+    //top:
+  }
 }
 
 .menuBox {

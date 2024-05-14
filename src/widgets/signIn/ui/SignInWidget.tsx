@@ -60,7 +60,6 @@ export const SignInWidget: FC = () => {
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 
   useEffect(() => {
@@ -69,12 +68,10 @@ export const SignInWidget: FC = () => {
         type: 'server',
         message: t.signin.error_message,
       })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error])
 
   useEffect(() => {
     isClient && trigger()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [t.signin.error_message])
 
   useFetchLoader(isLoading || socialsLoading)

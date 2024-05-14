@@ -48,6 +48,8 @@ export const readFile = (file: File) => {
 export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null)
   const [openCloseCrop, setCloseCropModal] = useState(false)
+  const [isDraft, setIsDraft] = useState<boolean>(false)
+  const [modalPost, setModalPost] = useState<boolean>(false)
   const { isOpen, openModal, closeModal } = useModal()
   const { selectPhotoHandler, inputRef } = useGeneralInputRefForPost()
   const croppers = useAppSelector(state => state.croppersSlice)
@@ -96,12 +98,21 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
 
       setImageSrc(imageDataUrl)
       addNewCropper(imageDataUrl)
+      setModalPost(true)
+      setIsDraft(true)
     }
   }
 
   const handleBack = () => {
-    dispatch(removeAllPhotos())
-    setImageSrc(null)
+    if (!croppers[0].originalImage) {
+      dispatch(removeAllPhotos())
+      setImageSrc(null)
+      setIsDraft(false)
+      setModalPost(false)
+    } else {
+      setModalPost(false)
+      setIsDraft(false)
+    }
   }
   const handleClosePostCropModal = () => {
     closePostModal()
@@ -123,18 +134,38 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
   }
 
   const handleOpenFilter = async () => {
-    await croppers.forEach(cropper => {
+    croppers.forEach(cropper => {
       dispatch(setOriginalImage(cropper.image))
     })
     await addNewCropperForFilter()
     openModal()
+    setModalPost(false)
+    setIsDraft(true)
   }
 
   const handleInteractOutsideOfCrop = (event: Event) => {
     event.preventDefault()
     imageSrc && setCloseCropModal(true)
   }
+
+  const draftPhotoHandler = () => {
+    croppers.forEach(cropper => setImageSrc(cropper.image))
+    setModalPost(true)
+    setIsDraft(true)
+  }
+
+  const onDiscordHandle = () => {
+    dispatch(removeAllPhotos())
+    setImageSrc(null)
+    setModalPost(false)
+    setIsDraft(false)
+    closePostModal()
+    handleCloseFilter()
+    setCloseCropModal(false)
+  }
   const handleSavePost = () => {
+    setImageSrc(null)
+    setModalPost(false)
     closePostModal()
     setCloseCropModal(false)
   }
@@ -144,18 +175,18 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
       <CloseCrop
         openCloseCrop={openCloseCrop}
         closeCrop={() => setCloseCropModal(false)}
-        onDiscard={() => setCloseCropModal(false)}
+        onDiscard={onDiscordHandle}
         savePhotoInDraft={handleSavePost}
       />
       <Modal
         open={openPostModal}
         size={'md'}
-        title={imageSrc ? t.post.crop_modal_title : t.post.post_modal_title}
+        title={modalPost ? t.post.crop_modal_title : t.post.post_modal_title}
         onClickNext={handleOpenFilter}
         closePostModal={handleBack}
         buttonText={t.post.button_navigation_text}
-        isCropHeader={!!imageSrc}
-        showCloseButton={!imageSrc}
+        isCropHeader={modalPost}
+        showCloseButton={!modalPost}
         isPost
         onClose={closePostModal}
         onInteractOutside={handleInteractOutsideOfCrop}
@@ -166,9 +197,11 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
             closeFilter={handleCloseFilter}
             closeCroppingModal={handleClosePostCropModal}
             setImageScr={setImageSrc}
+            setIsDraft={setIsDraft}
+            setModalPost={setModalPost}
           />
 
-          {imageSrc ? (
+          {!isOpen && modalPost ? (
             <AddPostModalData
               selectPhoto={selectPhotoHandler}
               closePostModal={closePostModal}
@@ -186,16 +219,19 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
                 <DefaultProfileImg style={{ width: '3rem', height: '3rem' }} />
               </div>
 
-              <Button
-                variant={'primary'}
-                style={{ marginBottom: '24px', width: '168px' }}
-                onClick={selectPhotoHandler}
-              >
-                {t.post.select_button}
-              </Button>
-              <Button variant={'outline'} style={{ width: '170px' }}>
-                {t.post.draft_button}
-              </Button>
+              {!isDraft ? (
+                <Button
+                  variant={'primary'}
+                  style={{ marginBottom: '24px', width: '168px' }}
+                  onClick={selectPhotoHandler}
+                >
+                  {t.post.select_button}
+                </Button>
+              ) : (
+                <Button variant={'outline'} style={{ width: '170px' }} onClick={draftPhotoHandler}>
+                  {t.post.draft_button}
+                </Button>
+              )}
             </div>
           )}
           <input

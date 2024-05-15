@@ -12,6 +12,7 @@ import { ProfileSettings } from '@/shared/assets/icons/ProfileSettings'
 import { Button, CustomDropdown, CustomDropdownItem, Typography } from '@/shared/components'
 import { NotificationBell } from '@/shared/components/notificatification-bell'
 import { useTranslation } from '@/shared/lib'
+import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { DropDownNotification } from '@/widgets/dropDownNotification'
 import { LangSelectWidget } from '@/widgets/langSelect'
@@ -23,6 +24,7 @@ export const HeaderWidget: FC = () => {
   const { t } = useTranslation()
   const [logOut] = useLogOutMutation()
 
+  const isAdmin = useAdmin()
   const { isAuth, accessToken } = useAuth()
   const router = useRouter()
 

@@ -1,3 +1,5 @@
+import { log } from 'console'
+
 import { FC, useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -8,11 +10,13 @@ import { SignInAuth } from '../signInAuth/SignInAuth'
 
 import styles from './SignInWidget.module.scss'
 
-import { useLoginMutation } from '@/entities/auth'
+import { adminSlice } from '@/app/services/admin-slice'
+import { useLoginAdminMutation, useLoginMutation } from '@/entities/auth'
 import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
 import { Button } from '@/shared/components'
-import { useFetchLoader, useTranslation } from '@/shared/lib'
+import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
+import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
 
@@ -33,10 +37,13 @@ export const SignInWidget: FC = () => {
   const { isClient } = useClient()
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
-
+  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin }] =
+    useLoginAdminMutation()
+  const dispatch = useAppDispatch()
   const router = useRouter()
 
   const onSubmit: SubmitHandler<IAuthInput> = data => {
+    loginAdminMutation({ email: data.email, password: data.password })
     Login({ email: data.email, password: data.password })
   }
 
@@ -44,6 +51,12 @@ export const SignInWidget: FC = () => {
     setSocialsLoading(true)
     window.location.assign(url)
   }
+
+  useEffect(() => {
+    dispatch(adminSlice.actions.isAdmin(isSuccessAdmin))
+    isSuccessAdmin && router.push('/superAdmin')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessAdmin])
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')
@@ -91,6 +104,7 @@ export const SignInWidget: FC = () => {
           {t.signin.sign_in}
         </button>
         <div className="font-base text-light-100 text-center">{t.signin.account_question}</div>
+
         <div className="text-center mt-3">
           <Link
             href={'/signup'}

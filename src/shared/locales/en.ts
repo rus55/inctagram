@@ -120,6 +120,12 @@ export const en = {
     settings: 'Profile Settings',
     log_out: 'Log Out',
   },
+  sidebarAdmin: {
+    userList: 'User list',
+    paymentsList: 'Payments list',
+    postsList: 'Posts list',
+    statistics: 'Statistics',
+  },
   notification_menu: {
     title: 'Notification',
   },

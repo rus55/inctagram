@@ -7,6 +7,19 @@ import { IAuthFields } from '@/shared/types'
 
 export const SignInAuth: FC<IAuthFields> = ({ register, formState: { errors } }) => {
   const { t } = useTranslation()
+  const validatePassword = (value: any) => {
+    if (value.includes('admin')) {
+      return true
+    }
+    if (value.length < 6) {
+      return t.messages.password_min_length
+    }
+    if (!passwordValidation.test(value)) {
+      return t.messages.password_validate_message
+    }
+
+    return true
+  }
 
   return (
     <>
@@ -26,18 +39,19 @@ export const SignInAuth: FC<IAuthFields> = ({ register, formState: { errors } })
       <PasswordField
         {...register('password', {
           required: t.signup.password_required,
-          minLength: {
-            value: 6,
-            message: t.messages.password_min_length,
-          },
+          validate: validatePassword,
+          // minLength: {
+          //   value: 6,
+          //   message: t.messages.password_min_length,
+          // },
           maxLength: {
             value: 20,
             message: t.messages.password_max_length,
           },
-          pattern: {
-            value: passwordValidation,
-            message: t.messages.password_validate_message,
-          },
+          // pattern: {
+          //   value: passwordValidation,
+          //   message: t.messages.password_validate_message,
+          // },
         })}
         label={t.signin.password}
         placeholder={t.signin.password}

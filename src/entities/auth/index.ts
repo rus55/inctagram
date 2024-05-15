@@ -4,6 +4,7 @@ export {
   useRegistrationMutation,
   useRegistrationConfirmationMutation,
   useLoginMutation,
+  useLoginAdminMutation,
   useSendCaptchaMutation,
   useCreateNewPasswordMutation,
   useValidCodeMutation,

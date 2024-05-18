@@ -20,11 +20,13 @@ import {
 } from '@/widgets/profileSettings/devices/ui/CardsDevice/CardsDevice'
 
 const Component = () => {
+  const { t } = useTranslation()
+
   const { accessToken } = useAuth()
   const { data, isLoading, error } = useGetDevicesQuery({ accessToken })
   const [deleteDevice, { isLoading: deleteLoadingAll, error: deleteErrorAll }] =
     useDeleteAllMutation()
-  const { t } = useTranslation()
+
   const [deleteSessionDevice, { isLoading: deleteLoading, error: deleteError }] =
     useDeleteSessionMutation()
   const [sortedDevices, setSortedDevices] = useState<Device[]>([])

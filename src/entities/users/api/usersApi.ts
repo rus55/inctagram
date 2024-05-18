@@ -8,7 +8,7 @@ export const usersApi = createApi({
   tagTypes: ['Users'],
   endpoints: builder => ({
     getUsers: builder.mutation({
-      query: ({ data, accessToken }) => {
+      query: data => {
         const authHeader = 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')
 
         return {

@@ -32,7 +32,7 @@ export const UserList: FC = () => {
       statusFilter: UserBlockStatus.ALL,
     }
 
-    data({ data: initObjectUsers, accessToken })
+    data(initObjectUsers)
       .unwrap()
       .then(res => {
         setUsers(res)

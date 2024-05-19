@@ -1,9 +1,11 @@
 import { FC, useEffect, useState } from 'react'
 
+import s from './UserList.module.scss'
+
 import { useGetUsersMutation } from '@/entities/users/api/usersApi'
-import { Input, OptionsType, SelectCustom } from '@/shared/components'
-import Container from '@/shared/components/container/container'
-import { useAuth } from '@/shared/lib/hooks/useAuth'
+import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
+import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
+import { useTranslation } from '@/shared/lib'
 
 export enum SortDirection {
   DESC = 'desc',
@@ -17,39 +19,90 @@ export enum UserBlockStatus {
 }
 
 export const UserList: FC = () => {
-  const { accessToken } = useAuth()
+  const { t } = useTranslation()
 
-  const [users, setUsers] = useState<UsersResponse | null>(null)
+  const [users, setUsers] = useState<User[]>([])
+  const [valuePagination, setValuePagination] = useState<PaginationModel | null>(null)
+  const [currentPage, setCurrentPage] = useState<number | string>(1)
+  const [pageSize, setPageSize] = useState<number>(10)
   const [data] = useGetUsersMutation()
+
+  const onPageSizeChange = (value: number) => {
+    setPageSize(value)
+  }
+
+  const onCurrentPageChange = (value: number | string) => {
+    setCurrentPage(value)
+  }
 
   useEffect(() => {
     const initObjectUsers: GetUsersType = {
-      pageSize: 10,
-      pageNumber: 1,
+      pageSize,
+      pageNumber: currentPage as number,
       sortBy: 'createdAt',
       sortDirection: SortDirection.DESC,
-      searchTerm: 'userName',
+      searchTerm: '',
       statusFilter: UserBlockStatus.ALL,
     }
 
     data(initObjectUsers)
       .unwrap()
       .then(res => {
-        setUsers(res)
+        setUsers(res.data.getUsers.users)
+        setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.log(er))
-  }, [])
+  }, [data, pageSize, currentPage])
 
   const options: OptionsType[] = [
-    { label: 'Not selected', value: 'Not selected' },
-    { label: 'Blocked', value: 'Blocked' },
-    { label: 'Not blocked', value: 'Not blocked' },
+    { label: t.user_list.not_selected, value: t.user_list.not_selected },
+    { label: t.user_list.blocked, value: t.user_list.blocked },
+    { label: t.user_list.not_blocked, value: t.user_list.not_blocked },
   ]
 
   return (
-    <Container>
-      <Input type={'search'} />
-      <SelectCustom options={options} />
-    </Container>
+    <div>
+      <div className={s.panelSearchAndSort}>
+        <div className={s.search}>
+          <Input placeholder="Search" type={'search'} />
+        </div>
+        <div className={s.select}>
+          <SelectCustom defaultValue={options[0].value} options={options} />
+        </div>
+      </div>
+      <table className={s.table}>
+        <tbody>
+          <tr>
+            <th>{t.user_list.id}</th>
+            <th>{t.user_list.name}</th>
+            <th>{t.user_list.profile}</th>
+            <th>{t.user_list.date}</th>
+          </tr>
+          {users.map((user: User) => (
+            <tr key={user.id}>
+              <td className="flex">
+                {user.userBan && <BlockIcon className="mr-2" />} {user.id}
+              </td>
+              <td>{user.userName}</td>
+              <td>{user.profile.userName}</td>
+              <td>{new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Pagination
+        totalCount={valuePagination?.totalCount}
+        currentPage={currentPage as number}
+        pageSize={pageSize}
+        onPageSizeChange={onPageSizeChange}
+        onCurrentPageChange={onCurrentPageChange}
+        options={[
+          { label: '10', value: '10' },
+          { label: '20', value: '20' },
+          { label: '30', value: '30' },
+        ]}
+        portionValue={pageSize.toString()}
+      />
+    </div>
   )
 }

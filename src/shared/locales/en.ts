@@ -273,5 +273,16 @@ export const en = {
   payment_type: 'Payment Type',
   show: 'Show',
   on_page: 'on page',
+
+  user_list: {
+    id: 'User ID',
+    name: 'Username',
+    profile: 'Profile link',
+    date: 'Date added',
+
+    not_selected: 'Not Selected',
+    blocked: 'Blocked',
+    not_blocked: 'Not Blocked',
+  },
 }
 export type LangType = typeof en

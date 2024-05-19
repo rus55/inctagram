@@ -1,21 +1,12 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
-
-import { clsx } from 'clsx'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
-import s from './HeaderAdmin.module.scss'
-
-import { useLogOutMutation } from '@/entities/auth'
-import { BookMarkIcon, FavoritesIcon, LogOutIcon, StatisticsIcon } from '@/shared/assets'
-import { ProfileSettings } from '@/shared/assets/icons/ProfileSettings'
-import { Button, CustomDropdown, CustomDropdownItem, Typography } from '@/shared/components'
-import { NotificationBell } from '@/shared/components/notificatification-bell'
-import { useTranslation } from '@/shared/lib'
-import { useAdmin } from '@/shared/lib/hooks/useAdmin'
-import { useAuth } from '@/shared/lib/hooks/useAuth'
-import { DropDownNotification } from '@/widgets/dropDownNotification'
-import { LangSelectWidget } from '@/widgets/langSelect'
+import {useLogOutMutation} from '@/entities/auth'
+import {useTranslation} from '@/shared/lib'
+import {useAdmin} from '@/shared/lib/hooks/useAdmin'
+import {useAuth} from '@/shared/lib/hooks/useAuth'
+import {LangSelectWidget} from '@/widgets/langSelect'
 
 export const HeaderAdmin: FC = () => {
   const [toggle, setToggle] = useState(false)
@@ -25,8 +16,6 @@ export const HeaderAdmin: FC = () => {
   const [logOut] = useLogOutMutation()
 
   const isAdmin = useAdmin()
-  const { isAuth, accessToken } = useAuth()
-  const router = useRouter()
 
   useEffect(() => {
     const handler = (e: MouseEvent): void => {

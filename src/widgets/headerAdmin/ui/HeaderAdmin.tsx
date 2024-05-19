@@ -1,12 +1,13 @@
-import React, {FC, useEffect, useRef, useState} from 'react'
-import Link from 'next/link'
-import {useRouter} from 'next/router'
+import React, { FC, useEffect, useRef, useState } from 'react'
 
-import {useLogOutMutation} from '@/entities/auth'
-import {useTranslation} from '@/shared/lib'
-import {useAdmin} from '@/shared/lib/hooks/useAdmin'
-import {useAuth} from '@/shared/lib/hooks/useAuth'
-import {LangSelectWidget} from '@/widgets/langSelect'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import { useLogOutMutation } from '@/entities/auth'
+import { useTranslation } from '@/shared/lib'
+import { useAdmin } from '@/shared/lib/hooks/useAdmin'
+import { useAuth } from '@/shared/lib/hooks/useAuth'
+import { LangSelectWidget } from '@/widgets/langSelect'
 
 export const HeaderAdmin: FC = () => {
   const [toggle, setToggle] = useState(false)

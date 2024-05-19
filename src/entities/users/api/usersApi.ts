@@ -1,21 +1,22 @@
-import { createApi } from '@reduxjs/toolkit/dist/query/react';
-import { baseQueryWithReauth } from '@/entities/posts';
+import { createApi } from '@reduxjs/toolkit/dist/query/react'
+
+import { baseQueryWithReauth } from '@/entities/posts'
 
 export const usersApi = createApi({
-    reducerPath: 'apiUsers',
-    baseQuery: baseQueryWithReauth,
-    tagTypes: ['Users'],
-    endpoints: (builder) => ({
-        getUsers: builder.mutation({
-            query: (data) => ({
-                url: '/graphql',
-                method: 'POST',
-                headers: {
-                    Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    query: `
+  reducerPath: 'apiUsers',
+  baseQuery: baseQueryWithReauth,
+  tagTypes: ['Users'],
+  endpoints: builder => ({
+    getUsers: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
             query {
               getUsers(
                 pageSize: ${data.pageSize},
@@ -30,10 +31,10 @@ export const usersApi = createApi({
               }
             }
           `,
-                }),
-            }),
         }),
+      }),
     }),
-});
+  }),
+})
 
-export const { useGetUsersMutation } = usersApi;
+export const { useGetUsersMutation } = usersApi

@@ -22,15 +22,18 @@ import {
 
 import s from './SidebarAdmin.module.scss'
 
-import { useTranslation } from '@/shared/lib'
+import {useAppDispatch, useAppSelector, useTranslation} from '@/shared/lib'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
 import { LogOutButton } from '@/widgets/logOut'
+import {adminSlice} from "@/app/services/admin-slice";
 
 export const SidebarAdmin = () => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { isOpen } = useModal()
 
+const onClickHandler = ()=>{
+  localStorage.removeItem('isAdmin');
+}
   return (
     <div className={s.box}>
       <div className={s.contentBox}>
@@ -76,7 +79,7 @@ export const SidebarAdmin = () => {
         <div className={s.largeMargin}></div>
         <ul>
           <LogOutButton>
-            <li className={s.content}>
+            <li className={s.content} onClick={onClickHandler}>
               <LogOutIcon /> {t.sidebar.log_out}
             </li>
           </LogOutButton>

@@ -14,6 +14,7 @@ export const LogOutWidget: FC<{ onClose: () => void }> = ({ onClose }) => {
   const { email } = useAppSelector(selectAuthUser)
   const { accessToken } = useAuth()
   const router = useRouter()
+  const isAdmin = (localStorage.getItem('isAdmin'))
 
   return (
     <div
@@ -36,7 +37,7 @@ export const LogOutWidget: FC<{ onClose: () => void }> = ({ onClose }) => {
           <hr className="w full border-dark-100 " />
           <div className="px-2 sm:px-6 mt-8">
             <p className="text-light-100 text-center sm:text-left mb-5">
-              {t.logout.message} {email}?
+              {isAdmin ? 'Вы хотите выйти из админки ? ' :  `${t.logout.message} ${email}?`}
             </p>
             <div className="w-full flex justify-center sm:justify-end gap-5">
               <button

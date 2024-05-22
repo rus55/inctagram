@@ -34,7 +34,24 @@ export const usersApi = createApi({
         }),
       }),
     }),
+    deleteUser: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            mutation {
+              removeUser(userId : ${data.userId}) 
+            }
+          `,
+        }),
+      }),
+    }),
   }),
 })
 
-export const { useGetUsersMutation } = usersApi
+export const { useGetUsersMutation,useDeleteUserMutation } = usersApi

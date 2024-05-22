@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react'
 
-import s from './UserList.module.scss'
+import s from './DeleteUser.module.scss'
 
-import {useDeleteUserMutation, useGetUsersMutation} from '@/entities/users/api/usersApi'
+import { useGetUsersMutation } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
-import {useFetchLoader, useTranslation} from '@/shared/lib'
+import { useTranslation } from '@/shared/lib'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { ModalAction } from "@/widgets/superAdmin/userList/ModalAction";
 
@@ -20,14 +20,13 @@ export enum UserBlockStatus {
   UNBLOCKED = 'UNBLOCKED',
 }
 
-export const UserList: FC = () => {
+export const DeleteUser: FC = () => {
   const { t } = useTranslation()
 
   const [users, setUsers] = useState<User[]>([])
   const [valuePagination, setValuePagination] = useState<PaginationModel | null>(null)
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
-  const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
 
   const [data] = useGetUsersMutation()
 
@@ -56,14 +55,14 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.log(er))
-  }, [data, pageSize, currentPage,isSuccess])
+  }, [data, pageSize, currentPage])
 
   const options: OptionsType[] = [
     { label: t.user_list.not_selected, value: t.user_list.not_selected },
     { label: t.user_list.blocked, value: t.user_list.blocked },
     { label: t.user_list.not_blocked, value: t.user_list.not_blocked },
   ]
-useFetchLoader(isLoading)
+
   return (
     <div>
       <div className={s.panelSearchAndSort}>
@@ -91,7 +90,7 @@ useFetchLoader(isLoading)
               <td>{user.profile.userName}</td>
               <td className="flex justify-between">
                 {new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}
-                {<ModalAction trigger={<EllipsisIcon className={s.ellipsis}/>} deleteUser={deleteUser}  userId={user.id}/>}
+                {<ModalAction trigger={<EllipsisIcon className={s.ellipsis}/>} />}
               </td>
             </tr>
           ))}

@@ -1,31 +1,13 @@
-import { clsx } from 'clsx'
+import {clsx} from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
-import {
-  BookMarkIcon,
-  CreateIcon,
-  CreatesIcon,
-  FavoritesIcon,
-  HomesIcon,
-  IconBxHomeAlt,
-  IconUser,
-  IconUser2,
-  LogOutIcon,
-  MessangersIcon,
-  MessengerIcon,
-  SearchIcon,
-  StatisticsIcon,
-  CardsIcon,
-  PostIcon,
-} from '../../assets'
+import {CardsIcon, IconUser, IconUser2, LogOutIcon, MessangersIcon, PostIcon, StatisticsIcon,} from '../../assets'
 
 import s from './SidebarAdmin.module.scss'
 
-import {useAppDispatch, useAppSelector, useTranslation} from '@/shared/lib'
-import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
-import { LogOutButton } from '@/widgets/logOut'
-import {adminSlice} from "@/app/services/admin-slice";
+import {useTranslation} from '@/shared/lib'
+import {LogOutButton} from '@/widgets/logOut'
 
 export const SidebarAdmin = () => {
   const router = useRouter()

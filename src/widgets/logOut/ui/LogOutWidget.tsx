@@ -14,7 +14,8 @@ export const LogOutWidget: FC<{ onClose: () => void }> = ({ onClose }) => {
   const { email } = useAppSelector(selectAuthUser)
   const { accessToken } = useAuth()
   const router = useRouter()
-  const isAdmin = (localStorage.getItem('isAdmin'))
+
+  const isAdmin = useAppSelector((store) => store.adminSlice.isAdmin);
 
   return (
     <div

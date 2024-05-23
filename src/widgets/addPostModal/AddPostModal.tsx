@@ -168,7 +168,7 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
   const handleInteractOutsideOfCrop = (event: Event) => {
     event.preventDefault()
     imageSrc && setCloseCropModal(true)
-    isAddedPhoto && setCloseCropModal(true)
+    isAddedPhoto && modalPost && setCloseCropModal(true)
   }
 
   const draftPhotoHandler = () => {

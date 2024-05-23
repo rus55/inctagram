@@ -19,7 +19,7 @@ const useIndexedDB = (
   dbVersion: number = 1
 ): UseIndexedDBProps => {
   const [db, setDb] = useState<IDBDatabase | null>(null)
-  const [isAddedPhoto, setIsAddedPhoto] = useState<boolean>(false)
+  const [isAddedPhoto, setIsAddedPhoto] = useState<boolean>(true)
 
   useEffect(() => {
     const request = indexedDB.open(dbName, dbVersion)

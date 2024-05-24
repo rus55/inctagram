@@ -4,10 +4,10 @@ import s from './DeleteUser.module.scss'
 
 import { useGetUsersMutation } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
+import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
 import { useTranslation } from '@/shared/lib'
-import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
-import { ModalAction } from "@/widgets/superAdmin/userList/ModalAction";
+import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export enum SortDirection {
   DESC = 'desc',
@@ -79,7 +79,7 @@ export const DeleteUser: FC = () => {
             <th>{t.user_list.id}</th>
             <th>{t.user_list.name}</th>
             <th>{t.user_list.profile}</th>
-            <th style={{width: 450}}>{t.user_list.date}</th>
+            <th style={{ width: 450 }}>{t.user_list.date}</th>
           </tr>
           {users.map((user: User) => (
             <tr key={user.id}>
@@ -90,7 +90,7 @@ export const DeleteUser: FC = () => {
               <td>{user.profile.userName}</td>
               <td className="flex justify-between">
                 {new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}
-                {<ModalAction trigger={<EllipsisIcon className={s.ellipsis}/>} />}
+                {<ModalAction trigger={<EllipsisIcon className={s.ellipsis} />} />}
               </td>
             </tr>
           ))}

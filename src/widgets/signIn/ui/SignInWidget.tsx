@@ -1,5 +1,3 @@
-import { log } from 'console'
-
 import { FC, useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -16,7 +14,6 @@ import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
 import { Button } from '@/shared/components'
 import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
-import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
 
@@ -37,14 +34,15 @@ export const SignInWidget: FC = () => {
   const { isClient } = useClient()
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
-  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin ,data  }] =
+  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin, data }] =
     useLoginAdminMutation()
   const dispatch = useAppDispatch()
   const router = useRouter()
+
   console.log(loginAdminMutation)
   const onSubmit: SubmitHandler<IAuthInput> = data => {
-     loginAdminMutation({ email: data.email, password: data.password })
-     Login({ email: data.email, password: data.password })
+    loginAdminMutation({ email: data.email, password: data.password })
+    Login({ email: data.email, password: data.password })
   }
 
   const login = (url: string) => {

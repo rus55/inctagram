@@ -1,21 +1,30 @@
-import {clsx} from 'clsx'
+import { clsx } from 'clsx'
 import Link from 'next/link'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 
-import {CardsIcon, IconUser, IconUser2, LogOutIcon, MessangersIcon, PostIcon, StatisticsIcon,} from '../../assets'
+import {
+  CardsIcon,
+  IconUser,
+  IconUser2,
+  LogOutIcon,
+  MessangersIcon,
+  PostIcon,
+  StatisticsIcon,
+} from '../../assets'
 
 import s from './SidebarAdmin.module.scss'
 
-import {useTranslation} from '@/shared/lib'
-import {LogOutButton} from '@/widgets/logOut'
+import { useTranslation } from '@/shared/lib'
+import { LogOutButton } from '@/widgets/logOut'
 
 export const SidebarAdmin = () => {
   const router = useRouter()
   const { t } = useTranslation()
 
-const onClickHandler = ()=>{
-  localStorage.removeItem('isAdmin');
-}
+  const onClickHandler = () => {
+    localStorage.removeItem('isAdmin')
+  }
+
   return (
     <div className={s.box}>
       <div className={s.contentBox}>

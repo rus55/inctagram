@@ -10,7 +10,7 @@ import {
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
 
-import { Typography } from '../typography'
+import { options, Typography } from "../typography";
 
 import s from './dropdown.module.scss'
 
@@ -109,11 +109,13 @@ export const CustomDropdownItem = ({
 
 type DropdownItemWithIconProps = Omit<DropdownItemProps, 'children'> & {
   title: string
+  variant?: (typeof options)[number]
   icon?: ReactNode
 } & ComponentPropsWithoutRef<typeof DropdownMenu.Item>
 
 export const CustomDropdownItemWithIcon = ({
   title,
+  variant,
   icon,
   onSelect,
   disabled,
@@ -136,7 +138,7 @@ export const CustomDropdownItemWithIcon = ({
       {...rest}
     >
       <div className={classNames.icon}>{icon}</div>
-      <Typography variant={'large'}>{title}</Typography>
+      <Typography variant={variant ?? 'large'}>{title}</Typography>
     </DropdownMenu.Item>
   )
 }

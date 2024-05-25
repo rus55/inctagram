@@ -283,6 +283,15 @@ export const en = {
     not_selected: 'Not Selected',
     blocked: 'Blocked',
     not_blocked: 'Not Blocked',
+
+    more: 'More information',
+    ban: 'Ban in the system',
+    delete_user: 'Delete user',
+    confirmation: 'Are you sure to delete user',
+
+    no: 'No',
+    yes: 'Yes'
+
   },
 }
 export type LangType = typeof en

@@ -3,9 +3,9 @@ import { Meta } from '@storybook/react'
 import { Sidebar } from './Sidebar'
 
 export default {
-  title: "Components/Sidebar",
-  component: Sidebar
-} as Meta<typeof Sidebar>;
+  title: 'Components/Sidebar',
+  component: Sidebar,
+} as Meta<typeof Sidebar>
 
 export const Default = {
   // @ts-ignore

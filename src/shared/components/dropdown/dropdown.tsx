@@ -10,7 +10,7 @@ import {
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
 
-import { options, Typography } from "../typography";
+import { options, Typography } from '../typography'
 
 import s from './dropdown.module.scss'
 

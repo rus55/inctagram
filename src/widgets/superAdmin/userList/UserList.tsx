@@ -1,13 +1,14 @@
-import { FC, useEffect, useState } from 'react'
+import React, { ChangeEventHandler, FC, useEffect, useMemo, useRef, useState } from 'react'
 
 import s from './UserList.module.scss'
 
-import {useDeleteUserMutation, useGetUsersMutation} from '@/entities/users/api/usersApi'
+import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
-import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
-import {useFetchLoader, useTranslation} from '@/shared/lib'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
-import { ModalAction } from "@/widgets/superAdmin/userList/ModalAction";
+import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
+import { useFetchLoader, useTranslation } from '@/shared/lib'
+import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
+import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export enum SortDirection {
   DESC = 'desc',
@@ -27,17 +28,10 @@ export const UserList: FC = () => {
   const [valuePagination, setValuePagination] = useState<PaginationModel | null>(null)
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
+  const [valueSearch, setValueSearch] = useState<string>('')
+
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
-
-  const [data] = useGetUsersMutation()
-
-  const onPageSizeChange = (value: number) => {
-    setPageSize(value)
-  }
-
-  const onCurrentPageChange = (value: number | string) => {
-    setCurrentPage(value)
-  }
+  const [data, { reset }] = useGetUsersMutation()
 
   useEffect(() => {
     const initObjectUsers: GetUsersType = {
@@ -45,7 +39,7 @@ export const UserList: FC = () => {
       pageNumber: currentPage as number,
       sortBy: 'createdAt',
       sortDirection: SortDirection.DESC,
-      searchTerm: '',
+      searchTerm: valueSearch,
       statusFilter: UserBlockStatus.ALL,
     }
 
@@ -56,19 +50,33 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.log(er))
-  }, [data, pageSize, currentPage,isSuccess])
+  }, [data, currentPage, isSuccess, valueSearch, pageSize])
+
+  const onDebounce = (value: string) => {
+    setValueSearch(value)
+  }
+
+  const onPageSizeChange = (value: number) => {
+    setPageSize(value)
+  }
+
+  const onCurrentPageChange = (value: number | string) => {
+    setCurrentPage(value)
+  }
 
   const options: OptionsType[] = [
     { label: t.user_list.not_selected, value: t.user_list.not_selected },
     { label: t.user_list.blocked, value: t.user_list.blocked },
     { label: t.user_list.not_blocked, value: t.user_list.not_blocked },
   ]
-useFetchLoader(isLoading)
+
+  useFetchLoader(isLoading)
+
   return (
     <div>
       <div className={s.panelSearchAndSort}>
         <div className={s.search}>
-          <Input placeholder="Search" type={'search'} />
+          <DebouncedInput callback={onDebounce} />
         </div>
         <div className={s.select}>
           <SelectCustom defaultValue={options[0].value} options={options} />
@@ -80,7 +88,7 @@ useFetchLoader(isLoading)
             <th>{t.user_list.id}</th>
             <th>{t.user_list.name}</th>
             <th>{t.user_list.profile}</th>
-            <th style={{width: 450}}>{t.user_list.date}</th>
+            <th style={{ width: 450 }}>{t.user_list.date}</th>
           </tr>
           {users.map((user: User) => (
             <tr key={user.id}>
@@ -91,7 +99,13 @@ useFetchLoader(isLoading)
               <td>{user.profile.userName}</td>
               <td className="flex justify-between">
                 {new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}
-                {<ModalAction trigger={<EllipsisIcon className={s.ellipsis}/>} deleteUser={deleteUser}  userId={user.id}/>}
+                {
+                  <ModalAction
+                    trigger={<EllipsisIcon className={s.ellipsis} />}
+                    deleteUser={deleteUser}
+                    userId={user.id}
+                  />
+                }
               </td>
             </tr>
           ))}

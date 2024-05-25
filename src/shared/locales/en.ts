@@ -290,8 +290,7 @@ export const en = {
     confirmation: 'Are you sure to delete user',
 
     no: 'No',
-    yes: 'Yes'
-
+    yes: 'Yes',
   },
 }
 export type LangType = typeof en

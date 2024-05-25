@@ -289,6 +289,6 @@ export const ru: LangType = {
     confirmation: 'Вы уверены, что хотите удалить пользователя',
 
     no: 'Нет',
-    yes: 'Да'
+    yes: 'Да',
   },
 }

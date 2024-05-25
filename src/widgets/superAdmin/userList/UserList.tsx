@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 
+import { useRouter } from 'next/router'
+
 import s from './UserList.module.scss'
 
 import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
@@ -8,9 +10,8 @@ import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { OptionsType, Pagination, SelectCustom } from '@/shared/components'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
 import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
+import { ModalDelete } from '@/widgets/superAdmin/userList/deleteUser/ModalDelete'
 import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
-import { ModalDelete } from "@/widgets/superAdmin/userList/deleteUser/ModalDelete";
-import { useRouter } from "next/router";
 
 export enum SortDirection {
   DESC = 'desc',
@@ -24,7 +25,7 @@ export enum UserBlockStatus {
 }
 
 export type ShowModalType = {
-  isShow: boolean,
+  isShow: boolean
   userId: number | null
   userName: string | null
 }
@@ -42,7 +43,7 @@ export const UserList: FC = () => {
   const [showModalDelete, setShowModalDelete] = useState<ShowModalType>({
     isShow: false,
     userId: null,
-    userName: null
+    userName: null,
   })
 
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
@@ -57,7 +58,7 @@ export const UserList: FC = () => {
   useEffect(() => {
     localStorage.setItem('lang', t.user_list.not_selected)
     setDefaultValue(localStorage.getItem('lang') as string)
-  }, [router.locale]);
+  }, [router.locale])
 
   useEffect(() => {
     const initObjectUsers: GetUsersType = {
@@ -90,25 +91,26 @@ export const UserList: FC = () => {
     setCurrentPage(value)
   }
 
-  const addValuesUser = ( id: number, name: string) => {
+  const addValuesUser = (id: number, name: string) => {
     setShowModalDelete({
       userId: id,
       userName: name,
-      isShow: true
+      isShow: true,
     })
   }
 
   const onDeleteUser = () => {
     const id = showModalDelete.userId
-    if (id) {
-      deleteUser({userId: id})
-    }
-    !isLoading && setShowModalDelete({
-      userId: null,
-      userName: null,
-      isShow: false
-    })
 
+    if (id) {
+      deleteUser({ userId: id })
+    }
+    !isLoading &&
+      setShowModalDelete({
+        userId: null,
+        userName: null,
+        isShow: false,
+      })
   }
 
   useFetchLoader(isLoading)
@@ -157,12 +159,13 @@ export const UserList: FC = () => {
           ))}
         </tbody>
       </table>
-       <ModalDelete
-         onDeleteUser={onDeleteUser}
-         isOpen={showModalDelete.isShow}
-         userName={showModalDelete.userName}
-         setShowModalDelete={setShowModalDelete}
-       />
+      <ModalDelete
+        onDeleteUser={onDeleteUser}
+        isOpen={showModalDelete.isShow}
+        userName={showModalDelete.userName}
+        setShowModalDelete={setShowModalDelete}
+      />
+
       <Pagination
         totalCount={valuePagination?.totalCount}
         currentPage={currentPage as number}

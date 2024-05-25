@@ -1,10 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react'
 
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { DeleteUserIcon } from '@/shared/assets/icons/DeleteUserIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { CustomDropdown, CustomDropdownItemWithIcon } from '@/shared/components'
-import { useTranslation } from "@/shared/lib";
+import { useTranslation } from '@/shared/lib'
 
 type Props = {
   trigger: ReactNode

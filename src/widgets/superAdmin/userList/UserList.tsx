@@ -76,7 +76,6 @@ export const UserList: FC = () => {
     <div>
       <div className={s.panelSearchAndSort}>
         <div className={s.search}>
-          {/*<Input value={valueInput} onChangeValue={onChangeInput} placeholder="Search" type={'search'} />*/}
           <DebouncedInput callback={onDebounce} />
         </div>
         <div className={s.select}>

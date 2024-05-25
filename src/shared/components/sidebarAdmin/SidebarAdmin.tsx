@@ -3,33 +3,27 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import {
-  BookMarkIcon,
-  CreateIcon,
-  CreatesIcon,
-  FavoritesIcon,
-  HomesIcon,
-  IconBxHomeAlt,
+  CardsIcon,
   IconUser,
   IconUser2,
   LogOutIcon,
   MessangersIcon,
-  MessengerIcon,
-  SearchIcon,
-  StatisticsIcon,
-  CardsIcon,
   PostIcon,
+  StatisticsIcon,
 } from '../../assets'
 
 import s from './SidebarAdmin.module.scss'
 
 import { useTranslation } from '@/shared/lib'
-import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
 import { LogOutButton } from '@/widgets/logOut'
 
 export const SidebarAdmin = () => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { isOpen } = useModal()
+
+  const onClickHandler = () => {
+    localStorage.removeItem('isAdmin')
+  }
 
   return (
     <div className={s.box}>
@@ -76,7 +70,7 @@ export const SidebarAdmin = () => {
         <div className={s.largeMargin}></div>
         <ul>
           <LogOutButton>
-            <li className={s.content}>
+            <li className={s.content} onClick={onClickHandler}>
               <LogOutIcon /> {t.sidebar.log_out}
             </li>
           </LogOutButton>

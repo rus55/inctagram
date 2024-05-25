@@ -1,5 +1,3 @@
-import { log } from 'console'
-
 import { FC, useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -16,7 +14,6 @@ import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
 import { Button } from '@/shared/components'
 import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
-import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
 
@@ -37,11 +34,12 @@ export const SignInWidget: FC = () => {
   const { isClient } = useClient()
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
-  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin }] =
+  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin, data }] =
     useLoginAdminMutation()
   const dispatch = useAppDispatch()
   const router = useRouter()
 
+  console.log(loginAdminMutation)
   const onSubmit: SubmitHandler<IAuthInput> = data => {
     loginAdminMutation({ email: data.email, password: data.password })
     Login({ email: data.email, password: data.password })
@@ -53,10 +51,12 @@ export const SignInWidget: FC = () => {
   }
 
   useEffect(() => {
-    dispatch(adminSlice.actions.isAdmin(isSuccessAdmin))
-    isSuccessAdmin && router.push('/superAdmin')
+    if (data?.data?.loginAdmin?.logged) {
+      dispatch(adminSlice.actions.isAdmin(true))
+      router.push('/superAdmin')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessAdmin])
+  }, [data])
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')
@@ -74,7 +74,7 @@ export const SignInWidget: FC = () => {
     isClient && trigger()
   }, [t.signin.error_message])
 
-  useFetchLoader(isLoading || socialsLoading)
+  useFetchLoader(isLoading || socialsLoading || isLoadingAdmin)
 
   return (
     <div className={styles.wrapper}>

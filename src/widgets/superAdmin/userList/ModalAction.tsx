@@ -1,20 +1,22 @@
-import { ReactNode, useEffect } from 'react'
+import { ReactNode } from 'react'
 
-import { useLoginMutation } from '@/entities/auth'
-import { useDeleteUserMutation } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { DeleteUserIcon } from '@/shared/assets/icons/DeleteUserIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { CustomDropdown, CustomDropdownItemWithIcon } from '@/shared/components'
+import { useTranslation } from '@/shared/lib'
 
 type Props = {
   trigger: ReactNode
   userId: number
-  deleteUser: any
+  userName: string
+  addValuesUser: (id: number, name: string) => void
 }
-export const ModalAction = ({ trigger, userId, deleteUser }: Props) => {
-  const handleDeleteUser = () => {
-    deleteUser({ userId: userId })
+export const ModalAction = ({ trigger, userId, userName, addValuesUser }: Props) => {
+  const { t } = useTranslation()
+
+  const addValuesForDeleteUser = () => {
+    addValuesUser(userId, userName)
   }
 
   return (
@@ -22,18 +24,18 @@ export const ModalAction = ({ trigger, userId, deleteUser }: Props) => {
       <CustomDropdownItemWithIcon
         variant={'regular_text_14'}
         icon={<DeleteUserIcon />}
-        title={'Delete User'}
-        onClick={handleDeleteUser}
+        title={t.user_list.delete_user}
+        onClick={addValuesForDeleteUser}
       />
       <CustomDropdownItemWithIcon
         variant={'regular_text_14'}
         icon={<BlockIcon />}
-        title={'Ban in the system'}
+        title={t.user_list.ban}
       />
       <CustomDropdownItemWithIcon
         variant={'regular_text_14'}
         icon={<EllipsisIcon />}
-        title={'More information'}
+        title={t.user_list.more}
       />
     </CustomDropdown>
   )

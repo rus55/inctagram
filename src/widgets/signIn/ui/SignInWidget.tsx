@@ -51,8 +51,7 @@ export const SignInWidget: FC = () => {
   useEffect(() => {
     dispatch(adminSlice.actions.isAdmin(isSuccessAdmin))
     isSuccessAdmin && router.push('/superAdmin')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessAdmin])
+  }, [isSuccessAdmin, router, dispatch])
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')

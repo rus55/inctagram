@@ -282,5 +282,13 @@ export const ru: LangType = {
     not_selected: 'Не выбрано',
     blocked: 'Заблокировано',
     not_blocked: 'Не заблокировано',
+
+    more: 'Подробнее',
+    ban: 'Заблокировать',
+    delete_user: 'Удалить пользователя',
+    confirmation: 'Вы уверены, что хотите удалить пользователя',
+
+    no: 'Нет',
+    yes: 'Да',
   },
 }

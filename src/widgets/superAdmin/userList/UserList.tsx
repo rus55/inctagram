@@ -15,13 +15,13 @@ import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export enum SortDirection {
   DESC = 'desc',
-  ASC = 'asc',
+  // ASC = 'asc',
 }
 
 export enum UserBlockStatus {
   ALL = 'ALL',
-  BLOCKED = 'BLOCKED',
-  UNBLOCKED = 'UNBLOCKED',
+  // BLOCKED = 'BLOCKED',
+  // UNBLOCKED = 'UNBLOCKED',
 }
 
 export type ShowModalType = {

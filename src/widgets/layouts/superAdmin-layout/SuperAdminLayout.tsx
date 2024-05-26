@@ -19,12 +19,8 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
   const isAdmin = useAppSelector(store => store.adminSlice.isAdmin)
 
   useEffect(() => {
-    if (isAdmin) router.push('/superAdmin')
+    isAdmin ? router.push('/superAdmin') : router.push('/signin')
   }, [isAdmin])
-
-  useEffect(() => {
-    if (!isAdmin) router.push('/signin')
-  }, [router, isAdmin])
 
   return (
     <div className={s.wrapper}>

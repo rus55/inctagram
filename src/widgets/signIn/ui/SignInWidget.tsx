@@ -1,5 +1,3 @@
-import { log } from 'console'
-
 import { FC, useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -16,7 +14,6 @@ import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
 import { Button } from '@/shared/components'
 import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
-import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
 
@@ -37,8 +34,7 @@ export const SignInWidget: FC = () => {
   const { isClient } = useClient()
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
-  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin }] =
-    useLoginAdminMutation()
+  const [loginAdminMutation, { isSuccess: isSuccessAdmin }] = useLoginAdminMutation()
   const dispatch = useAppDispatch()
   const router = useRouter()
 
@@ -60,7 +56,7 @@ export const SignInWidget: FC = () => {
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')
-  }, [isSuccess])
+  }, [isSuccess, router])
 
   useEffect(() => {
     error &&
@@ -68,11 +64,11 @@ export const SignInWidget: FC = () => {
         type: 'server',
         message: t.signin.error_message,
       })
-  }, [error])
+  }, [error, setError, t.signin.error_message])
 
   useEffect(() => {
     isClient && trigger()
-  }, [t.signin.error_message])
+  }, [t.signin.error_message, isClient, trigger])
 
   useFetchLoader(isLoading || socialsLoading)
 

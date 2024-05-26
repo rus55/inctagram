@@ -2,22 +2,22 @@ import { FC, useEffect, useState } from 'react'
 
 import s from './UserList.module.scss'
 
-import {useDeleteUserMutation, useGetUsersMutation} from '@/entities/users/api/usersApi'
+import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
-import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
-import {useFetchLoader, useTranslation} from '@/shared/lib'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
-import { ModalAction } from "@/widgets/superAdmin/userList/ModalAction";
+import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
+import { useFetchLoader, useTranslation } from '@/shared/lib'
+import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export enum SortDirection {
   DESC = 'desc',
-  ASC = 'asc',
+  // ASC = 'asc',
 }
 
 export enum UserBlockStatus {
   ALL = 'ALL',
-  BLOCKED = 'BLOCKED',
-  UNBLOCKED = 'UNBLOCKED',
+  // BLOCKED = 'BLOCKED',
+  // UNBLOCKED = 'UNBLOCKED',
 }
 
 export const UserList: FC = () => {
@@ -55,15 +55,17 @@ export const UserList: FC = () => {
         setUsers(res.data.getUsers.users)
         setValuePagination(res.data.getUsers.pagination)
       })
-      .catch(er => console.log(er))
-  }, [data, pageSize, currentPage,isSuccess])
+      .catch(er => console.error(er))
+  }, [data, pageSize, currentPage, isSuccess])
 
   const options: OptionsType[] = [
     { label: t.user_list.not_selected, value: t.user_list.not_selected },
     { label: t.user_list.blocked, value: t.user_list.blocked },
     { label: t.user_list.not_blocked, value: t.user_list.not_blocked },
   ]
-useFetchLoader(isLoading)
+
+  useFetchLoader(isLoading)
+
   return (
     <div>
       <div className={s.panelSearchAndSort}>
@@ -80,7 +82,7 @@ useFetchLoader(isLoading)
             <th>{t.user_list.id}</th>
             <th>{t.user_list.name}</th>
             <th>{t.user_list.profile}</th>
-            <th style={{width: 450}}>{t.user_list.date}</th>
+            <th style={{ width: 450 }}>{t.user_list.date}</th>
           </tr>
           {users.map((user: User) => (
             <tr key={user.id}>
@@ -91,7 +93,13 @@ useFetchLoader(isLoading)
               <td>{user.profile.userName}</td>
               <td className="flex justify-between">
                 {new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}
-                {<ModalAction trigger={<EllipsisIcon className={s.ellipsis}/>} deleteUser={deleteUser}  userId={user.id}/>}
+                {
+                  <ModalAction
+                    trigger={<EllipsisIcon className={s.ellipsis} />}
+                    deleteUser={deleteUser}
+                    userId={user.id}
+                  />
+                }
               </td>
             </tr>
           ))}

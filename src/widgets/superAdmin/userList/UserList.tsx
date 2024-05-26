@@ -58,7 +58,7 @@ export const UserList: FC = () => {
   useEffect(() => {
     localStorage.setItem('lang', t.user_list.not_selected)
     setDefaultValue(localStorage.getItem('lang') as string)
-  }, [router.locale])
+  }, [router.locale, t.user_list.not_selected])
 
   useEffect(() => {
     const initObjectUsers: GetUsersType = {
@@ -76,7 +76,7 @@ export const UserList: FC = () => {
         setUsers(res.data.getUsers.users)
         setValuePagination(res.data.getUsers.pagination)
       })
-      .catch(er => console.log(er))
+      .catch(er => console.error(er))
   }, [data, currentPage, isSuccess, valueSearch, pageSize])
 
   const onDebounce = (value: string) => {

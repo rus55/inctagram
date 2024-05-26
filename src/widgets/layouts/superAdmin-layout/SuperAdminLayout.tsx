@@ -20,7 +20,7 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (isAdmin) router.push('/superAdmin')
-  }, [isAdmin, router])
+  }, [isAdmin])
 
   useEffect(() => {
     if (!isAdmin) router.push('/signin')

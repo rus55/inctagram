@@ -6,6 +6,7 @@ export const usersApi = createApi({
   reducerPath: 'apiUsers',
   baseQuery: baseQueryWithReauth,
   tagTypes: ['Users'],
+  refetchOnMountOrArgChange: true,
   endpoints: builder => ({
     getUsers: builder.mutation({
       query: data => ({
@@ -23,7 +24,7 @@ export const usersApi = createApi({
                 pageNumber: ${data.pageNumber},
                 sortBy: "${data.sortBy}",
                 sortDirection: ${data.sortDirection},
-                searchTerm: "",
+                searchTerm: "${data.searchTerm}",
                 statusFilter: ${data.statusFilter}
               ) {
                 users {id, userName, email, createdAt, profile {id, userName, firstName, lastName, city, dateOfBirth, aboutMe, createdAt, avatars {url, width, height, fileSize}}, userBan {reason, createdAt}}
@@ -33,6 +34,7 @@ export const usersApi = createApi({
           `,
         }),
       }),
+      invalidatesTags: ['Users'],
     }),
     deleteUser: builder.mutation({
       query: data => ({

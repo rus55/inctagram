@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import React, { ChangeEventHandler, FC, useEffect, useMemo, useRef, useState } from 'react'
 
 import s from './UserList.module.scss'
 
@@ -7,17 +7,18 @@ import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { Input, OptionsType, Pagination, SelectCustom } from '@/shared/components'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
+import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
 import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export enum SortDirection {
   DESC = 'desc',
-  // ASC = 'asc',
+  ASC = 'asc',
 }
 
 export enum UserBlockStatus {
   ALL = 'ALL',
-  // BLOCKED = 'BLOCKED',
-  // UNBLOCKED = 'UNBLOCKED',
+  BLOCKED = 'BLOCKED',
+  UNBLOCKED = 'UNBLOCKED',
 }
 
 export const UserList: FC = () => {
@@ -27,17 +28,10 @@ export const UserList: FC = () => {
   const [valuePagination, setValuePagination] = useState<PaginationModel | null>(null)
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
+  const [valueSearch, setValueSearch] = useState<string>('')
+
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
-
-  const [data] = useGetUsersMutation()
-
-  const onPageSizeChange = (value: number) => {
-    setPageSize(value)
-  }
-
-  const onCurrentPageChange = (value: number | string) => {
-    setCurrentPage(value)
-  }
+  const [data, { reset }] = useGetUsersMutation()
 
   useEffect(() => {
     const initObjectUsers: GetUsersType = {
@@ -45,7 +39,7 @@ export const UserList: FC = () => {
       pageNumber: currentPage as number,
       sortBy: 'createdAt',
       sortDirection: SortDirection.DESC,
-      searchTerm: '',
+      searchTerm: valueSearch,
       statusFilter: UserBlockStatus.ALL,
     }
 
@@ -55,8 +49,20 @@ export const UserList: FC = () => {
         setUsers(res.data.getUsers.users)
         setValuePagination(res.data.getUsers.pagination)
       })
-      .catch(er => console.error(er))
-  }, [data, pageSize, currentPage, isSuccess])
+      .catch(er => console.log(er))
+  }, [data, currentPage, isSuccess, valueSearch, pageSize])
+
+  const onDebounce = (value: string) => {
+    setValueSearch(value)
+  }
+
+  const onPageSizeChange = (value: number) => {
+    setPageSize(value)
+  }
+
+  const onCurrentPageChange = (value: number | string) => {
+    setCurrentPage(value)
+  }
 
   const options: OptionsType[] = [
     { label: t.user_list.not_selected, value: t.user_list.not_selected },
@@ -70,7 +76,7 @@ export const UserList: FC = () => {
     <div>
       <div className={s.panelSearchAndSort}>
         <div className={s.search}>
-          <Input placeholder="Search" type={'search'} />
+          <DebouncedInput callback={onDebounce} />
         </div>
         <div className={s.select}>
           <SelectCustom defaultValue={options[0].value} options={options} />

@@ -15,23 +15,11 @@ type Props = {
 
 export const SuperAdminLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
+
   const isAdmin = useAppSelector(store => store.adminSlice.isAdmin)
 
   useEffect(() => {
-    // Set the isAdmin value in the localStorage
-    localStorage.setItem('isAdmin', JSON.stringify(isAdmin))
-
-    if (localStorage.getItem('isAdmin')) {
-      router.push('/superAdmin')
-    }
-  }, [isAdmin])
-
-  useEffect(() => {
-    const storedIsAdmin = localStorage.getItem('isAdmin')
-
-    if (!storedIsAdmin) {
-      router.push('/signin')
-    }
+    isAdmin ? router.push('/superAdmin') : router.push('/signin')
   }, [isAdmin])
 
   return (
@@ -43,6 +31,7 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
         <div className={s.sidebar}>
           <SidebarAdmin />
         </div>
+
         <div className={s.wrapperContent}>
           <Scroller>{children}</Scroller>
         </div>

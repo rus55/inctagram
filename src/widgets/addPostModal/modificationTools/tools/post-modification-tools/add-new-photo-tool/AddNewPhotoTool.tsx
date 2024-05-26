@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 
 import { clsx } from 'clsx'
+import Image from 'next/image'
 import { Scrollbar } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -70,7 +71,7 @@ export const AddNewPhotoTool: FC<Props> = ({ selectNewPhoto, closePostModal, set
                 return (
                   <SwiperSlide key={photo.id}>
                     <div className={s.imgs}>
-                      <img src={photo.image} alt={''} width={80} height={82} />
+                      <Image src={photo.image} alt={''} width={80} height={82} />
                       <div onClick={() => handleDeletePhoto(photo.id)}>
                         <DeleteIcon
                           style={{

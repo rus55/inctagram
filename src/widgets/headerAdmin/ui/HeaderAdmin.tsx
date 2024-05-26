@@ -1,8 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
+import { useLogOutMutation } from '@/entities/auth'
 import { useTranslation } from '@/shared/lib'
+import { useAdmin } from '@/shared/lib/hooks/useAdmin'
+import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { LangSelectWidget } from '@/widgets/langSelect'
 
 export const HeaderAdmin: FC = () => {
@@ -10,6 +14,9 @@ export const HeaderAdmin: FC = () => {
 
   const menuRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
+  const [logOut] = useLogOutMutation()
+
+  const isAdmin = useAdmin()
 
   useEffect(() => {
     const handler = (e: MouseEvent): void => {
@@ -28,9 +35,11 @@ export const HeaderAdmin: FC = () => {
       className={'header-three sticky-header w-full h-16 sticky lg:relative top-0 z-20 bg-dark-700'}
     >
       <div className="flex justify-between items-center h-16 max-[480px]:px-1 px-6 sm:px-16 py-3 border-b border-dark-300">
-        <Link href="/superAdmin" className="text-light-100 text-[26px] font-semibold">
-          InctagramSuperAdmin
-        </Link>
+        {isAdmin && (
+          <Link href="/superAdmin" className="text-light-100 text-[26px] font-semibold">
+            InctagramSuperAdmin
+          </Link>
+        )}
 
         <div className="flex justify-center items-center space-x-6">
           <LangSelectWidget />

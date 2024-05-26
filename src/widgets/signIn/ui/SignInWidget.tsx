@@ -34,12 +34,10 @@ export const SignInWidget: FC = () => {
   const { isClient } = useClient()
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
-  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin, data }] =
-    useLoginAdminMutation()
+  const [loginAdminMutation, { isSuccess: isSuccessAdmin }] = useLoginAdminMutation()
   const dispatch = useAppDispatch()
   const router = useRouter()
 
-  console.log(loginAdminMutation)
   const onSubmit: SubmitHandler<IAuthInput> = data => {
     loginAdminMutation({ email: data.email, password: data.password })
     Login({ email: data.email, password: data.password })
@@ -51,16 +49,14 @@ export const SignInWidget: FC = () => {
   }
 
   useEffect(() => {
-    if (data?.data?.loginAdmin?.logged) {
-      dispatch(adminSlice.actions.isAdmin(true))
-      router.push('/superAdmin')
-    }
+    dispatch(adminSlice.actions.isAdmin(isSuccessAdmin))
+    isSuccessAdmin && router.push('/superAdmin')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [isSuccessAdmin])
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')
-  }, [isSuccess])
+  }, [isSuccess, router])
 
   useEffect(() => {
     error &&
@@ -68,13 +64,13 @@ export const SignInWidget: FC = () => {
         type: 'server',
         message: t.signin.error_message,
       })
-  }, [error])
+  }, [error, setError, t.signin.error_message])
 
   useEffect(() => {
     isClient && trigger()
-  }, [t.signin.error_message])
+  }, [t.signin.error_message, isClient, trigger])
 
-  useFetchLoader(isLoading || socialsLoading || isLoadingAdmin)
+  useFetchLoader(isLoading || socialsLoading)
 
   return (
     <div className={styles.wrapper}>

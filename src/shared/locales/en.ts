@@ -273,5 +273,24 @@ export const en = {
   payment_type: 'Payment Type',
   show: 'Show',
   on_page: 'on page',
+
+  user_list: {
+    id: 'User ID',
+    name: 'Username',
+    profile: 'Profile link',
+    date: 'Date added',
+
+    not_selected: 'Not Selected',
+    blocked: 'Blocked',
+    not_blocked: 'Not Blocked',
+
+    more: 'More information',
+    ban: 'Ban in the system',
+    delete_user: 'Delete user',
+    confirmation: 'Are you sure to delete user',
+
+    no: 'No',
+    yes: 'Yes',
+  },
 }
 export type LangType = typeof en

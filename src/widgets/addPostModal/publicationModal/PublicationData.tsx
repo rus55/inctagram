@@ -70,7 +70,7 @@ export const PublicationData = ({ photos }: Props) => {
         <div className={s.textareaBox}>
           <div className={s.avaAndUserName}>
             {profileData?.avatars[0] ? (
-              <img src={profileData.avatars[0].url} className={s.avatar} alt={'postImg'} />
+              <Image src={profileData.avatars[0].url} className={s.avatar} alt={'postImg'} />
             ) : (
               <IconUser className={s.avatar} />
             )}

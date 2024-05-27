@@ -20,8 +20,8 @@ export enum SortDirection {
 
 export enum UserBlockStatus {
   ALL = 'ALL',
-  // BLOCKED = 'BLOCKED',
-  // UNBLOCKED = 'UNBLOCKED',
+  BLOCKED = 'BLOCKED',
+  UNBLOCKED = 'UNBLOCKED',
 }
 
 export type ShowModalType = {
@@ -55,6 +55,12 @@ export const UserList: FC = () => {
     { label: t.user_list.not_blocked, value: t.user_list.not_blocked },
   ]
 
+  const status = {
+    [t.user_list.not_selected]: UserBlockStatus.ALL,
+    [t.user_list.blocked]: UserBlockStatus.BLOCKED,
+    [t.user_list.not_blocked]: UserBlockStatus.UNBLOCKED,
+  }
+
   useEffect(() => {
     localStorage.setItem('lang', t.user_list.not_selected)
     setDefaultValue(localStorage.getItem('lang') as string)
@@ -67,7 +73,7 @@ export const UserList: FC = () => {
       sortBy: 'createdAt',
       sortDirection: SortDirection.DESC,
       searchTerm: valueSearch,
-      statusFilter: UserBlockStatus.ALL,
+      statusFilter: status[defaultValue],
     }
 
     data(initObjectUsers)
@@ -77,7 +83,7 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.error(er))
-  }, [data, currentPage, isSuccess, valueSearch, pageSize])
+  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue])
 
   const onDebounce = (value: string) => {
     setValueSearch(value)

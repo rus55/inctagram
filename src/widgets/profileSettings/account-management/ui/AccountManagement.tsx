@@ -91,7 +91,7 @@ const Component = () => {
   useEffect(() => {
     setValueType(addLangValue<ValueType>(t.lg as LangType, valueType))
     setValuePrice(addLangValue<ValuePriceType>(t.lg as LangType, valuePrice))
-  }, [router.locale])
+  }, [router.locale, t.lg, valuePrice, valueType])
 
   useEffect(() => {
     if (curData?.data.length > 0) {
@@ -99,7 +99,7 @@ const Component = () => {
     } else {
       setLocalStorageAndValue(t.account_type.personal as ValueType, valueLS.type, setValueType)
     }
-  }, [curData])
+  }, [curData, t.account_type.business, t.account_type.personal])
 
   return (
     <div className={styles.container}>

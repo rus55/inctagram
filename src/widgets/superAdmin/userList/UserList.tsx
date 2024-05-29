@@ -41,7 +41,13 @@ export const UserList: FC = () => {
   const [pageSize, setPageSize] = useState<number>(10)
   const [valueSearch, setValueSearch] = useState<string>('')
   const [defaultValue, setDefaultValue] = useState<statusType>(() => {
-    return (localStorage.getItem('lang') as statusType) ?? (t.user_list.not_selected as statusType)
+    if (typeof window !== 'undefined') {
+      return (
+        (localStorage.getItem('lang') as statusType) ?? (t.user_list.not_selected as statusType)
+      )
+    }
+
+    return t.user_list.not_selected as statusType
   })
   const [showModalDelete, setShowModalDelete] = useState<ShowModalType>({
     isShow: false,

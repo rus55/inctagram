@@ -11,6 +11,7 @@ import { OptionsType, Pagination, SelectCustom } from '@/shared/components'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
 import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
 import { ModalDelete } from '@/widgets/superAdmin/userList/deleteUser/ModalDelete'
+import { getValueByLang, statusType } from '@/widgets/superAdmin/userList/getValueByLang'
 import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export enum SortDirection {
@@ -39,7 +40,9 @@ export const UserList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const [valueSearch, setValueSearch] = useState<string>('')
-  const [defaultValue, setDefaultValue] = useState(t.user_list.not_selected)
+  const [defaultValue, setDefaultValue] = useState<statusType>(() => {
+    return (localStorage.getItem('lang') as statusType) ?? (t.user_list.not_selected as statusType)
+  })
   const [showModalDelete, setShowModalDelete] = useState<ShowModalType>({
     isShow: false,
     userId: null,
@@ -61,10 +64,16 @@ export const UserList: FC = () => {
     [t.user_list.not_blocked]: UserBlockStatus.UNBLOCKED,
   }
 
+  const onSelectChange = (value: statusType) => {
+    const currentValue = getValueByLang(value)
+
+    localStorage.setItem('lang', t.user_list[currentValue as keyof typeof t.user_list])
+    setDefaultValue(t.user_list[currentValue as keyof typeof t.user_list] as statusType)
+  }
+
   useEffect(() => {
-    localStorage.setItem('lang', t.user_list.not_selected)
-    setDefaultValue(localStorage.getItem('lang') as string)
-  }, [router.locale, t.user_list.not_selected])
+    onSelectChange(defaultValue)
+  }, [router.locale])
 
   useEffect(() => {
     const initObjectUsers: GetUsersType = {
@@ -73,7 +82,7 @@ export const UserList: FC = () => {
       sortBy: 'createdAt',
       sortDirection: SortDirection.DESC,
       searchTerm: valueSearch,
-      statusFilter: status[defaultValue],
+      statusFilter: status[defaultValue as string] as UserBlockStatus,
     }
 
     data(initObjectUsers)
@@ -129,9 +138,9 @@ export const UserList: FC = () => {
         </div>
         <div className={s.select}>
           <SelectCustom
-            value={defaultValue}
+            value={defaultValue as string}
             options={options}
-            onValueChange={(value: string) => setDefaultValue(value)}
+            onValueChange={onSelectChange}
           />
         </div>
       </div>

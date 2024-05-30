@@ -167,14 +167,12 @@ export const UserList: FC = () => {
               <td>{user.profile.userName}</td>
               <td className="flex justify-between">
                 {new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}
-                {
-                  <ModalAction
-                    trigger={<EllipsisIcon className={s.ellipsis} />}
-                    userId={user.id}
-                    userName={user.userName}
-                    addValuesUser={addValuesUser}
-                  />
-                }
+                <ModalAction
+                  trigger={<EllipsisIcon className={s.ellipsis} />}
+                  userId={user.id}
+                  userName={user.userName}
+                  addValuesUser={addValuesUser}
+                />
               </td>
             </tr>
           ))}

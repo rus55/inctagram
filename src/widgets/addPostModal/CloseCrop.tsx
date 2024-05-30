@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { Button, Typography } from '@/shared/components'
+// import { Button, Typography } from '@/shared/components'
 import { Modal } from '@/shared/components/modals'
 import { useTranslation } from '@/shared/lib'
+import {Button} from "@/shared/components/button";
+import {Typography} from "@/shared/components/typography";
 
 type Props = {
   openCloseCrop: boolean

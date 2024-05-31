@@ -18,7 +18,6 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
   const isAdmin = useAppSelector(store => store.adminSlice.isAdmin)
 
   useEffect(() => {
-    // Set the isAdmin value in the localStorage
     localStorage.setItem('isAdmin', JSON.stringify(isAdmin))
 
     if (localStorage.getItem('isAdmin')) {

@@ -24,6 +24,7 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const storedIsAdmin = localStorage.getItem('isAdmin')
+
     if (!storedIsAdmin) {
       router.push('/signin')
     }

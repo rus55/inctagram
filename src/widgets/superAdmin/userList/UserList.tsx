@@ -7,6 +7,9 @@ import s from './UserList.module.scss'
 import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
+import { Filter } from '@/shared/assets/icons/Filter'
+import { Polygon } from '@/shared/assets/icons/Polygon'
+import { PolygonUp } from '@/shared/assets/icons/PolygonUp'
 import { OptionsType, Pagination, SelectCustom } from '@/shared/components'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
 import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
@@ -16,7 +19,7 @@ import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export enum SortDirection {
   DESC = 'desc',
-  // ASC = 'asc',
+  ASC = 'asc',
 }
 
 export enum UserBlockStatus {
@@ -40,6 +43,7 @@ export const UserList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const [valueSearch, setValueSearch] = useState<string>('')
+  const [sort, setSort] = useState<SortDirection | 'default'>(SortDirection.DESC)
   const [defaultValue, setDefaultValue] = useState<statusType>(() => {
     if (typeof window !== 'undefined') {
       return (
@@ -86,7 +90,7 @@ export const UserList: FC = () => {
       pageSize,
       pageNumber: currentPage as number,
       sortBy: 'createdAt',
-      sortDirection: SortDirection.DESC,
+      sortDirection: sort === 'default' ? SortDirection.DESC : (sort as SortDirection),
       searchTerm: valueSearch,
       statusFilter: status[defaultValue as string] as UserBlockStatus,
     }
@@ -98,7 +102,7 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.error(er))
-  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue])
+  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort])
 
   const onDebounce = (value: string) => {
     setValueSearch(value)
@@ -118,6 +122,18 @@ export const UserList: FC = () => {
       userName: name,
       isShow: true,
     })
+  }
+
+  const onSortChange = () => {
+    if (sort === SortDirection.DESC) setSort(SortDirection.ASC)
+    if (sort === SortDirection.ASC) setSort('default')
+    if (sort === 'default') setSort(SortDirection.DESC)
+  }
+
+  const changeIcon = () => {
+    if (sort === SortDirection.DESC) return <Polygon />
+    if (sort === SortDirection.ASC) return <PolygonUp />
+    if (sort === 'default') return <Filter />
   }
 
   const onDeleteUser = () => {
@@ -154,9 +170,15 @@ export const UserList: FC = () => {
         <tbody>
           <tr>
             <th>{t.user_list.id}</th>
-            <th>{t.user_list.name}</th>
+            <th onClick={onSortChange} className="flex items-center gap-1 cursor-pointer">
+              {t.user_list.name}
+              {changeIcon()}
+            </th>
             <th>{t.user_list.profile}</th>
-            <th style={{ width: 450 }}>{t.user_list.date}</th>
+            <th onClick={onSortChange} className={s.date}>
+              {t.user_list.date}
+              {changeIcon()}
+            </th>
           </tr>
           {users.map((user: User) => (
             <tr key={user.id}>

@@ -24,6 +24,7 @@ export const SidebarAdmin = () => {
   const onClickHandler = () => {
     localStorage.removeItem('isAdmin')
   }
+
   return (
     <div className={s.box}>
       <div className={s.contentBox}>

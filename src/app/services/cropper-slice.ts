@@ -26,18 +26,22 @@ export const croppersSlice = createSlice({
   name: 'croppersSlice',
   reducers: {
     addNewPhoto: (state, action: PayloadAction<string>) => {
-      const newData: CropperState = {
-        id: v1(),
-        image: action.payload,
-        crop: { x: 0, y: 0 },
-        zoom: 1,
-        croppedAreaPixels: null,
-        filterClass: '',
-        aspect: 1,
-        originalImage: '',
-      }
+      const existingPhoto = state.find(cropper => cropper.image === action.payload)
 
-      state.unshift(newData)
+      if (!existingPhoto) {
+        const newData: CropperState = {
+          id: v1(),
+          image: action.payload,
+          crop: { x: 0, y: 0 },
+          zoom: 1,
+          croppedAreaPixels: null,
+          filterClass: '',
+          aspect: 1,
+          originalImage: '',
+        }
+
+        state.unshift(newData)
+      }
     },
     deletePhoto: (state, action: PayloadAction<string>) => {
       const imageIndex = state.findIndex(image => image.id === action.payload)

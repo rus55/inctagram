@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import s from './AddPostModal.module.scss'
 
@@ -16,6 +16,7 @@ import { Modal } from '@/shared/components/modals'
 import { useAppDispatch, useTranslation } from '@/shared/lib'
 import { useErrorText } from '@/shared/lib/hooks'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
+import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'
 import { AddPostModalData } from '@/widgets/addPostModal/addPostModalData'
 import { CloseCrop } from '@/widgets/addPostModal/CloseCrop'
 import { FilterPublicationModal } from '@/widgets/addPostModal/filterModal/FilterPublicatioModal'
@@ -46,16 +47,30 @@ export const readFile = (file: File) => {
   })
 }
 export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
+  const { t } = useTranslation()
+
   const [imageSrc, setImageSrc] = useState<string | null>(null)
   const [openCloseCrop, setCloseCropModal] = useState(false)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [modalPost, setModalPost] = useState<boolean>(false)
+
   const { isOpen, openModal, closeModal } = useModal()
+  const { addPhoto, deletePhotos, getAllPhotos, isAddedPhoto } = useIndexedDB(
+    'photoGalleryDB',
+    'photos'
+  )
   const { selectPhotoHandler, inputRef } = useGeneralInputRefForPost()
   const croppers = useAppSelector(state => state.croppersSlice)
   const { errorText, showErrorText } = useErrorText()
   const dispatch = useAppDispatch()
-  const { t } = useTranslation()
+
+  getAllPhotos(photos => {
+    if (photos.length) {
+      setIsDraft(true)
+    }
+  })
+
+  console.log(modalPost)
 
   const handleCloseFilter = () => {
     croppers.forEach(cropper => {
@@ -96,20 +111,27 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
       }
       let imageDataUrl: any = await readFile(file)
 
-      setImageSrc(imageDataUrl)
+      addPhoto(imageDataUrl)
+
       addNewCropper(imageDataUrl)
+      setImageSrc(imageDataUrl)
       setModalPost(true)
       setIsDraft(true)
+
+      if (inputRef.current) {
+        inputRef.current.value = ''
+      }
     }
   }
 
   const handleBack = () => {
     if (!croppers[0].originalImage) {
-      dispatch(removeAllPhotos())
       setImageSrc(null)
       setIsDraft(false)
       setModalPost(false)
     } else {
+      dispatch(removeAllPhotos())
+      deletePhotos()
       setModalPost(false)
       setIsDraft(false)
     }
@@ -146,15 +168,16 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
   const handleInteractOutsideOfCrop = (event: Event) => {
     event.preventDefault()
     imageSrc && setCloseCropModal(true)
+    isAddedPhoto && modalPost && setCloseCropModal(true)
   }
 
   const draftPhotoHandler = () => {
-    croppers.forEach(cropper => setImageSrc(cropper.image))
     setModalPost(true)
     setIsDraft(true)
   }
 
   const onDiscordHandle = () => {
+    deletePhotos()
     dispatch(removeAllPhotos())
     setImageSrc(null)
     setModalPost(false)
@@ -169,6 +192,25 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
     closePostModal()
     setCloseCropModal(false)
   }
+
+  const onButtonChangePhoto = () => {
+    selectPhotoHandler()
+    setModalPost(true)
+    closeModal()
+  }
+
+  useEffect(() => {
+    if (!croppers.length) {
+      getAllPhotos(photos => {
+        photos.forEach(item => {
+          if (item) {
+            setImageSrc(item.imageUrl)
+            setIsDraft(true)
+          }
+        })
+      })
+    }
+  }, [])
 
   return (
     <>
@@ -223,7 +265,7 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
                 <Button
                   variant={'primary'}
                   style={{ marginBottom: '24px', width: '168px' }}
-                  onClick={selectPhotoHandler}
+                  onClick={onButtonChangePhoto}
                 >
                   {t.post.select_button}
                 </Button>

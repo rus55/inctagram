@@ -21,15 +21,11 @@ export const HeaderWithSidebarLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
   const { isAuth } = useAuth()
   const { isClient } = useClient()
-  const { isAdmin } = useAdmin()
+  // const { isAdmin } = useAdmin()
 
   useEffect(() => {
-    if (isAdmin && !isAuth) router.push('/superAdmin')
-  }, [isAdmin, isAuth, router])
-
-  useEffect(() => {
-    if (!isAuth && isClient && !isAdmin) router.push('/signin')
-  }, [isAuth, isClient, router, isAdmin])
+    if (!isAuth && isClient) router.push('/signin')
+  }, [isAuth, isClient, router])
   if (!isAuth) return null
 
   return (

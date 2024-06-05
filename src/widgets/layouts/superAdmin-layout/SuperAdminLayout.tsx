@@ -1,6 +1,9 @@
 import { FC, ReactElement, ReactNode, useEffect } from 'react'
+
 import { useRouter } from 'next/router'
+
 import s from './SuperAdminLayout.module.scss'
+
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { SidebarAdmin } from '@/shared/components/sidebarAdmin/SidebarAdmin'
 import { useAppSelector } from '@/shared/lib'
@@ -9,26 +12,14 @@ import { HeaderAdmin } from '@/widgets/headerAdmin/ui/HeaderAdmin'
 type Props = {
   children: ReactNode
 }
-
 export const SuperAdminLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
-  const isAdmin = useAppSelector(store => store.adminSlice.isAdmin)
 
   useEffect(() => {
-    localStorage.setItem('isAdmin', JSON.stringify(isAdmin))
-
-    if (localStorage.getItem('isAdmin')) {
-      router.push('/superAdmin')
-    }
-  }, [isAdmin])
-
-  useEffect(() => {
-    const storedIsAdmin = localStorage.getItem('isAdmin')
-
-    if (!storedIsAdmin) {
+    if (!localStorage.getItem('isAdmin')) {
       router.push('/signin')
     }
-  }, [isAdmin])
+  }, [router])
 
   return (
     <div className={s.wrapper}>

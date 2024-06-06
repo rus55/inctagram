@@ -1,6 +1,9 @@
 import { FC, ReactElement, ReactNode, useEffect } from 'react'
+
 import { useRouter } from 'next/router'
+
 import s from './SuperAdminLayout.module.scss'
+
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { SidebarAdmin } from '@/shared/components/sidebarAdmin/SidebarAdmin'
 import { useAppSelector } from '@/shared/lib'

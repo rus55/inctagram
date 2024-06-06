@@ -5,16 +5,16 @@
 }
 
 .wrapper {
+  margin-top: 10px;
+  padding: 24px 0 0 20px;
   background-color: var(--color-dark-500);
   border: 1px solid var(--color-dark-300);
-  padding: 24px 0px 0 20px;
-  margin-top: 10px;
 }
 
 .wrapperWithFlex {
   display: flex;
-  justify-content: left;
   gap: 50px;
+  justify-content: left;
   padding-bottom: 24px;
 }
 
@@ -38,24 +38,25 @@
 }
 
 .payPalAndStripe {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  margin-top: 20px;
-
   position: absolute;
   right: 0;
 
-  Button {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+
+  margin-top: 20px;
+
+  button {
     padding: 0;
   }
 }
 
 .payPal {
-  background-color: var(--color-dark-500);
   padding: 10px;
-  border-radius: 7px;
+  background-color: var(--color-dark-500);
   border: 1px solid var(--color-dark-300);
+  border-radius: 7px;
 }
 
 .successButton {

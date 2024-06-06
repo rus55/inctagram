@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { clsx } from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -24,6 +26,7 @@ export const SidebarAdmin = () => {
   const onClickHandler = () => {
     localStorage.removeItem('isAdmin')
   }
+
   return (
     <div className={s.box}>
       <div className={s.contentBox}>

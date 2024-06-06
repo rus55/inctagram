@@ -18,6 +18,7 @@
   border: 1px solid var(--color-dark-500);
 
   th {
+    width: 250px;
     background-color: var(--color-dark-500);
   }
 
@@ -27,7 +28,16 @@
     text-align: left;
     border-bottom: 1px solid var(--color-dark-500);
   }
+  .date {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    width: 450px;
+  }
 }
+
+
 
 .ellipsis {
   cursor: pointer;

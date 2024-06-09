@@ -290,5 +290,7 @@ export const ru: LangType = {
 
     no: 'Нет',
     yes: 'Да',
+
+    backToUserList: 'Назад к списку пользователей',
   },
 }

@@ -15,8 +15,8 @@
 }
 
 .table {
-  width: 100%;
   border: 1px solid var(--color-dark-500);
+  border-collapse: collapse;
   th {
     width: 250px;
     background-color: var(--color-dark-500);

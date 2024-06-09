@@ -291,6 +291,8 @@ export const en = {
 
     no: 'No',
     yes: 'Yes',
+
+    backToUserList: 'Back to User List',
   },
 }
 export type LangType = typeof en

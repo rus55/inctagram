@@ -2,18 +2,15 @@ import { FC, ReactElement, ReactNode, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
-import s from './SuperAdminLayout.module.scss'
-
 import { Scroller } from '@/shared/components/scroller/Scroller'
-import { SidebarAdmin } from '@/shared/components/sidebarAdmin/SidebarAdmin'
-import { useAppSelector } from '@/shared/lib'
-import { HeaderAdmin } from '@/widgets/headerAdmin/ui/HeaderAdmin'
+import { HeaderAdmin } from '@/widgets/headerAdmin'
+import s from '@/widgets/layouts/superAdmin-layout/SuperAdminLayout.module.scss'
 
 type Props = {
   children: ReactNode
 }
 
-export const SuperAdminLayout: FC<Props> = ({ children }) => {
+export const InfoUserLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -28,9 +25,6 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
         <HeaderAdmin />
       </div>
       <main className={s.main}>
-        <div className={s.sidebar}>
-          <SidebarAdmin />
-        </div>
         <div className={s.wrapperContent}>
           <Scroller>{children}</Scroller>
         </div>
@@ -39,6 +33,6 @@ export const SuperAdminLayout: FC<Props> = ({ children }) => {
   )
 }
 
-export const getSuperAdminLayoutLayout = (page: ReactElement) => {
-  return <SuperAdminLayout>{page}</SuperAdminLayout>
+export const getInfoUserLayout = (page: ReactElement) => {
+  return <InfoUserLayout>{page}</InfoUserLayout>
 }

@@ -1,0 +1,17 @@
+.main {
+  width: 100%;
+  table-layout: fixed;
+  margin-top: 50px;
+
+  th {
+    border-bottom: 2px solid var(--color-dark-100);
+    width: 25%;
+    text-align: center;
+  }
+
+  .active {
+    color: var(--color-accent-500);
+    border-bottom: 2px solid var(--color-accent-500);
+  }
+}
+

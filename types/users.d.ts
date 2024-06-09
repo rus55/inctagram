@@ -62,3 +62,19 @@ type UsersResponse = {
   users: User
   pagination: PaginationModel
 }
+
+type ImagePost = {
+  id: number
+  createdAt: Date
+  url: string
+  width: number
+  height: number
+  fileSize: number
+}
+
+type Posts = {
+  pagesCount: number
+  pageSize: number
+  totalCount: number
+  items:ImagePost[]
+}

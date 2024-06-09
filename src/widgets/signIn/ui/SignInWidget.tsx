@@ -1,3 +1,5 @@
+import { log } from 'console'
+
 import { FC, useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -14,6 +16,7 @@ import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'
 import { Button } from '@/shared/components'
 import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
+import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useClient } from '@/shared/lib/hooks/useClient'
 import { IAuthInput } from '@/shared/types'
 
@@ -34,10 +37,12 @@ export const SignInWidget: FC = () => {
   const { isClient } = useClient()
   const { t } = useTranslation()
   const [Login, { isLoading, error, isSuccess }] = useLoginMutation()
-  const [loginAdminMutation, { isSuccess: isSuccessAdmin }] = useLoginAdminMutation()
+  const [loginAdminMutation, { isSuccess: isSuccessAdmin, isLoading: isLoadingAdmin, data }] =
+    useLoginAdminMutation()
   const dispatch = useAppDispatch()
   const router = useRouter()
 
+  console.log(loginAdminMutation)
   const onSubmit: SubmitHandler<IAuthInput> = data => {
     loginAdminMutation({ email: data.email, password: data.password })
     Login({ email: data.email, password: data.password })
@@ -49,13 +54,22 @@ export const SignInWidget: FC = () => {
   }
 
   useEffect(() => {
-    dispatch(adminSlice.actions.isAdmin(isSuccessAdmin))
-    isSuccessAdmin && router.push('/superAdmin')
-  }, [isSuccessAdmin, router, dispatch])
+    if (!router.query.superAdmin) {
+      localStorage.removeItem('isAdmin')
+    }
+  }, [router.query])
+  useEffect(() => {
+    if (data?.data?.loginAdmin?.logged) {
+      localStorage.setItem('isAdmin', JSON.stringify(true))
+      dispatch(adminSlice.actions.isAdmin(true))
+      router.push('/superAdmin')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, dispatch, router])
 
   useEffect(() => {
     isSuccess && router.push('/my-profile')
-  }, [isSuccess, router])
+  }, [isSuccess])
 
   useEffect(() => {
     error &&
@@ -63,13 +77,13 @@ export const SignInWidget: FC = () => {
         type: 'server',
         message: t.signin.error_message,
       })
-  }, [error, setError, t.signin.error_message])
+  }, [error])
 
   useEffect(() => {
     isClient && trigger()
-  }, [t.signin.error_message, isClient, trigger])
+  }, [t.signin.error_message])
 
-  useFetchLoader(isLoading || socialsLoading)
+  useFetchLoader(isLoading || socialsLoading || isLoadingAdmin)
 
   return (
     <div className={styles.wrapper}>

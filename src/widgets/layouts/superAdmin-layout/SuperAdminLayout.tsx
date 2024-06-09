@@ -12,26 +12,14 @@ import { HeaderAdmin } from '@/widgets/headerAdmin/ui/HeaderAdmin'
 type Props = {
   children: ReactNode
 }
-
 export const SuperAdminLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
-  const isAdmin = useAppSelector(store => store.adminSlice.isAdmin)
 
   useEffect(() => {
-    localStorage.setItem('isAdmin', JSON.stringify(isAdmin))
-
-    if (localStorage.getItem('isAdmin')) {
-      router.push('/superAdmin')
-    }
-  }, [isAdmin])
-
-  useEffect(() => {
-    const storedIsAdmin = localStorage.getItem('isAdmin')
-
-    if (!storedIsAdmin) {
+    if (!localStorage.getItem('isAdmin')) {
       router.push('/signin')
     }
-  }, [isAdmin])
+  }, [router])
 
   return (
     <div className={s.wrapper}>

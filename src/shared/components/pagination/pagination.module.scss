@@ -73,8 +73,8 @@
   all: unset;
 
   display: flex;
-  align-items: center;
   gap: 5px;
+  align-items: center;
 
   margin-top: 15px;
   margin-bottom: 15px;
@@ -83,7 +83,8 @@
 .selectWrapper {
   display: flex;
   gap: 10px;
-  white-space: nowrap;
   align-items: center;
   justify-content: center;
+
+  white-space: nowrap;
 }

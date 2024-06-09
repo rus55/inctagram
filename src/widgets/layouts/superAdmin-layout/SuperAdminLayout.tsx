@@ -12,7 +12,6 @@ import { HeaderAdmin } from '@/widgets/headerAdmin/ui/HeaderAdmin'
 type Props = {
   children: ReactNode
 }
-
 export const SuperAdminLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
 

@@ -5,26 +5,28 @@
 .select {
   width: 190px;
   margin-bottom: 4px;
-
 }
 
 .panelSearchAndSort {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .table {
+  width: 100%;
   border: 1px solid var(--color-dark-500);
-  border-collapse: collapse;
+
   th {
     width: 250px;
     background-color: var(--color-dark-500);
   }
-  th, td {
+
+  th,
+  td {
+    padding: 20px 30px;
     text-align: left;
     border-bottom: 1px solid var(--color-dark-500);
-    padding: 20px 30px;
   }
   .date {
     display: flex;
@@ -34,9 +36,6 @@
     width: 450px;
   }
 }
-
-
-
 .ellipsis {
   cursor: pointer;
 }

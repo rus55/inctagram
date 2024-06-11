@@ -42,7 +42,6 @@ export const SignInWidget: FC = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
-  console.log(loginAdminMutation)
   const onSubmit: SubmitHandler<IAuthInput> = data => {
     loginAdminMutation({ email: data.email, password: data.password })
     Login({ email: data.email, password: data.password })

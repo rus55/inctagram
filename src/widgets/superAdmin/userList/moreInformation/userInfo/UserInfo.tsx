@@ -1,18 +1,20 @@
+import Link from 'next/link'
+
 import { Typography } from '@/shared/components'
 import { AvatarSmallView } from '@/shared/components/avatarSmallView'
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { useTranslation } from '@/shared/lib'
 
 type Props = {
   avatar: string
   name: { first: string; last: string }
-  email: string
+  userName: string
   userId: number
   date: Date
 }
 
-export const UserInfo = ({ avatar, name, email, userId, date }: Props) => {
-  const router = useRouter()
+export const UserInfo = ({ avatar, name, userName, userId, date }: Props) => {
+  const { t } = useTranslation()
+
   return (
     <div>
       <div className="flex">
@@ -21,20 +23,20 @@ export const UserInfo = ({ avatar, name, email, userId, date }: Props) => {
           <Typography variant={'h1'}>
             {name.first} {name.last}
           </Typography>
-          <Link href={'/public-posts/2'}>
-            <Typography>{email}</Typography>
+          <Link href={`/public-posts/${userId}`}>
+            <Typography style={{ textDecoration: 'underline' }}>{userName}</Typography>
           </Link>
         </div>
       </div>
       <div className="flex gap-15 mt-13">
         <div>
-          <Typography className="text-dark-100">UserID</Typography>
+          <Typography className="text-dark-100">{t.user_info.usertId}</Typography>
           <Typography as={'span'} variant={'regular_text_16'}>
             {userId}
           </Typography>
         </div>
         <div>
-          <Typography className="text-dark-100">Profile Creation Date</Typography>
+          <Typography className="text-dark-100">{t.user_info.profileDate}</Typography>
           <Typography as={'span'} variant={'regular_text_16'}>
             {new Date(date).toLocaleDateString('ru-RU')}
           </Typography>

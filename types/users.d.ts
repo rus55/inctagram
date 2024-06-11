@@ -1,12 +1,12 @@
 enum SortDirection {
-  DESC = 'desc',
-  ASC = 'asc',
+  DESC = "desc",
+  ASC = "asc",
 }
 
 enum UserBlockStatus {
-  ALL = 'ALL',
-  BLOCKED = 'BLOCKED',
-  UNBLOCKED = 'UNBLOCKED',
+  ALL = "ALL",
+  BLOCKED = "BLOCKED",
+  UNBLOCKED = "UNBLOCKED",
 }
 
 type GetUsersType = {
@@ -76,5 +76,72 @@ type Posts = {
   pagesCount: number
   pageSize: number
   totalCount: number
-  items:ImagePost[]
+  items: ImagePost[]
+}
+
+enum SuperAdminStatus {
+  PENDING = PENDING,
+  ACTIVE = ACTIVE,
+  FINISHED = FINISHED,
+  DELETED = DELETED
+}
+
+enum SuperAdminType {
+  MONTHLY = MONTHLY,
+  DAY = DAY,
+  WEEKLY = WEEKLY
+}
+
+enum SuperAdminPaymentType {
+  STRIPE = STRIPE,
+  PAYPAL = PAYPAL,
+  CREDIT_CARD = CREDIT_CARD
+}
+
+enum SuperAdminCurrency {
+  USD = USD,
+  EUR = EUR
+}
+
+type SuperAdminPayments = {
+  id: number,
+  userId: number,
+  paymentMethod: SuperAdminPaymentType,
+  amount: number,
+  currency: SuperAdminCurrency,
+  createdAt: Date,
+  endDate: Date,
+  type: SuperAdminType
+}
+
+type SuperAdminItems = {
+  id: number
+  businessAccountId: number
+  status: SuperAdminStatus
+  dateOfPayment: Date
+  startDate: Date
+  endDate: Date
+  type: SuperAdminType
+  price: number
+  paymentType: SuperAdminPaymentType
+  payments: SuperAdminPayments[]
+}
+
+type SuperAdminPagePayments = {
+  pagesCount: number
+  page: number
+  pageSize: number
+  totalCount: number
+  items: SuperAdminItems[]
+}
+
+type FollowItems = {
+  id: number
+  userId: number
+  userName: string
+  createdAt: Date
+}
+
+type FollowContent = Omit<SuperAdminPagePayments, 'items'> & {
+  items: FollowItems[]
 }

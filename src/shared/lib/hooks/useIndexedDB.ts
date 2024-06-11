@@ -50,7 +50,6 @@ const useIndexedDB = (
     const request = objectStore.add({ imageUrl })
 
     request.onsuccess = () => {
-      console.log('Photo added to the database')
       setIsAddedPhoto(true)
     }
 
@@ -85,7 +84,6 @@ const useIndexedDB = (
     const request = objectStore.clear()
 
     request.onsuccess = () => {
-      console.log('Photos deleted from the database')
       setIsAddedPhoto(false)
     }
 

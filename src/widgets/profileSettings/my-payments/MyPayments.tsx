@@ -39,7 +39,7 @@ const Component = () => {
   }
 
   useEffect(() => {
-    setArray(getPageItems(currentPage as number, pageSize, payments || []))
+    setArray(getPageItems<IPayments>(currentPage as number, pageSize, payments || []))
   }, [payments, currentPage, pageSize])
 
   return (

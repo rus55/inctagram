@@ -267,6 +267,7 @@ export const ru: LangType = {
 
   date_of_payment: 'Дата оплаты',
   end_date_of_subscription: 'Дата окончания подписки',
+  amount: 'Сумма',
   price: 'Цена',
   subscription_type: 'Тип подписки',
   payment_type: 'Тип оплаты',
@@ -292,5 +293,17 @@ export const ru: LangType = {
     yes: 'Да',
 
     backToUserList: 'Назад к списку пользователей',
+  },
+  user_info: {
+    usertId: 'ID Пользователя',
+    profileDate: 'Дата создания профиля',
+    uploaded_photos: 'Загруженные фотография',
+    payments: 'Платежи',
+    followers: 'Подписчики',
+    following: 'Подписки',
+    userName: 'Имя пользователя',
+    profileLink: 'Ссылка на профиль',
+    subscriptionDate: 'Дата подписки',
+    not_found: 'Не найдено',
   },
 }

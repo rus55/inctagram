@@ -70,8 +70,6 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
     }
   })
 
-  console.log(modalPost)
-
   const handleCloseFilter = () => {
     croppers.forEach(cropper => {
       dispatch(

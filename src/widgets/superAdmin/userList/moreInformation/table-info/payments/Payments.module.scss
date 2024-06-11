@@ -1,0 +1,5 @@
+@use "src/shared/assets/mixins";
+
+.table {
+  @include mixins.table_styles
+}

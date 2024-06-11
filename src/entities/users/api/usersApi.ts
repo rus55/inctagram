@@ -96,6 +96,89 @@ export const usersApi = createApi({
         }),
       }),
     }),
+    getPaymentsByUser: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              getPaymentsByUser(
+                userId: ${data.userId},
+                pageSize: ${data.pageSize},
+                pageNumber: ${data.pageNumber},
+                sortBy: "${data.sortBy}",
+                sortDirection: ${data.sortDirection}
+              ) {
+                pagesCount, page, pageSize, totalCount, items {
+                  id, businessAccountId, status, dateOfPayment, startDate, endDate, type, price, paymentType, payments {
+                    id, userId, paymentMethod, amount, currency, createdAt, endDate, type
+                  }
+                }
+              }
+            }
+          `,
+        }),
+      }),
+    }),
+    getFollowers: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              getFollowers(
+                pageSize: ${data.pageSize}
+                pageNumber: ${data.pageNumber}
+                sortBy: "${data.sortBy}"
+                sortDirection: ${data.sortDirection}
+                userId: ${data.userId}
+              ) {
+                pagesCount, page, pageSize, totalCount, items {
+                  id, userId, userName, createdAt
+                }
+              }
+            }
+          `,
+        }),
+      }),
+    }),
+    getFollowing: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              getFollowing(
+                pageSize: ${data.pageSize}
+                pageNumber: ${data.pageNumber}
+                sortBy: "${data.sortBy}"
+                sortDirection: ${data.sortDirection}
+                userId: ${data.userId}
+              ) {
+                pagesCount, page, pageSize, totalCount, items {
+                  id, userId, userName, createdAt
+                }
+              }
+            }
+          `,
+        }),
+      }),
+    }),
   }),
 })
 
@@ -104,4 +187,7 @@ export const {
   useDeleteUserMutation,
   useGetUserMutation,
   useGetPostsByUserMutation,
+  useGetPaymentsByUserMutation,
+  useGetFollowersMutation,
+  useGetFollowingMutation,
 } = usersApi

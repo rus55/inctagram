@@ -1,12 +1,13 @@
 .main {
   width: 100%;
   table-layout: fixed;
-  margin-top: 50px;
+  margin: 50px 0 30px 0;
 
   th {
     border-bottom: 2px solid var(--color-dark-100);
     width: 25%;
     text-align: center;
+    cursor: pointer;
   }
 
   .active {

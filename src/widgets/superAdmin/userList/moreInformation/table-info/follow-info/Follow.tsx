@@ -21,7 +21,7 @@ export const Follow = ({ tab, userId }: Props) => {
   const [pageNumber, setPageNumber] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const [followContent, setFollowContent] = useState<FollowContent | null>(null)
-  const [items, setItems] = useState<FollowItems[] | []>([])
+  const [items, setItems] = useState<FollowItems[]>([])
 
   const [getFollowers, { isLoading: loadFollowers }] = useGetFollowersMutation()
   const [getFollowing, { isLoading: loadFollowing }] = useGetFollowingMutation()
@@ -44,34 +44,18 @@ export const Follow = ({ tab, userId }: Props) => {
       userId,
     }
 
-    if (tab === 'followers') {
-      getFollowers(initialObj)
-        .unwrap()
-        .then(res => {
-          !followContent && setFollowContent(res.data.getFollowers)
-        })
-    }
+    const func = tab === 'followers' ? getFollowers : getFollowing
 
-    if (tab === 'following') {
-      getFollowing(initialObj)
-        .unwrap()
-        .then(res => {
-          !followContent && setFollowContent(res.data.getFollowing)
-        })
-    }
+    func(initialObj)
+      .unwrap()
+      .then(res => {
+        !followContent && setFollowContent(res.data.getFollowers)
+      })
 
     const followItems = followContent?.items
 
     setItems(getPageItems<FollowItems>(pageNumber as number, pageSize, followItems || []))
-  }, [pageSize, pageNumber, setFollowContent, followContent, sort])
-
-  const onPageSizeChange = (value: number) => {
-    setPageSize(value)
-  }
-
-  const onPageNumberChange = (value: number | string) => {
-    setPageNumber(value)
-  }
+  },[pageSize, pageNumber, followContent, sort])
 
   return (
     <div>
@@ -111,8 +95,8 @@ export const Follow = ({ tab, userId }: Props) => {
             totalCount={followContent?.totalCount}
             currentPage={pageNumber as number}
             pageSize={pageSize}
-            onPageSizeChange={onPageSizeChange}
-            onCurrentPageChange={onPageNumberChange}
+            onPageSizeChange={setPageSize}
+            onCurrentPageChange={setPageNumber}
             options={[
               { label: '10', value: '10' },
               { label: '20', value: '20' },

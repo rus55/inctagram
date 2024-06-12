@@ -16,11 +16,11 @@ const MoreInformation: FC = () => {
 
   const [user, setUser] = useState<User | null>(null)
 
-  const [data, { isLoading }] = useGetUserMutation()
+  const [getUser, { isLoading }] = useGetUserMutation()
 
   useEffect(() => {
     if (userId) {
-      data(userId)
+      getUser(userId)
         .unwrap()
         .then(res => {
           setUser(res.data.getUser)
@@ -39,12 +39,12 @@ const MoreInformation: FC = () => {
       {user && (
         <>
           <UserInfo
-            avatar={user?.profile.avatars.url}
+            avatar={user.profile.avatars.url}
             name={{
-              first: user?.profile.firstName ?? '----',
-              last: user?.profile.lastName ?? '----',
+              first: user.profile.firstName ?? '----',
+              last: user.profile.lastName ?? '----',
             }}
-            userName={user?.userName}
+            userName={user.userName}
             userId={user.id}
             date={user.createdAt}
           />

@@ -297,7 +297,7 @@ export const ru: LangType = {
   user_info: {
     usertId: 'ID Пользователя',
     profileDate: 'Дата создания профиля',
-    uploaded_photos: 'Загруженные фотография',
+    uploaded_photos: 'Загруженные фотографии',
     payments: 'Платежи',
     followers: 'Подписчики',
     following: 'Подписки',

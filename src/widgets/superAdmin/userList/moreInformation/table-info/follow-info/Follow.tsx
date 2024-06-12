@@ -55,7 +55,7 @@ export const Follow = ({ tab, userId }: Props) => {
     const followItems = followContent?.items
 
     setItems(getPageItems<FollowItems>(pageNumber as number, pageSize, followItems || []))
-  }, [pageSize, pageNumber, followContent, sort])
+  },[pageSize, pageNumber, followContent, sort])
 
   return (
     <div>

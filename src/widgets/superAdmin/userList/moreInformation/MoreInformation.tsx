@@ -26,7 +26,7 @@ const MoreInformation: FC = () => {
           setUser(res.data.getUser)
         })
     }
-  }, [userId])
+  },[userId])
 
   useFetchLoader(isLoading)
 

@@ -268,6 +268,7 @@ export const en = {
 
   date_of_payment: 'Date of Payment',
   end_date_of_subscription: 'End date of subscription',
+  amount: 'Amount',
   price: 'Price',
   subscription_type: 'Subscription Type',
   payment_type: 'Payment Type',
@@ -291,6 +292,20 @@ export const en = {
 
     no: 'No',
     yes: 'Yes',
+
+    backToUserList: 'Back to User List',
+  },
+  user_info: {
+    usertId: 'User ID',
+    profileDate: 'Profile Creation Date',
+    uploaded_photos: 'Uploaded photos',
+    payments: 'Payments',
+    followers: 'Followers',
+    following: 'Following',
+    userName: 'UserName',
+    profileLink: 'Profile link',
+    subscriptionDate: 'Subscription Date',
+    not_found: 'Not found',
   },
 }
 export type LangType = typeof en

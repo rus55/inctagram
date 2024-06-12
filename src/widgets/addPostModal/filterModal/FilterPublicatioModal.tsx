@@ -141,7 +141,6 @@ export const FilterPublicationModal: FC<Props> = ({
     dispatch(removeAllPhotos())
     setImageScr(null)
     setIsDraft(false)
-    // setModalPost(true)
     closeCroppingModal()
     setCloseCrop(false)
   }
@@ -149,6 +148,8 @@ export const FilterPublicationModal: FC<Props> = ({
     if (mode === 'filter') {
       setMode('publish')
     } else {
+      deletePhotos()
+      setIsDraft(false)
       handlePublish()
     }
   }

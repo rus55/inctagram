@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 
+import Link from 'next/link'
+
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { DeleteUserIcon } from '@/shared/assets/icons/DeleteUserIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
@@ -32,11 +34,18 @@ export const ModalAction = ({ trigger, userId, userName, addValuesUser }: Props)
         icon={<BlockIcon />}
         title={t.user_list.ban}
       />
-      <CustomDropdownItemWithIcon
-        variant={'regular_text_14'}
-        icon={<EllipsisIcon />}
-        title={t.user_list.more}
-      />
+      <Link
+        href={{
+          pathname: '/more-information',
+          query: { userId: `${userId}` },
+        }}
+      >
+        <CustomDropdownItemWithIcon
+          variant={'regular_text_14'}
+          icon={<EllipsisIcon />}
+          title={t.user_list.more}
+        />
+      </Link>
     </CustomDropdown>
   )
 }

@@ -7,26 +7,14 @@ import s from './UserList.module.scss'
 import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
-import { Filter } from '@/shared/assets/icons/Filter'
-import { Polygon } from '@/shared/assets/icons/Polygon'
-import { PolygonUp } from '@/shared/assets/icons/PolygonUp'
 import { OptionsType, Pagination, SelectCustom } from '@/shared/components'
+import { UserBlockStatus, SortDirection } from '@/shared/constants/enum'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
+import { useSortBy } from '@/shared/lib/hooks/useSortBy'
 import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
 import { ModalDelete } from '@/widgets/superAdmin/userList/deleteUser/ModalDelete'
 import { getValueByLang, statusType } from '@/widgets/superAdmin/userList/getValueByLang'
 import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
-
-export enum SortDirection {
-  DESC = 'desc',
-  ASC = 'asc',
-}
-
-export enum UserBlockStatus {
-  ALL = 'ALL',
-  BLOCKED = 'BLOCKED',
-  UNBLOCKED = 'UNBLOCKED',
-}
 
 export type ShowModalType = {
   isShow: boolean
@@ -43,7 +31,6 @@ export const UserList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const [valueSearch, setValueSearch] = useState<string>('')
-  const [sort, setSort] = useState<SortDirection | 'default'>(SortDirection.DESC)
   const [defaultValue, setDefaultValue] = useState<statusType>(() => {
     if (typeof window !== 'undefined') {
       return (
@@ -61,6 +48,8 @@ export const UserList: FC = () => {
 
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
   const [data] = useGetUsersMutation()
+
+  const { icon, onSortChange, sort } = useSortBy()
 
   const options: OptionsType[] = [
     { label: t.user_list.not_selected, value: t.user_list.not_selected },
@@ -124,18 +113,6 @@ export const UserList: FC = () => {
     })
   }
 
-  const onSortChange = () => {
-    if (sort === SortDirection.DESC) setSort(SortDirection.ASC)
-    if (sort === SortDirection.ASC) setSort('default')
-    if (sort === 'default') setSort(SortDirection.DESC)
-  }
-
-  const changeIcon = () => {
-    if (sort === SortDirection.DESC) return <Polygon />
-    if (sort === SortDirection.ASC) return <PolygonUp />
-    if (sort === 'default') return <Filter />
-  }
-
   const onDeleteUser = () => {
     const id = showModalDelete.userId
 
@@ -172,12 +149,12 @@ export const UserList: FC = () => {
             <th>{t.user_list.id}</th>
             <th onClick={onSortChange} className="flex items-center gap-1 cursor-pointer">
               {t.user_list.name}
-              {changeIcon()}
+              {icon()}
             </th>
             <th>{t.user_list.profile}</th>
             <th onClick={onSortChange} className={s.date}>
               {t.user_list.date}
-              {changeIcon()}
+              {icon()}
             </th>
           </tr>
           {users.map((user: User) => (

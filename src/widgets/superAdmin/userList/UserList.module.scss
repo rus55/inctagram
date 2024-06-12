@@ -14,7 +14,6 @@
 }
 
 .table {
-  width: 100%;
   border: 1px solid var(--color-dark-500);
 
   th {
@@ -36,9 +35,6 @@
     width: 450px;
   }
 }
-
-
-
 .ellipsis {
   cursor: pointer;
 }

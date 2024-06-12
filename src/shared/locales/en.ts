@@ -296,7 +296,7 @@ export const en = {
     backToUserList: 'Back to User List',
   },
   user_info: {
-    usertId: 'UserID',
+    usertId: 'User ID',
     profileDate: 'Profile Creation Date',
     uploaded_photos: 'Uploaded photos',
     payments: 'Payments',

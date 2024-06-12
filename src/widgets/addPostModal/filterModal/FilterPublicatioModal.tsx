@@ -17,6 +17,7 @@ import {
 import { Modal } from '@/shared/components/modals'
 import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
+import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'
 import { CloseCrop } from '@/widgets/addPostModal/CloseCrop'
 import { FilteringData } from '@/widgets/addPostModal/filterModal/FilterData'
 import { PublicationData } from '@/widgets/addPostModal/publicationModal/PublicationData'
@@ -24,7 +25,6 @@ import { createImage } from '@/widgets/addProfilePhoto/addAvaWithoutRotation/crr
 
 type Props = {
   isOpenFilter: boolean
-
   closeFilter: () => void
   setImageScr: (img: string | null) => void
   closeCroppingModal: () => void
@@ -52,6 +52,7 @@ export const FilterPublicationModal: FC<Props> = ({
   const dispatch = useAppDispatch()
   const [isButtonDisabled, setButtonDisabled] = useState(false)
   const [flag, setFlag] = useState<boolean>(false)
+  const { deletePhotos } = useIndexedDB('photoGalleryDB', 'photos')
 
   useFetchLoader(isLoading || isPostLoading)
   if (!croppers.length || flag) {
@@ -136,9 +137,11 @@ export const FilterPublicationModal: FC<Props> = ({
     setCloseCrop(false)
   }
   const handleDiscordCrop = () => {
+    deletePhotos()
     dispatch(removeAllPhotos())
     setImageScr(null)
     setIsDraft(false)
+    // setModalPost(true)
     closeCroppingModal()
     setCloseCrop(false)
   }

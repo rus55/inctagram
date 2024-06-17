@@ -38,7 +38,7 @@ export type ShowModalBanType = {
     isShow: boolean
     userId: number | null
     userName: string | null
-    // reason: string | null
+    reason: string | null
 }
 
 export const UserList: FC = () => {
@@ -70,13 +70,13 @@ export const UserList: FC = () => {
         isShow: false,
         userId: null,
         userName: null,
-        // reason: null
+        reason: null
     })
 
     const [deleteUser, {isLoading, isSuccess}] = useDeleteUserMutation()
     const [banUser, {isLoading: isLoadingBan, isSuccess: isSuccessBan}] = useBanUserMutation()
     const [data] = useGetUsersMutation()
-
+    const [reason, setReason] = useState('')
     const options: OptionsType[] = [
         {label: t.user_list.not_selected, value: t.user_list.not_selected},
         {label: t.user_list.blocked, value: t.user_list.blocked},
@@ -138,12 +138,12 @@ export const UserList: FC = () => {
             isShow: true,
         })
     }
-    const valueBanUser = (id: number, name: string) => {
+    const valueBanUser = (id: number, name: string, reason: string) => {
         setShowModalBan({
             userId: id,
             userName: name,
-            isShow: true
-            // reason: reason
+            isShow: true,
+            reason: reason
         })
     }
 
@@ -174,16 +174,17 @@ export const UserList: FC = () => {
     }
     const onBanUser = () => {
         const id = showModalBan.userId
-        const reason = defaultValueBan
+        const reason = showModalBan.reason
+
         if (id) {
-            banUser({banReason: reason , userId: id})
+            banUser({banReason: reason, userId: id})
         }
         !isLoadingBan &&
         setShowModalBan({
             userId: null,
             userName: null,
             isShow: false,
-            // reason: null
+            reason: null
         })
     }
 
@@ -230,6 +231,7 @@ export const UserList: FC = () => {
                                 trigger={<EllipsisIcon className={s.ellipsis}/>}
                                 userId={user.id}
                                 userName={user.userName}
+                                reason={reason}
                                 addValuesUser={addValuesUser}
                                 valueBanUser={valueBanUser}
                             />
@@ -245,9 +247,11 @@ export const UserList: FC = () => {
                 setShowModalDelete={setShowModalDelete}
             />
             <ModalBan
+                reason={reason}
                 onBanUser={onBanUser}
                 isOpen={showModalBan.isShow}
                 userName={showModalBan.userName}
+                setReason={setReason}
                 setShowModalBan={setShowModalBan}
             />
 

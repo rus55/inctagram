@@ -11,16 +11,17 @@ type Props = {
     userId: number
     userName: string
     addValuesUser: (id: number, name: string) => void
-    valueBanUser: (id: number, name: string) => void
+    valueBanUser: (id: number, name: string,reason) => void
+    reason:string
 }
-export const ModalAction = ({trigger, userId, userName, addValuesUser,valueBanUser}: Props) => {
+export const ModalAction = ({trigger, userId, userName, addValuesUser,valueBanUser,reason}: Props) => {
     const {t} = useTranslation()
 
     const addValuesForDeleteUser = () => {
         addValuesUser(userId, userName)
     }
     const addValuesForBanUser = () => {
-        valueBanUser(userId, userName)
+        valueBanUser(userId, userName,reason)
     }
     return (
         <CustomDropdown trigger={trigger} align={'end'}>

@@ -6,6 +6,8 @@ export type statusType =
   | 'Заблокировано'
   | 'Не заблокировано'
 
+export type BanType = 'Reason for ban' | 'Bad behavior' | 'Advertising placement' | 'Another reason'
+
 export const getValueByLang = (value: statusType) => {
   const values = {
     'Not Selected': 'not_selected',
@@ -14,6 +16,20 @@ export const getValueByLang = (value: statusType) => {
     'Не выбрано': 'not_selected',
     Заблокировано: 'blocked',
     'Не заблокировано': 'not_blocked',
+  }
+
+  return values[value]
+}
+export const getValueBanByLang = (value: BanType) => {
+  const values = {
+    'Reason for ban': 'reason_for_ban',
+    'Bad behavior': 'bad_behavior',
+    'Advertising placement': 'advertising_placement',
+    'Another reason': 'another_reason',
+    'Причина бана': 'reason_for_ban',
+    'Плохое поведение': 'bad_behavior',
+    'Размещение рекламы': 'advertising_placement',
+    'Другой причиной': 'another_reason',
   }
 
   return values[value]

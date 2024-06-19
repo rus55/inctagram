@@ -289,6 +289,11 @@ export const en = {
     delete_user: 'Delete user',
     confirmation: 'Are you sure to delete user',
 
+    reason_for_ban: 'Reason for ban',
+    bad_behavior: 'Bad behavior',
+    advertising_placement: 'Advertising placement',
+    another_reason: 'Another reason',
+
     no: 'No',
     yes: 'Yes',
   },

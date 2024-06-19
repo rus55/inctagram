@@ -75,4 +75,4 @@ export const usersApi = createApi({
   }),
 })
 
-export const { useGetUsersMutation, useDeleteUserMutation,useBanUserMutation } = usersApi
+export const { useGetUsersMutation, useDeleteUserMutation, useBanUserMutation } = usersApi

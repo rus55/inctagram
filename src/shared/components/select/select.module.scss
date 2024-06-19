@@ -1,6 +1,5 @@
 .container {
   width: 100%;
-
 }
 
 .label {
@@ -9,7 +8,6 @@
 }
 
 .icon {
-
   display: flex;
 }
 
@@ -41,7 +39,6 @@
 }
 
 .value {
-
   margin-right: 6px;
   margin-left: 6px;
 }
@@ -77,7 +74,9 @@
 
 .item {
   cursor: pointer;
+
   z-index: 101;
+
   display: flex;
   align-items: center;
 

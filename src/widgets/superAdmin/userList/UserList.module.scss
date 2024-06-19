@@ -28,16 +28,17 @@
     text-align: left;
     border-bottom: 1px solid var(--color-dark-500);
   }
+
   .date {
-    display: flex;
-    align-items: center;
-    gap: 4px;
     cursor: pointer;
+
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
     width: 450px;
   }
 }
-
-
 
 .ellipsis {
   cursor: pointer;

@@ -13,6 +13,7 @@ import { profileApi } from '@/entities/profile'
 import { publicPostsApi } from '@/entities/publicPosts'
 import { subscriptionApi } from '@/entities/subscription'
 import { usersApi } from '@/entities/users/api/usersApi'
+import { notificationsApi } from "@/entities/notifications/api/notificationsApi";
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     [subscriptionApi.reducerPath]: subscriptionApi.reducer,
     [devicesApi.reducerPath]: devicesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [notificationsApi.reducerPath]: notificationsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -41,7 +43,8 @@ const store = configureStore({
       postsApi.middleware,
       subscriptionApi.middleware,
       devicesApi.middleware,
-      usersApi.middleware
+      usersApi.middleware,
+      notificationsApi.middleware
     ),
 })
 

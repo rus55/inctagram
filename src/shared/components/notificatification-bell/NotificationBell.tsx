@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import React, { FC } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -8,14 +8,23 @@ import s from './NotificationBell.module.scss'
 
 import { FillBellIcon } from '@/shared/assets/icons/FillBellIcon'
 import { OutlineBellIcon } from '@/shared/assets/icons/OutlineBellIcon'
+import useNotifications from '@/shared/lib/hooks/useNotifications'
 
 export type NotificationProps = {
   className?: string
   toggle: boolean
   setToggle: React.Dispatch<React.SetStateAction<boolean>>
+  accessToken: string
 }
 
-export const NotificationBell: FC<NotificationProps> = ({ toggle, setToggle, className }) => {
+export const NotificationBell: FC<NotificationProps> = ({
+  toggle,
+  setToggle,
+  accessToken,
+  className,
+}) => {
+  const { notifications } = useNotifications(accessToken)
+
   const classNames = {
     notificationBlock: clsx(s.notificationBlock, className),
   }
@@ -25,7 +34,7 @@ export const NotificationBell: FC<NotificationProps> = ({ toggle, setToggle, cla
       {toggle ? <FillBellIcon className={s.iconColor} /> : <OutlineBellIcon className={s.icon} />}
       {!toggle && (
         <Typography as="span" className={s.iconBadge}>
-          2
+          {notifications?.totalCount}
         </Typography>
       )}
     </button>

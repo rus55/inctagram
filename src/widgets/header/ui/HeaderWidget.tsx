@@ -13,6 +13,7 @@ import { Button, CustomDropdown, CustomDropdownItem, Typography } from '@/shared
 import { NotificationBell } from '@/shared/components/notificatification-bell'
 import { useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
+import { useConnectSocket } from '@/shared/lib/hooks/useConnectSocket'
 import { DropDownNotification } from '@/widgets/dropDownNotification'
 import { LangSelectWidget } from '@/widgets/langSelect'
 
@@ -25,6 +26,7 @@ export const HeaderWidget: FC = () => {
 
   const { isAuth, accessToken } = useAuth()
   const router = useRouter()
+  const { event } = useConnectSocket(accessToken as string, isAuth)
 
   useEffect(() => {
     const handler = (e: MouseEvent): void => {
@@ -36,7 +38,9 @@ export const HeaderWidget: FC = () => {
     return () => {
       document.removeEventListener('mousedown', handler)
     }
-  }, [])
+  }, [event])
+
+  console.log(event)
 
   return (
     <header
@@ -56,8 +60,12 @@ export const HeaderWidget: FC = () => {
         <div className="flex justify-center items-center space-x-6">
           {isAuth && (
             <div className="hidden lg:flex relative" ref={menuRef}>
-              <NotificationBell toggle={toggle} setToggle={setToggle} />
-              <DropDownNotification toggle={toggle} />
+              <NotificationBell
+                accessToken={accessToken as string}
+                toggle={toggle}
+                setToggle={setToggle}
+              />
+              <DropDownNotification accessToken={accessToken as string} toggle={toggle} />
             </div>
           )}
           <LangSelectWidget />

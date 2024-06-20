@@ -307,5 +307,24 @@ export const en = {
     subscriptionDate: 'Subscription Date',
     not_found: 'Not found',
   },
+  notification(message: string) {
+    const datePattern = /(\d{2}\/\d{2}\/\d{4})/
+    const match = message.match(datePattern)
+
+    if (match) {
+      const [month, day, year] = match[0].split('/')
+      const formattedDate = `${day}.${month}.${year}`
+
+      return `Your subscription has been activated and is valid until ${formattedDate}.`
+    }
+    const messages = {
+      'Your subscription-ws ends in 1 day': 'Your subscription-ws ends in 1 day',
+      'Your subscription ends in 7 days': 'Your subscription ends in 7 days',
+      'The next subscription payment will be debited from your account after 1 day.':
+        'The next subscription payment will be debited from your account after 1 day.',
+    }
+
+    return messages[message as keyof typeof messages]
+  },
 }
 export type LangType = typeof en

@@ -8,11 +8,20 @@ import { Typography } from '@/shared/components'
 import { NotificationItem } from '@/shared/components/notification-item/NotificationItem'
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { useTranslation } from '@/shared/lib'
+import useNotifications from '@/shared/lib/hooks/useNotifications'
 
-export const DropDownNotification = ({ toggle }: { toggle: boolean }) => {
+type Props = {
+  toggle: boolean
+  accessToken: string
+}
+export const DropDownNotification = ({ toggle, accessToken }: Props) => {
+  const { notifications } = useNotifications(accessToken)
+
   const classNames = clsx(s.dropDownNotification, toggle ? s.active : s.inactive)
 
   const { t } = useTranslation()
+
+  console.log(notifications)
 
   return (
     <div className={classNames}>
@@ -20,9 +29,12 @@ export const DropDownNotification = ({ toggle }: { toggle: boolean }) => {
         {t.notification_menu.title}
       </Typography>
       <Scroller>
-        {Array.from({ length: 10 }, (_, i) => (
-          <NotificationItem key={i} />
-        ))}
+        {/*{Array.from({ length: 10 }, (_, i) => (*/}
+        {/*  <NotificationItem key={i} />*/}
+        {/*))}*/}
+        {notifications?.items.map((item: NotificationItems) => {
+          return <NotificationItem key={item.id} message={item.message} />
+        })}
       </Scroller>
     </div>
   )

@@ -1,10 +1,16 @@
-import React, { FC } from 'react'
-
-import { Typography } from '..'
+import React from 'react'
 
 import s from './NotificationItem.module.scss'
 
-export const NotificationItem: FC = () => {
+import { Typography } from '@/shared/components'
+import { useTranslation } from '@/shared/lib'
+
+type Props = {
+  message: string
+}
+export const NotificationItem = ({ message }: Props) => {
+  const { t } = useTranslation()
+
   return (
     <div className={s.wrapper}>
       <div>
@@ -16,7 +22,7 @@ export const NotificationItem: FC = () => {
         </Typography>
       </div>
       <Typography as="span" className={s.textBase}>
-        Следующий платеж у вас спишется через 1 день
+        {t.notification(message)}
       </Typography>
       <Typography variant="small_text" className={s.textSb}>
         1 день назад

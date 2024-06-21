@@ -9,3 +9,7 @@ interface INotification {
   totalCount: number
   items: NotificationItems[]
 }
+
+type MessagesNotif = NotificationItems & {
+  clientId: string;
+}

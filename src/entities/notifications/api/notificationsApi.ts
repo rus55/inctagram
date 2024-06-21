@@ -10,7 +10,7 @@ export const notificationsApi = createApi({
     notification: builder.query({
       query: accessToken => ({
         method: 'GET',
-        url: `/notifications/{cursor}`,
+        url: `/notifications`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + accessToken,

@@ -9,7 +9,7 @@ export const useConnectSocket = (token: string, isAuth: boolean) => {
     SocketApi.creatConnection(token)
 
     SocketApi.socket?.timeout(30000).on('notifications', event => {
-      setEvent(event)
+      setEvent(prev => [event, ...prev])
     })
   }
 

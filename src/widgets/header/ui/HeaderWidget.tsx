@@ -16,6 +16,7 @@ import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { useConnectSocket } from '@/shared/lib/hooks/useConnectSocket'
 import { DropDownNotification } from '@/widgets/dropDownNotification'
 import { LangSelectWidget } from '@/widgets/langSelect'
+import useNotifications from "@/shared/lib/hooks/useNotifications";
 
 export const HeaderWidget: FC = () => {
   const [toggle, setToggle] = useState(false)
@@ -27,6 +28,7 @@ export const HeaderWidget: FC = () => {
   const { isAuth, accessToken } = useAuth()
   const router = useRouter()
   const { event } = useConnectSocket(accessToken as string, isAuth)
+  const { currentNotification } = useNotifications(accessToken as string, event)
 
   useEffect(() => {
     const handler = (e: MouseEvent): void => {
@@ -39,8 +41,6 @@ export const HeaderWidget: FC = () => {
       document.removeEventListener('mousedown', handler)
     }
   }, [event])
-
-  console.log(event)
 
   return (
     <header
@@ -61,11 +61,11 @@ export const HeaderWidget: FC = () => {
           {isAuth && (
             <div className="hidden lg:flex relative" ref={menuRef}>
               <NotificationBell
-                accessToken={accessToken as string}
+                currentNotification={currentNotification}
                 toggle={toggle}
                 setToggle={setToggle}
               />
-              <DropDownNotification accessToken={accessToken as string} toggle={toggle} />
+              <DropDownNotification currentNotification={currentNotification} toggle={toggle} />
             </div>
           )}
           <LangSelectWidget />

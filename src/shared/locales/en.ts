@@ -309,7 +309,7 @@ export const en = {
   },
   notification(message: string) {
     const datePattern = /(\d{2}\/\d{2}\/\d{4})/
-    const match = message.match(datePattern)
+    const match = message?.match(datePattern)
 
     if (match) {
       const [month, day, year] = match[0].split('/')

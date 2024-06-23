@@ -57,24 +57,8 @@ const useNotifications = (accessToken: string, event?: MessagesNotif) => {
       return dateMatch === formattedToday
     })
 
-    if (notification) {
-      setCurrentNotification(prev => {
-        const seenIds = new Set()
+    uniqueNotifications(notification, setCurrentNotification)
 
-        return [...prev, ...notification].filter(item => {
-          if (item.message.match(/(\d{2}\/\d{2}\/\d{4})/)) {
-            return false
-          }
-          if (seenIds.has(item.id)) {
-            return false
-          } else {
-            seenIds.add(item.id)
-
-            return true
-          }
-        })
-      })
-    }
     if (event?.message) {
       setCurrentNotification(prev => [...prev, event])
     }

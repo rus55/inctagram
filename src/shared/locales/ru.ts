@@ -314,7 +314,7 @@ export const ru: LangType = {
       const [month, day, year] = match[0].split('/')
       const formattedDate = `${day}.${month}.${year}`
 
-      return `Ваша подписка активирована и действует до ${formattedDate}.`
+      return `Ваша подписка активирована и действует до ${formattedDate}`
     }
     const messages = {
       'Your subscription-ws ends in 1 day': 'Ваша подписка истекает через 1 день',
@@ -325,4 +325,7 @@ export const ru: LangType = {
 
     return messages[message as keyof typeof messages]
   },
+  new_notification: 'Новое уведомление!',
+  new_title: 'Новое',
+  one_day: '1 день назад',
 }

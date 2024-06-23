@@ -315,7 +315,7 @@ export const en = {
       const [month, day, year] = match[0].split('/')
       const formattedDate = `${day}.${month}.${year}`
 
-      return `Your subscription has been activated and is valid until ${formattedDate}.`
+      return `Your subscription has been activated and is valid until ${formattedDate}`
     }
     const messages = {
       'Your subscription-ws ends in 1 day': 'Your subscription-ws ends in 1 day',
@@ -326,5 +326,8 @@ export const en = {
 
     return messages[message as keyof typeof messages]
   },
+  new_notification: 'New notification!',
+  new_title: 'new',
+  one_day: '1 day ago',
 }
 export type LangType = typeof en

@@ -16,11 +16,11 @@ export const NotificationItem = ({ message, newMessage }: Props) => {
     <div className={s.wrapper}>
       <div>
         <Typography as="span" variant="bold_text_16">
-          Новое уведомление!
+          {t.new_notification}
         </Typography>
         {newMessage && (
           <Typography as="span" variant="small_text" className={s.textSm}>
-            Новое
+            {t.new_title}
           </Typography>
         )}
       </div>
@@ -28,7 +28,7 @@ export const NotificationItem = ({ message, newMessage }: Props) => {
         {t.notification(message)}
       </Typography>
       <Typography variant="small_text" className={s.textSb}>
-        1 день назад
+        {t.one_day}
       </Typography>
     </div>
   )

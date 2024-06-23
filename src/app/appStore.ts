@@ -8,12 +8,12 @@ import { adminSlice } from '@/app/services/admin-slice'
 import { croppersSlice } from '@/app/services/cropper-slice'
 import { countriesApi } from '@/entities/countries/'
 import { devicesApi } from "@/entities/device's"
+import { notificationsApi } from '@/entities/notifications/api/notificationsApi'
 import { postsApi } from '@/entities/posts'
 import { profileApi } from '@/entities/profile'
 import { publicPostsApi } from '@/entities/publicPosts'
 import { subscriptionApi } from '@/entities/subscription'
 import { usersApi } from '@/entities/users/api/usersApi'
-import { notificationsApi } from "@/entities/notifications/api/notificationsApi";
 
 const store = configureStore({
   reducer: {

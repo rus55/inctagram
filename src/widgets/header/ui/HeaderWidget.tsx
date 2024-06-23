@@ -7,28 +7,27 @@ import { useRouter } from 'next/router'
 import s from './HeaderWidget.module.scss'
 
 import { useLogOutMutation } from '@/entities/auth'
+import { SocketApi } from '@/entities/socket/socket-api'
 import { BookMarkIcon, FavoritesIcon, LogOutIcon, StatisticsIcon } from '@/shared/assets'
 import { ProfileSettings } from '@/shared/assets/icons/ProfileSettings'
 import { Button, CustomDropdown, CustomDropdownItem, Typography } from '@/shared/components'
 import { NotificationBell } from '@/shared/components/notificatification-bell'
 import { useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
-import { useConnectSocket } from '@/shared/lib/hooks/useConnectSocket'
 import { DropDownNotification } from '@/widgets/dropDownNotification'
 import { LangSelectWidget } from '@/widgets/langSelect'
-import useNotifications from "@/shared/lib/hooks/useNotifications";
 
 export const HeaderWidget: FC = () => {
   const [toggle, setToggle] = useState(false)
 
   const menuRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
+
+  const [eventNotif, setEventNotif] = useState<MessagesNotif | null>(null)
   const [logOut] = useLogOutMutation()
 
   const { isAuth, accessToken } = useAuth()
   const router = useRouter()
-  const { event } = useConnectSocket(accessToken as string, isAuth)
-  const { currentNotification } = useNotifications(accessToken as string, event)
 
   useEffect(() => {
     const handler = (e: MouseEvent): void => {
@@ -37,10 +36,20 @@ export const HeaderWidget: FC = () => {
 
     document.addEventListener('mousedown', handler)
 
+    if (isAuth) {
+      SocketApi.creatConnection(accessToken as string)
+
+      SocketApi.socket?.timeout(30000).on('notifications', event => {
+        if (event.length !== 0) {
+          setEventNotif(event)
+        }
+      })
+    }
+
     return () => {
       document.removeEventListener('mousedown', handler)
     }
-  }, [event])
+  }, [eventNotif, accessToken])
 
   return (
     <header
@@ -61,11 +70,16 @@ export const HeaderWidget: FC = () => {
           {isAuth && (
             <div className="hidden lg:flex relative" ref={menuRef}>
               <NotificationBell
-                currentNotification={currentNotification}
+                eventNotif={eventNotif as MessagesNotif}
+                accessToken={accessToken as string}
                 toggle={toggle}
                 setToggle={setToggle}
               />
-              <DropDownNotification currentNotification={currentNotification} toggle={toggle} />
+              <DropDownNotification
+                eventNotif={eventNotif as MessagesNotif}
+                accessToken={accessToken as string}
+                toggle={toggle}
+              />
             </div>
           )}
           <LangSelectWidget />

@@ -1,30 +1,86 @@
-import { useNotificationQuery } from '@/entities/notifications'
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from 'react'
 
-const useNotifications = (accessToken: string, event?: MessagesNotif | any) => {
-  const [currentNotification, setCurrentNotification] = useState<MessagesNotif[]>([])
+import { format } from 'date-fns'
+
+import { useNotificationQuery } from '@/entities/notifications'
+
+const uniqueNotifications = (
+  arrayNotify: NotificationItems[],
+  callback: Dispatch<
+    (prev: (MessagesNotif | NotificationItems)[]) => (MessagesNotif | NotificationItems)[]
+  >
+) => {
+  if (!arrayNotify) return
+  callback(prev => {
+    const seenIds = new Set()
+
+    return [...prev, ...arrayNotify].filter(item => {
+      if (seenIds.has(item.id)) {
+        return false
+      } else {
+        seenIds.add(item.id)
+
+        return true
+      }
+    })
+  })
+}
+
+const useNotifications = (accessToken: string, event?: MessagesNotif) => {
+  const [currentNotification, setCurrentNotification] = useState<
+    (MessagesNotif | NotificationItems)[]
+  >([])
 
   const { data: notifications } = useNotificationQuery(accessToken)
 
   useEffect(() => {
-    const today = new Date();
-    const formattedToday = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`
+    const now = new Date()
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
 
-    const notification = notifications?.items.find((notif: NotificationItems) => {
-      const dateMatch = notif.message.match(/(\d{2}\/\d{2}\/\d{4})/)
-      return dateMatch && dateMatch[0] === formattedToday
-    });
+    const lastMonthNotifications = notifications?.items.filter(
+      (notification: NotificationItems) => {
+        const notifyDate = new Date(notification.notifyAt)
+
+        return notifyDate < now && notifyDate >= lastMonth
+      }
+    )
+
+    if (lastMonthNotifications?.length !== 0) {
+      uniqueNotifications(lastMonthNotifications, setCurrentNotification)
+    }
+
+    const formattedToday = format(new Date(), 'dd.MM.yyyy')
+
+    const notification = notifications?.items.filter((notif: NotificationItems) => {
+      const dateMatch = format(new Date(notif.notifyAt), 'dd.MM.yyyy')
+
+      return dateMatch === formattedToday
+    })
 
     if (notification) {
-      setCurrentNotification(prev => [...prev, notification])
+      setCurrentNotification(prev => {
+        const seenIds = new Set()
+
+        return [...prev, ...notification].filter(item => {
+          if (item.message.match(/(\d{2}\/\d{2}\/\d{4})/)) {
+            return false
+          }
+          if (seenIds.has(item.id)) {
+            return false
+          } else {
+            seenIds.add(item.id)
+
+            return true
+          }
+        })
+      })
     }
-    if (event.length) {
+    if (event?.message) {
       setCurrentNotification(prev => [...prev, event])
     }
   }, [notifications, event])
 
-
-  return {  currentNotification }
+  return { currentNotification }
 }
 
 export default useNotifications

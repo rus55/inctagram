@@ -7,8 +7,9 @@ import { useTranslation } from '@/shared/lib'
 
 type Props = {
   message: string
+  newMessage: boolean
 }
-export const NotificationItem = ({ message }: Props) => {
+export const NotificationItem = ({ message, newMessage }: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -17,9 +18,11 @@ export const NotificationItem = ({ message }: Props) => {
         <Typography as="span" variant="bold_text_16">
           Новое уведомление!
         </Typography>
-        <Typography as="span" variant="small_text" className={s.textSm}>
-          Новое
-        </Typography>
+        {newMessage && (
+          <Typography as="span" variant="small_text" className={s.textSm}>
+            Новое
+          </Typography>
+        )}
       </div>
       <Typography as="span" className={s.textBase}>
         {t.notification(message)}

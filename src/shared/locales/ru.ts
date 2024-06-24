@@ -320,7 +320,7 @@ export const ru: LangType = {
       'Your subscription-ws ends in 1 day': 'Ваша подписка истекает через 1 день',
       'Your subscription ends in 7 days': 'Ваша подписка истекает через 7 дней',
       'The next subscription payment will be debited from your account after 1 day.':
-        'Следующее платеж у вас спишется через 1 день',
+        'Следующий платеж у вас спишется через 1 день',
     }
 
     return messages[message as keyof typeof messages]

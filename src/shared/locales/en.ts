@@ -127,7 +127,7 @@ export const en = {
     statistics: 'Statistics',
   },
   notification_menu: {
-    title: 'Notification',
+    title: 'Notifications',
   },
   add_following: {
     // title_of_delete_modal: 'Удалить подписку',

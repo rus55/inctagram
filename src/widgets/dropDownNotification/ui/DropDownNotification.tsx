@@ -10,6 +10,7 @@ import { NotificationItem } from '@/shared/components/notification-item/Notifica
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { useTranslation } from '@/shared/lib'
 import useNotifications from '@/shared/lib/hooks/useNotifications'
+import { useCurrentSubscriptionQuery } from "@/entities/subscription/api/subscriptionApi";
 
 type Props = {
   toggle: boolean
@@ -21,6 +22,7 @@ export const DropDownNotification = ({ toggle, accessToken, eventNotif }: Props)
 
   const { t } = useTranslation()
 
+  const { data: currentSubscription } = useCurrentSubscriptionQuery(accessToken)
   const { currentNotification } = useNotifications(accessToken as string, eventNotif)
 
   return (
@@ -29,7 +31,11 @@ export const DropDownNotification = ({ toggle, accessToken, eventNotif }: Props)
         {t.notification_menu.title}
       </Typography>
       <Scroller>
-        {currentNotification?.map(item => {
+        {currentNotification?.filter(notif =>
+          currentSubscription?.hasAutoRenewal
+          || notif.message
+          !== 'The next subscription payment will be debited from your account after 1 day.'
+        ).map(item => {
           const newMessage =
             format(new Date(), 'dd.MM.yyyy') <= format(new Date(item.notifyAt), 'dd.MM.yyyy')
 

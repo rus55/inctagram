@@ -3,6 +3,7 @@ import { Dispatch, useEffect, useState } from 'react'
 import { format } from 'date-fns'
 
 import { useNotificationQuery } from '@/entities/notifications'
+import { useCurrentSubscriptionQuery } from '@/entities/subscription/api/subscriptionApi'
 
 const uniqueNotifications = (
   arrayNotify: NotificationItems[],
@@ -30,20 +31,25 @@ const useNotifications = (accessToken: string, event?: MessagesNotif) => {
   const [currentNotification, setCurrentNotification] = useState<
     (MessagesNotif | NotificationItems)[]
   >([])
-
+  const { data: currentSubscription } = useCurrentSubscriptionQuery(accessToken)
   const { data: notifications } = useNotificationQuery(accessToken)
 
   useEffect(() => {
     const now = new Date()
     const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
 
-    const lastMonthNotifications = notifications?.items.filter(
-      (notification: NotificationItems) => {
-        const notifyDate = new Date(notification.notifyAt)
+    const lastMonthNotifications = notifications?.items.filter((notif: NotificationItems) => {
+      const notifyDate = new Date(notif.notifyAt)
 
-        return notifyDate < now && notifyDate >= lastMonth
-      }
-    )
+      const isRelevantMessage =
+        currentSubscription?.hasAutoRenewal ||
+        notif.message !==
+          'The next subscription payment will be debited from your account after 1 day.'
+
+      const isWithinLastMonth = notifyDate < now && notifyDate >= lastMonth
+
+      return isRelevantMessage && isWithinLastMonth
+    })
 
     if (lastMonthNotifications?.length !== 0) {
       uniqueNotifications(lastMonthNotifications, setCurrentNotification)

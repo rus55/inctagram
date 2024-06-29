@@ -288,15 +288,10 @@ export const ru: LangType = {
     delete_user: 'Удалить пользователя',
     confirmation: 'Вы уверены, что хотите удалить пользователя',
 
-    reason_for_ban: 'Причина бана',
-    bad_behavior: 'Плохое поведение',
-    advertising_placement: 'Размещение рекламы',
-    another_reason: 'Другой причиной',
-
     reason_for_ban: 'Причина блокировки',
     bad_behavior: 'Плохое поведение',
     advertising_placement: 'Размещение рекламы',
-    another_reason: 'Другая причиной',
+    another_reason: 'Другой причина',
 
     are_you_sure_you: 'Вы уверены, что хотите заблокировать пользователя?',
     no: 'Нет',

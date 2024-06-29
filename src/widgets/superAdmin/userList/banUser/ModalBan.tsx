@@ -73,9 +73,9 @@ export const ModalBan = ({ isOpen, userName, setShowModalBan, showModalBan }: Pr
   ]
 
   return (
-    <Modal size="sm" open={isOpen} title={'Блокировка пользоав'} onClose={onCloseModal}>
+    <Modal size="sm" open={isOpen} title={t.user_list.user_blocking} onClose={onCloseModal}>
       <Typography as="span" variant="regular_text_14">
-        Вы уверены что хотите удалить пользователя,{/*{t.user_list.confirmation}*/}
+        {t.user_list.are_you_sure_you}
       </Typography>
       <Typography as="span" variant="h3">{` ${userName}?`}</Typography>
       <SelectCustom

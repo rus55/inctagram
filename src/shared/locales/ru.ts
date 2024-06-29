@@ -282,7 +282,7 @@ export const ru: LangType = {
     not_selected: 'Не выбрано',
     blocked: 'Заблокировано',
     not_blocked: 'Не заблокировано',
-
+    user_blocking: 'Блокировка пользователя',
     more: 'Подробнее',
     ban: 'Заблокировать',
     delete_user: 'Удалить пользователя',
@@ -293,6 +293,12 @@ export const ru: LangType = {
     advertising_placement: 'Размещение рекламы',
     another_reason: 'Другой причиной',
 
+    reason_for_ban: 'Причина блокировки',
+    bad_behavior: 'Плохое поведение',
+    advertising_placement: 'Размещение рекламы',
+    another_reason: 'Другая причиной',
+
+    are_you_sure_you: 'Вы уверены, что хотите заблокировать пользователя?',
     no: 'Нет',
     yes: 'Да',
   },

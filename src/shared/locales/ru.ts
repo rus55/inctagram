@@ -291,9 +291,9 @@ export const ru: LangType = {
     reason_for_ban: 'Причина блокировки',
     bad_behavior: 'Плохое поведение',
     advertising_placement: 'Размещение рекламы',
-    another_reason: 'Другой причина',
+    another_reason: 'Другая причина',
 
-    are_you_sure_you: 'Вы уверены, что хотите заблокировать пользователя?',
+    are_you_sure_you: 'Вы уверены, что хотите заблокировать пользователя',
     no: 'Нет',
     yes: 'Да',
   },

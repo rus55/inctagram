@@ -4,7 +4,11 @@ import { useRouter } from 'next/router'
 
 import s from './UserList.module.scss'
 
-import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
+import {
+  useBanUserMutation,
+  useDeleteUserMutation,
+  useGetUsersMutation,
+} from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { Filter } from '@/shared/assets/icons/Filter'
@@ -69,7 +73,7 @@ export const UserList: FC = () => {
     userId: null,
     userName: null,
   })
-
+  const [banUser, { isLoading: isLoadingBan }] = useBanUserMutation()
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
   const [data] = useGetUsersMutation()
   const options: OptionsType[] = [
@@ -120,7 +124,7 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.error(er))
-  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort, valueBanUser])
+  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort, isLoadingBan])
 
   const onDebounce = (value: string) => {
     setValueSearch(value)
@@ -168,7 +172,7 @@ export const UserList: FC = () => {
       })
   }
 
-  useFetchLoader(isLoading)
+  useFetchLoader(isLoading || isLoadingBan)
 
   return (
     <div>
@@ -226,6 +230,8 @@ export const UserList: FC = () => {
         setShowModalDelete={setShowModalDelete}
       />
       <ModalBan
+        isLoadingBan={isLoadingBan}
+        banUser={banUser}
         showModalBan={showModalBan}
         isOpen={showModalBan.isShow}
         userName={showModalBan.userName}

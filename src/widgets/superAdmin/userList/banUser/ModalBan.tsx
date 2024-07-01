@@ -13,19 +13,28 @@ import {
   statusType,
 } from '@/widgets/superAdmin/userList/getValueByLang'
 import { ShowModalBanType } from '@/widgets/superAdmin/userList/UserList'
+import { InputField } from '@/shared'
 
 type Props = {
   isOpen: boolean
   userName: string | null
   setShowModalBan: Dispatch<ShowModalBanType>
   showModalBan: any
+  banUser: any
+  isLoadingBan: boolean
 }
 
-export const ModalBan = ({ isOpen, userName, setShowModalBan, showModalBan }: Props) => {
+export const ModalBan = ({
+  isOpen,
+  userName,
+  setShowModalBan,
+  showModalBan,
+  banUser,
+  isLoadingBan,
+}: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const [banUser, { isLoading: isLoadingBan, isSuccess: isSuccessBan }] = useBanUserMutation()
-  // const [selectedOption, setSelectedOption] = useState('yt ');
+
   const [selectedOption, setSelectedOption] = useState<BanType>(() => {
     if (typeof window !== 'undefined') {
       return (localStorage.getItem('lang') as BanType) ?? (t.user_list.not_selected as BanType)
@@ -33,11 +42,16 @@ export const ModalBan = ({ isOpen, userName, setShowModalBan, showModalBan }: Pr
 
     return t.user_list.not_selected as BanType
   })
-  const handleSelectChange = (value: BanType) => {
-    const currentValue = getValueBanByLang(value)
+  const [inputValue, setInputValue] = useState('')
 
-    localStorage.setItem('lang', t.user_list[currentValue as keyof typeof t.user_list])
-    setSelectedOption(t.user_list[currentValue as keyof typeof t.user_list] as BanType)
+  const handleSelectChange = (value: BanType) => {
+    if (value === t.user_list.another_reason) {
+      setSelectedOption(t.user_list.another_reason)
+    } else {
+      const currentValue = getValueBanByLang(value)
+      localStorage.setItem('lang', t.user_list[currentValue as keyof typeof t.user_list])
+      setSelectedOption(t.user_list[currentValue as keyof typeof t.user_list] as BanType)
+    }
   }
 
   useEffect(() => {
@@ -48,7 +62,13 @@ export const ModalBan = ({ isOpen, userName, setShowModalBan, showModalBan }: Pr
     const id = showModalBan.userId
 
     if (id) {
-      banUser({ banReason: selectedOption, userId: id })
+      if (selectedOption === t.user_list.another_reason) {
+        banUser({ banReason: inputValue, userId: id })
+      } else {
+        banUser({ banReason: selectedOption, userId: id })
+      }
+    } else {
+      setSelectedOption(t.user_list.not_selected as BanType)
     }
     !isLoadingBan &&
       setShowModalBan({
@@ -56,13 +76,16 @@ export const ModalBan = ({ isOpen, userName, setShowModalBan, showModalBan }: Pr
         userName: null,
         isShow: false,
       })
+    setSelectedOption(t.user_list.not_selected as BanType)
   }
+
   const onCloseModal = () => {
     setShowModalBan({
       userId: null,
       userName: null,
       isShow: false,
     })
+    setSelectedOption(t.user_list.not_selected as BanType)
   }
 
   const options: OptionsType[] = [
@@ -78,11 +101,22 @@ export const ModalBan = ({ isOpen, userName, setShowModalBan, showModalBan }: Pr
         {t.user_list.are_you_sure_you}
       </Typography>
       <Typography as="span" variant="h3">{` ${userName}?`}</Typography>
-      <SelectCustom
-        options={options}
-        value={selectedOption as string}
-        onValueChange={handleSelectChange}
-      />
+      {selectedOption === t.user_list.another_reason ? (
+        <InputField
+          type="text"
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+          placeholder={t.user_list.another_reason}
+          label={''}
+        />
+      ) : (
+        <SelectCustom
+          options={options}
+          value={selectedOption as string}
+          onValueChange={handleSelectChange}
+        />
+      )}
+
       <div className="flex justify-between mt-13">
         <Button onClick={onCloseModal} style={{ width: 60 }}>
           <Typography variant="h3">{t.user_list.no}</Typography>

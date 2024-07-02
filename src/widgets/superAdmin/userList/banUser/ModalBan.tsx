@@ -35,9 +35,7 @@ export const ModalBan = ({
   const { t } = useTranslation()
   const router = useRouter()
 
-  const [selectedOption, setSelectedOption] = useState<BanType>(
-    t.user_list.reason_for_ban as BanType
-  )
+  const [selectedOption, setSelectedOption] = useState<BanType>('' as BanType)
 
   const [inputValue, setInputValue] = useState('')
 
@@ -68,7 +66,7 @@ export const ModalBan = ({
         userName: null,
         isShow: false,
       })
-    setSelectedOption(t.user_list.reason_for_ban as BanType)
+    setSelectedOption('' as BanType)
     setInputValue('')
   }
 
@@ -79,11 +77,11 @@ export const ModalBan = ({
       isShow: false,
     })
     setInputValue('')
-    setSelectedOption(t.user_list.reason_for_ban as BanType)
+    setSelectedOption('' as BanType)
   }
 
   const options: OptionsType[] = [
-    { label: t.user_list.reason_for_ban, value: t.user_list.reason_for_ban },
+    // { label: t.user_list.reason_for_ban, value: t.user_list.reason_for_ban },
     { label: t.user_list.bad_behavior, value: t.user_list.bad_behavior },
     { label: t.user_list.advertising_placement, value: t.user_list.advertising_placement },
     { label: t.user_list.another_reason, value: t.user_list.another_reason },
@@ -106,6 +104,7 @@ export const ModalBan = ({
       ) : (
         <SelectCustom
           options={options}
+          placeHolder={t.user_list.reason_for_ban}
           value={selectedOption as string}
           onValueChange={handleSelectChange}
         />

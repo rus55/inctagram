@@ -31,7 +31,7 @@ export const Sidebar = () => {
   const router = useRouter()
   const { t } = useTranslation()
   const { isOpen, openModal, closeModal } = useModal()
-  const { getAllPhotos } = useIndexedDB('photoGalleryDB', 'photos')
+  const { getAllPhotos } = useIndexedDB('photoGalleryDB', { photoStore: 'photos' })
   const dispatch = useAppDispatch()
 
   const handleOpenMyProfileAndAddPost = () => {

@@ -7,13 +7,14 @@ import { useTranslation } from '@/shared/lib'
 
 type Props = {
   message: string
-  newMessage: boolean
+  newMessage?: boolean
+  notifyAt: Date
 }
-export const NotificationItem = ({ message, newMessage }: Props) => {
+export const NotificationItem = ({ message, newMessage, notifyAt, ...restProps }: Props) => {
   const { t } = useTranslation()
 
   return (
-    <div className={s.wrapper}>
+    <div className={s.wrapper} {...restProps}>
       <div>
         <Typography as="span" variant="bold_text_16">
           {t.new_notification}
@@ -28,7 +29,9 @@ export const NotificationItem = ({ message, newMessage }: Props) => {
         {t.notification(message)}
       </Typography>
       <Typography variant="small_text" className={s.textSb}>
-        {t.one_day}
+        {new Date(notifyAt).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)
+          ? t.today
+          : new Date(notifyAt).toLocaleDateString('ru-RU')}
       </Typography>
     </div>
   )

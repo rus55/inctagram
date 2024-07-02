@@ -328,6 +328,6 @@ export const en = {
   },
   new_notification: 'New notification!',
   new_title: 'new',
-  one_day: '1 day ago',
+  today: 'today',
 }
 export type LangType = typeof en

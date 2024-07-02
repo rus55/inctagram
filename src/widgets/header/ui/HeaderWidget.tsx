@@ -14,6 +14,7 @@ import { Button, CustomDropdown, CustomDropdownItem, Typography } from '@/shared
 import { NotificationBell } from '@/shared/components/notificatification-bell'
 import { useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
+import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'
 import { DropDownNotification } from '@/widgets/dropDownNotification'
 import { LangSelectWidget } from '@/widgets/langSelect'
 
@@ -23,11 +24,20 @@ export const HeaderWidget: FC = () => {
   const menuRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
 
-  const [eventNotif, setEventNotif] = useState<MessagesNotif | null>(null)
   const [logOut] = useLogOutMutation()
 
+  const [count, setCount] = useState<number>(0)
   const { isAuth, accessToken } = useAuth()
+  const { addNotification, getAllNotifications, deleteNotifications } = useIndexedDB('myDatabase', {
+    notificationStore: 'notification',
+  })
   const router = useRouter()
+
+  const updateStateNotifications = () => {
+    getAllNotifications(notif => {
+      setCount(notif.length)
+    })
+  }
 
   useEffect(() => {
     const handler = (e: MouseEvent): void => {
@@ -39,9 +49,9 @@ export const HeaderWidget: FC = () => {
     if (isAuth) {
       SocketApi.creatConnection(accessToken as string)
 
-      SocketApi.socket?.timeout(30000).on('notifications', event => {
+      SocketApi.socket?.on('notifications', event => {
         if (event.length !== 0) {
-          setEventNotif(event)
+          addNotification(event, updateStateNotifications)
         }
       })
     }
@@ -49,7 +59,7 @@ export const HeaderWidget: FC = () => {
     return () => {
       document.removeEventListener('mousedown', handler)
     }
-  }, [eventNotif, accessToken])
+  }, [accessToken, SocketApi.socket, addNotification])
 
   return (
     <header
@@ -69,14 +79,11 @@ export const HeaderWidget: FC = () => {
         <div className="flex justify-center items-center space-x-6">
           {isAuth && (
             <div className="hidden lg:flex relative" ref={menuRef}>
-              <NotificationBell
-                eventNotif={eventNotif as MessagesNotif}
-                accessToken={accessToken as string}
-                toggle={toggle}
-                setToggle={setToggle}
-              />
+              <NotificationBell count={count} toggle={toggle} setToggle={setToggle} />
               <DropDownNotification
-                eventNotif={eventNotif as MessagesNotif}
+                setCount={setCount}
+                deleteNotifications={deleteNotifications}
+                getAllNotifications={getAllNotifications}
                 accessToken={accessToken as string}
                 toggle={toggle}
               />

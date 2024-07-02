@@ -327,5 +327,5 @@ export const ru: LangType = {
   },
   new_notification: 'Новое уведомление!',
   new_title: 'Новое',
-  one_day: '1 день назад',
+  today: 'сегодня',
 }

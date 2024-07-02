@@ -26,10 +26,10 @@ export const getValueBanByLang = (value: BanType) => {
     'Bad behavior': 'bad_behavior',
     'Advertising placement': 'advertising_placement',
     'Another reason': 'another_reason',
-    'Причина бана': 'reason_for_ban',
+    'Причина блокировки': 'reason_for_ban',
     'Плохое поведение': 'bad_behavior',
     'Размещение рекламы': 'advertising_placement',
-    'Другой причиной': 'another_reason',
+    'Другая причина': 'another_reason',
   }
 
   return values[value]

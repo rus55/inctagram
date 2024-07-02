@@ -35,23 +35,17 @@ export const ModalBan = ({
   const { t } = useTranslation()
   const router = useRouter()
 
-  const [selectedOption, setSelectedOption] = useState<BanType>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('lang') as BanType) ?? (t.user_list.reason_for_ban as BanType)
-    }
+  const [selectedOption, setSelectedOption] = useState<BanType>(
+    t.user_list.reason_for_ban as BanType
+  )
 
-    return t.user_list.reason_for_ban as BanType
-  })
   const [inputValue, setInputValue] = useState('')
 
   const handleSelectChange = (value: BanType) => {
-    if (value === t.user_list.another_reason) {
-      setSelectedOption(t.user_list.another_reason)
-    } else {
-      const currentValue = getValueBanByLang(value)
-      localStorage.setItem('lang', t.user_list[currentValue as keyof typeof t.user_list])
-      setSelectedOption(t.user_list.reason_for_ban as BanType)
-    }
+    const currentValue = getValueBanByLang(value)
+
+    localStorage.setItem('lang', t.user_list[currentValue as keyof typeof t.user_list])
+    setSelectedOption(t.user_list[currentValue as keyof typeof t.user_list] as BanType)
   }
 
   useEffect(() => {
@@ -62,14 +56,11 @@ export const ModalBan = ({
     const id = showModalBan.userId
 
     if (id) {
-      if (selectedOption === t.user_list.reason_for_ban) {
+      if (selectedOption === t.user_list.another_reason) {
         banUser({ banReason: inputValue, userId: id })
       } else {
         banUser({ banReason: selectedOption, userId: id })
       }
-    } else {
-      setInputValue('')
-      setSelectedOption(t.user_list.reason_for_ban as BanType)
     }
     !isLoadingBan &&
       setShowModalBan({
@@ -78,6 +69,7 @@ export const ModalBan = ({
         isShow: false,
       })
     setSelectedOption(t.user_list.reason_for_ban as BanType)
+    setInputValue('')
   }
 
   const onCloseModal = () => {

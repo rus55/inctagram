@@ -294,7 +294,7 @@ export const en = {
     advertising_placement: 'Advertising placement',
     another_reason: 'Another reason',
 
-    are_you_sure_you: 'Are you sure you want to ban the user?',
+    are_you_sure_you: 'Are you sure you want to ban the user',
     user_blocking: 'User blocking',
     no: 'No',
     yes: 'Yes',

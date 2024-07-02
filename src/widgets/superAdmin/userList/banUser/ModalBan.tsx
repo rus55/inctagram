@@ -37,10 +37,10 @@ export const ModalBan = ({
 
   const [selectedOption, setSelectedOption] = useState<BanType>(() => {
     if (typeof window !== 'undefined') {
-      return (localStorage.getItem('lang') as BanType) ?? (t.user_list.not_selected as BanType)
+      return (localStorage.getItem('lang') as BanType) ?? (t.user_list.reason_for_ban as BanType)
     }
 
-    return t.user_list.not_selected as BanType
+    return t.user_list.reason_for_ban as BanType
   })
   const [inputValue, setInputValue] = useState('')
 
@@ -50,7 +50,7 @@ export const ModalBan = ({
     } else {
       const currentValue = getValueBanByLang(value)
       localStorage.setItem('lang', t.user_list[currentValue as keyof typeof t.user_list])
-      setSelectedOption(t.user_list[currentValue as keyof typeof t.user_list] as BanType)
+      setSelectedOption(t.user_list.reason_for_ban as BanType)
     }
   }
 
@@ -62,13 +62,14 @@ export const ModalBan = ({
     const id = showModalBan.userId
 
     if (id) {
-      if (selectedOption === t.user_list.another_reason) {
+      if (selectedOption === t.user_list.reason_for_ban) {
         banUser({ banReason: inputValue, userId: id })
       } else {
         banUser({ banReason: selectedOption, userId: id })
       }
     } else {
-      setSelectedOption(t.user_list.not_selected as BanType)
+      setInputValue('')
+      setSelectedOption(t.user_list.reason_for_ban as BanType)
     }
     !isLoadingBan &&
       setShowModalBan({
@@ -76,7 +77,7 @@ export const ModalBan = ({
         userName: null,
         isShow: false,
       })
-    setSelectedOption(t.user_list.not_selected as BanType)
+    setSelectedOption(t.user_list.reason_for_ban as BanType)
   }
 
   const onCloseModal = () => {
@@ -85,7 +86,8 @@ export const ModalBan = ({
       userName: null,
       isShow: false,
     })
-    setSelectedOption(t.user_list.not_selected as BanType)
+    setInputValue('')
+    setSelectedOption(t.user_list.reason_for_ban as BanType)
   }
 
   const options: OptionsType[] = [

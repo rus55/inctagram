@@ -21,7 +21,7 @@ export const useVisibleItems = (items: MessagesNotif[], toggle: boolean) => {
         })
       },
       {
-        threshold: 0.1
+        threshold: 0.1,
       }
     )
 

@@ -87,7 +87,6 @@ const useIndexedDB = (
     const request = objectStore.add(notification)
 
     request.onsuccess = () => {
-      console.log('ADD')
       callback()
     }
 

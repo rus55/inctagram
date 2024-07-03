@@ -23,8 +23,6 @@
   margin-bottom: -4px;
   padding: 5px;
 
-  //text-transform: capitalize;
-
   background: none;
   border: 1px solid var(--color-dark-100);
 
@@ -39,7 +37,6 @@
 }
 
 .value {
-
   margin-right: 6px;
   margin-left: 6px;
 }
@@ -63,8 +60,6 @@
 
   width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
-
-  //text-transform: capitalize;
 
   background: black;
   border: 1px solid var(--dark-300, #4c4c4c);

@@ -3,6 +3,7 @@ import { Dispatch, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useBanUserMutation } from '@/entities/users/api/usersApi'
+import { InputField } from '@/shared'
 import { Button, OptionsType, SelectCustom, Typography } from '@/shared/components'
 import { Modal } from '@/shared/components/modals'
 import { useTranslation } from '@/shared/lib'
@@ -13,7 +14,6 @@ import {
   statusType,
 } from '@/widgets/superAdmin/userList/getValueByLang'
 import { ShowModalBanType } from '@/widgets/superAdmin/userList/UserList'
-import { InputField } from '@/shared'
 
 type Props = {
   isOpen: boolean

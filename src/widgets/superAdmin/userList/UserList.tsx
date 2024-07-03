@@ -113,8 +113,7 @@ export const UserList: FC = () => {
       sortBy: 'createdAt',
       sortDirection: sort === 'default' ? SortDirection.DESC : (sort as SortDirection),
       searchTerm: valueSearch,
-      // statusFilter: status[defaultValue as string] as UserBlockStatus,
-      statusFilter: 'ALL',
+      statusFilter: status[defaultValue as string] as UserBlockStatus,
     }
 
     data(initObjectUsers)

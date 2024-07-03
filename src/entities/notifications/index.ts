@@ -1,1 +1,1 @@
-export { useNotificationQuery } from './api/notificationsApi'
+export { useGetNotificationsQuery, useUpdateNotificationsMutation } from './api/notificationsApi'

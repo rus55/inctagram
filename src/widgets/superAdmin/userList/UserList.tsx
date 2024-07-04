@@ -4,19 +4,29 @@ import { useRouter } from 'next/router'
 
 import s from './UserList.module.scss'
 
-import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
+import {
+  useBanUserMutation,
+  useDeleteUserMutation,
+  useGetUsersMutation,
+} from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { OptionsType, Pagination, SelectCustom } from '@/shared/components'
 import { UserBlockStatus, SortDirection } from '@/shared/constants/enum'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
 import { useSortBy } from '@/shared/lib/hooks/useSortBy'
+import { ModalBan } from '@/widgets/superAdmin/userList/banUser/ModalBan'
 import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
 import { ModalDelete } from '@/widgets/superAdmin/userList/deleteUser/ModalDelete'
 import { getValueByLang, statusType } from '@/widgets/superAdmin/userList/getValueByLang'
 import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
 
 export type ShowModalType = {
+  isShow: boolean
+  userId: number | null
+  userName: string | null
+}
+export type ShowModalBanType = {
   isShow: boolean
   userId: number | null
   userName: string | null
@@ -45,7 +55,12 @@ export const UserList: FC = () => {
     userId: null,
     userName: null,
   })
-
+  const [showModalBan, setShowModalBan] = useState<ShowModalBanType>({
+    isShow: false,
+    userId: null,
+    userName: null,
+  })
+  const [banUser, { isLoading: isLoadingBan }] = useBanUserMutation()
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
   const [data] = useGetUsersMutation()
 
@@ -73,6 +88,13 @@ export const UserList: FC = () => {
   useEffect(() => {
     onSelectChange(defaultValue)
   }, [router.locale])
+  const valueBanUser = (id: number, name: string) => {
+    setShowModalBan({
+      userId: id,
+      userName: name,
+      isShow: true,
+    })
+  }
 
   useEffect(() => {
     const initObjectUsers: GetUsersType = {
@@ -91,7 +113,7 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.error(er))
-  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort])
+  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort, isLoadingBan])
 
   const onDebounce = (value: string) => {
     setValueSearch(value)
@@ -127,7 +149,7 @@ export const UserList: FC = () => {
       })
   }
 
-  useFetchLoader(isLoading)
+  useFetchLoader(isLoading || isLoadingBan)
 
   return (
     <div>
@@ -171,6 +193,7 @@ export const UserList: FC = () => {
                   userId={user.id}
                   userName={user.userName}
                   addValuesUser={addValuesUser}
+                  valueBanUser={valueBanUser}
                 />
               </td>
             </tr>
@@ -182,6 +205,14 @@ export const UserList: FC = () => {
         isOpen={showModalDelete.isShow}
         userName={showModalDelete.userName}
         setShowModalDelete={setShowModalDelete}
+      />
+      <ModalBan
+        isLoadingBan={isLoadingBan}
+        banUser={banUser}
+        showModalBan={showModalBan}
+        isOpen={showModalBan.isShow}
+        userName={showModalBan.userName}
+        setShowModalBan={setShowModalBan}
       />
 
       <Pagination

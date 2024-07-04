@@ -208,5 +208,6 @@ export const {
   useGetPostsByUserMutation,
   useGetPaymentsByUserMutation,
   useGetFollowersMutation,
-  useGetFollowingMutation, useBanUserMutation
+  useGetFollowingMutation,
+  useBanUserMutation,
 } = usersApi

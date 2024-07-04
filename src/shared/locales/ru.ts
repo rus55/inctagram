@@ -288,11 +288,13 @@ export const ru: LangType = {
     ban: 'Заблокировать',
     delete_user: 'Удалить пользователя',
     confirmation: 'Вы уверены, что хотите удалить пользователя',
-
+    unBan: 'Разблокировать',
     no: 'Нет',
     yes: 'Да',
 
     backToUserList: 'Назад к списку пользователей',
+    unban_user: 'Блокировка пользователя',
+    confirmation_unBan: 'Вы уверены, что хотите снять запрет с ',
   },
   user_info: {
     usertId: 'ID Пользователя',

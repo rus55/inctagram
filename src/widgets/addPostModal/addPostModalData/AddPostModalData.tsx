@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
 import Cropper from 'react-easy-crop'
 import { Navigation, Pagination } from 'swiper/modules'
@@ -12,9 +12,10 @@ import {
   updateAspect,
   updateCrop,
   updateCroppedAreaPixels,
-  updateZoom
-} from "@/app/services/cropper-slice";
+  updateZoom,
+} from '@/app/services/cropper-slice'
 import { useAppDispatch } from '@/shared/lib'
+import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'
 import s from '@/widgets/addPostModal/AddPostModal.module.scss'
 import {
   AddNewPhotoTool,

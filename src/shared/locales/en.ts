@@ -288,11 +288,13 @@ export const en = {
     more: 'More information',
     ban: 'Ban in the system',
     delete_user: 'Delete user',
+    unban_user: 'Un-ban user',
     confirmation: 'Are you sure to delete user',
+    confirmation_unBan: 'Are you sure want to un-ban',
 
     no: 'No',
     yes: 'Yes',
-
+    unBan: 'Un-ban',
     backToUserList: 'Back to User List',
   },
   user_info: {

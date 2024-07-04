@@ -4,7 +4,11 @@ import { useRouter } from 'next/router'
 
 import s from './UserList.module.scss'
 
-import { useDeleteUserMutation, useGetUsersMutation } from '@/entities/users/api/usersApi'
+import {
+  useDeleteUserMutation,
+  useGetUsersMutation,
+  useUnBanUserMutation,
+} from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { OptionsType, Pagination, SelectCustom } from '@/shared/components'
@@ -15,6 +19,7 @@ import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
 import { ModalDelete } from '@/widgets/superAdmin/userList/deleteUser/ModalDelete'
 import { getValueByLang, statusType } from '@/widgets/superAdmin/userList/getValueByLang'
 import { ModalAction } from '@/widgets/superAdmin/userList/ModalAction'
+import { ModalUnBan } from '@/widgets/superAdmin/userList/unBanUser/ModalUnBan'
 
 export type ShowModalType = {
   isShow: boolean
@@ -40,6 +45,11 @@ export const UserList: FC = () => {
 
     return t.user_list.not_selected as statusType
   })
+  const [showModalUnban, setShowModalUnban] = useState<ShowModalType>({
+    isShow: false,
+    userId: null,
+    userName: null,
+  })
   const [showModalDelete, setShowModalDelete] = useState<ShowModalType>({
     isShow: false,
     userId: null,
@@ -48,7 +58,8 @@ export const UserList: FC = () => {
 
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation()
   const [data] = useGetUsersMutation()
-
+  const [unblockUser, { isLoading: isLoadingUnBan, isSuccess: isSuccessUnBan }] =
+    useUnBanUserMutation()
   const { icon, onSortChange, sort } = useSortBy()
 
   const options: OptionsType[] = [
@@ -91,7 +102,7 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.error(er))
-  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort])
+  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort, isSuccessUnBan])
 
   const onDebounce = (value: string) => {
     setValueSearch(value)
@@ -107,6 +118,13 @@ export const UserList: FC = () => {
 
   const addValuesUser = (id: number, name: string) => {
     setShowModalDelete({
+      userId: id,
+      userName: name,
+      isShow: true,
+    })
+  }
+  const addValuesUnBanUser = (id: number, name: string) => {
+    setShowModalUnban({
       userId: id,
       userName: name,
       isShow: true,
@@ -171,6 +189,7 @@ export const UserList: FC = () => {
                   userId={user.id}
                   userName={user.userName}
                   addValuesUser={addValuesUser}
+                  addValuesBanUser={addValuesUnBanUser}
                 />
               </td>
             </tr>
@@ -182,6 +201,12 @@ export const UserList: FC = () => {
         isOpen={showModalDelete.isShow}
         userName={showModalDelete.userName}
         setShowModalDelete={setShowModalDelete}
+      />
+      <ModalUnBan
+        isLoadingUnBan={isLoadingUnBan}
+        unblockUser={unblockUser}
+        showModalUnban={showModalUnban}
+        setShowModalUnban={setShowModalUnban}
       />
 
       <Pagination

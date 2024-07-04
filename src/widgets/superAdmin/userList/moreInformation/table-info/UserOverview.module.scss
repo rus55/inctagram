@@ -1,13 +1,13 @@
 .main {
-  width: 100%;
   table-layout: fixed;
-  margin: 50px 0 30px 0;
+  width: 100%;
+  margin: 50px 0 30px;
 
   th {
-    border-bottom: 2px solid var(--color-dark-100);
+    cursor: pointer;
     width: 25%;
     text-align: center;
-    cursor: pointer;
+    border-bottom: 2px solid var(--color-dark-100);
   }
 
   .active {
@@ -15,4 +15,3 @@
     border-bottom: 2px solid var(--color-accent-500);
   }
 }
-

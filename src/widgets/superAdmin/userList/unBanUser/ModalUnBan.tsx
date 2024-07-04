@@ -1,10 +1,10 @@
 import { Dispatch, useState } from 'react'
 
+import { useUnBanUserMutation } from '@/entities/users/api/usersApi'
 import { Button, Typography } from '@/shared/components'
 import { Modal } from '@/shared/components/modals'
 import { useTranslation } from '@/shared/lib'
 import { ShowModalType } from '@/widgets/superAdmin/userList/UserList'
-import { useUnBanUserMutation } from '@/entities/users/api/usersApi'
 
 type Props = {
   setShowModalUnban: Dispatch<ShowModalType>

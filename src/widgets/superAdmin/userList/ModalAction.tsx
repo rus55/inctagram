@@ -13,12 +13,16 @@ type Props = {
   userId: number
   userName: string
   addValuesUser: (id: number, name: string) => void
+  valueBanUser: (id: number, name: string) => void
 }
-export const ModalAction = ({ trigger, userId, userName, addValuesUser }: Props) => {
+export const ModalAction = ({ trigger, userId, userName, addValuesUser, valueBanUser }: Props) => {
   const { t } = useTranslation()
 
   const addValuesForDeleteUser = () => {
     addValuesUser(userId, userName)
+  }
+  const addValuesForBanUser = () => {
+    valueBanUser(userId, userName)
   }
 
   return (
@@ -32,6 +36,7 @@ export const ModalAction = ({ trigger, userId, userName, addValuesUser }: Props)
       <CustomDropdownItemWithIcon
         variant={'regular_text_14'}
         icon={<BlockIcon />}
+        onClick={addValuesForBanUser}
         title={t.user_list.ban}
       />
       <Link

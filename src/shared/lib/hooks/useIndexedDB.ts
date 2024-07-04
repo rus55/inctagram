@@ -30,6 +30,7 @@ const useIndexedDB = (
 ): UseIndexedDBProps => {
   const [db, setDb] = useState<IDBDatabase | null>(null)
   const [isAddedPhoto, setIsAddedPhoto] = useState<boolean>(true)
+  const [isDbReady, setIsDbReady] = useState<boolean>(false)
 
   useEffect(() => {
     const request = indexedDB.open(dbName, dbVersion)
@@ -54,6 +55,7 @@ const useIndexedDB = (
 
     request.onsuccess = (event: Event) => {
       setDb((event.target as IDBOpenDBRequest).result)
+      setIsDbReady(true)
     }
 
     request.onerror = (event: Event) => {
@@ -79,7 +81,7 @@ const useIndexedDB = (
   }
 
   const addNotification = (notification: MessagesNotif, callback: () => void) => {
-    if (!db || !storeNames.notificationStore) return
+    if (!isDbReady || !db || !storeNames.notificationStore) return
 
     const transaction = db.transaction([storeNames.notificationStore], 'readwrite')
     const objectStore = transaction.objectStore(storeNames.notificationStore)
@@ -96,7 +98,7 @@ const useIndexedDB = (
   }
 
   const getPhoto = (id: number, callback: (photo: string | undefined) => void) => {
-    if (!db || !storeNames.photoStore) return
+    if (!isDbReady || !db || !storeNames.photoStore) return
 
     const transaction = db.transaction([storeNames.photoStore], 'readonly')
     const objectStore = transaction.objectStore(storeNames.photoStore)
@@ -116,7 +118,7 @@ const useIndexedDB = (
     id: number,
     callback: (notification: Notification | undefined) => void
   ) => {
-    if (!db || !storeNames.notificationStore) return
+    if (!isDbReady || !db || !storeNames.notificationStore) return
 
     const transaction = db.transaction([storeNames.notificationStore], 'readonly')
     const objectStore = transaction.objectStore(storeNames.notificationStore)
@@ -133,7 +135,7 @@ const useIndexedDB = (
   }
 
   const deletePhotos = () => {
-    if (!db || !storeNames.photoStore) return
+    if (!isDbReady || !db || !storeNames.photoStore) return
 
     const transaction = db.transaction([storeNames.photoStore], 'readwrite')
     const objectStore = transaction.objectStore(storeNames.photoStore)
@@ -150,7 +152,7 @@ const useIndexedDB = (
   }
 
   const deleteNotifications = (keys: (IDBValidKey | IDBKeyRange)[]) => {
-    if (!db || !storeNames.notificationStore) return
+    if (!isDbReady || !db || !storeNames.notificationStore) return
 
     const transaction = db.transaction([storeNames.notificationStore], 'readwrite')
     const objectStore = transaction.objectStore(storeNames.notificationStore)
@@ -172,7 +174,7 @@ const useIndexedDB = (
   }
 
   const getAllPhotos = (callback: (photos: Photo[]) => void) => {
-    if (!db || !storeNames.photoStore) return
+    if (!isDbReady || !db || !storeNames.photoStore) return
 
     const transaction = db.transaction([storeNames.photoStore], 'readonly')
     const objectStore = transaction.objectStore(storeNames.photoStore)
@@ -189,7 +191,7 @@ const useIndexedDB = (
   }
 
   const getAllNotifications = (callback: (notifications: MessagesNotif[]) => void) => {
-    if (!db || !storeNames.notificationStore) return
+    if (!isDbReady || !db || !storeNames.notificationStore) return
 
     const transaction = db.transaction([storeNames.notificationStore], 'readonly')
     const objectStore = transaction.objectStore(storeNames.notificationStore)

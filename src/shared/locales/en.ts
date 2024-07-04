@@ -292,6 +292,13 @@ export const en = {
     confirmation: 'Are you sure to delete user',
     confirmation_unBan: 'Are you sure want to un-ban',
 
+    reason_for_ban: 'Reason for ban',
+    bad_behavior: 'Bad behavior',
+    advertising_placement: 'Advertising placement',
+    another_reason: 'Another reason',
+
+    are_you_sure_you: 'Are you sure you want to ban the user',
+    user_blocking: 'User blocking',
     no: 'No',
     yes: 'Yes',
     unBan: 'Un-ban',

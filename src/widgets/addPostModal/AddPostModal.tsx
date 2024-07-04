@@ -55,10 +55,9 @@ export const AddPostModal = ({ openPostModal, closePostModal }: Props) => {
   const [modalPost, setModalPost] = useState<boolean>(false)
 
   const { isOpen, openModal, closeModal } = useModal()
-  const { addPhoto, deletePhotos, getAllPhotos, isAddedPhoto } = useIndexedDB(
-    'photoGalleryDB',
-    'photos'
-  )
+  const { addPhoto, deletePhotos, getAllPhotos, isAddedPhoto } = useIndexedDB('photoGalleryDB', {
+    photoStore: 'photos',
+  })
   const { selectPhotoHandler, inputRef } = useGeneralInputRefForPost()
   const croppers = useAppSelector(state => state.croppersSlice)
   const { errorText, showErrorText } = useErrorText()

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Meta } from '@storybook/react'
 
 import { DropDownNotification } from '..'
@@ -13,7 +11,13 @@ export default {
 export const DropDownNotificationDefault = () => {
   return (
     <div>
-      <DropDownNotification toggle={true} />
+      <DropDownNotification
+        deleteNotifications={() => {}}
+        getAllNotifications={() => {}}
+        accessToken={''}
+        toggle={true}
+        setCount={() => {}}
+      />
     </div>
   )
 }

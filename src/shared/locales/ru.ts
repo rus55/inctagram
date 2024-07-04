@@ -306,4 +306,26 @@ export const ru: LangType = {
     subscriptionDate: 'Дата подписки',
     not_found: 'Не найдено',
   },
+  notification(message: string) {
+    const datePattern = /(\d{2}\/\d{2}\/\d{4})/
+    const match = message?.match(datePattern)
+
+    if (match) {
+      const [month, day, year] = match[0].split('/')
+      const formattedDate = `${day}.${month}.${year}`
+
+      return `Ваша подписка активирована и действует до ${formattedDate}`
+    }
+    const messages = {
+      'Your subscription-ws ends in 1 day': 'Ваша подписка истекает через 1 день',
+      'Your subscription ends in 7 days': 'Ваша подписка истекает через 7 дней',
+      'The next subscription payment will be debited from your account after 1 day.':
+        'Следующий платеж у вас спишется через 1 день',
+    }
+
+    return messages[message as keyof typeof messages]
+  },
+  new_notification: 'Новое уведомление!',
+  new_title: 'Новое',
+  today: 'сегодня',
 }

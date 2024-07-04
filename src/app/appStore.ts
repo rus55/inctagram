@@ -8,6 +8,7 @@ import { adminSlice } from '@/app/services/admin-slice'
 import { croppersSlice } from '@/app/services/cropper-slice'
 import { countriesApi } from '@/entities/countries/'
 import { devicesApi } from "@/entities/device's"
+import { notificationsApi } from '@/entities/notifications/api/notificationsApi'
 import { postsApi } from '@/entities/posts'
 import { profileApi } from '@/entities/profile'
 import { publicPostsApi } from '@/entities/publicPosts'
@@ -30,6 +31,7 @@ const store = configureStore({
     [subscriptionApi.reducerPath]: subscriptionApi.reducer,
     [devicesApi.reducerPath]: devicesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [notificationsApi.reducerPath]: notificationsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -41,7 +43,8 @@ const store = configureStore({
       postsApi.middleware,
       subscriptionApi.middleware,
       devicesApi.middleware,
-      usersApi.middleware
+      usersApi.middleware,
+      notificationsApi.middleware
     ),
 })
 

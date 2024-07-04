@@ -52,7 +52,7 @@ export const FilterPublicationModal: FC<Props> = ({
   const dispatch = useAppDispatch()
   const [isButtonDisabled, setButtonDisabled] = useState(false)
   const [flag, setFlag] = useState<boolean>(false)
-  const { deletePhotos } = useIndexedDB('photoGalleryDB', 'photos')
+  const { deletePhotos } = useIndexedDB('photoGalleryDB', { photoStore: 'photos' })
 
   useFetchLoader(isLoading || isPostLoading)
   if (!croppers.length || flag) {

@@ -288,6 +288,7 @@ export const ru: LangType = {
     ban: 'Заблокировать',
     delete_user: 'Удалить пользователя',
     confirmation: 'Вы уверены, что хотите удалить пользователя',
+    unBan: 'Разблокировать',
 
     reason_for_ban: 'Причина блокировки',
     bad_behavior: 'Плохое поведение',
@@ -295,10 +296,13 @@ export const ru: LangType = {
     another_reason: 'Другая причина',
 
     are_you_sure_you: 'Вы уверены, что хотите заблокировать пользователя',
+
     no: 'Нет',
     yes: 'Да',
 
     backToUserList: 'Назад к списку пользователей',
+    unban_user: 'Блокировка пользователя',
+    confirmation_unBan: 'Вы уверены, что хотите снять запрет с ',
   },
   user_info: {
     usertId: 'ID Пользователя',

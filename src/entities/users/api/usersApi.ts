@@ -96,6 +96,26 @@ export const usersApi = createApi({
         }),
       }),
     }),
+
+    unBanUser: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            mutation {
+              unbanUser(
+              userId : ${data.userId}) 
+            }
+          `,
+        }),
+      }),
+    }),
+
     getPaymentsByUser: builder.mutation({
       query: data => ({
         url: '/graphql',
@@ -209,5 +229,6 @@ export const {
   useGetPaymentsByUserMutation,
   useGetFollowersMutation,
   useGetFollowingMutation,
+  useUnBanUserMutation,
   useBanUserMutation,
 } = usersApi

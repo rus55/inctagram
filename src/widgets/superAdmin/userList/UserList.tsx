@@ -5,13 +5,10 @@ import { useRouter } from 'next/router'
 import s from './UserList.module.scss'
 
 import {
-  useDeleteUserMutation,
-  useGetUsersMutation,
   useUnBanUserMutation,
   useBanUserMutation,
   useDeleteUserMutation,
   useGetUsersMutation,
-
 } from '@/entities/users/api/usersApi'
 import { BlockIcon } from '@/shared/assets/icons/BlockIcon'
 import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
@@ -37,7 +34,7 @@ export type ShowModalBanType = {
   userName: string | null
 }
 
-export const UserList: FC = () => {
+export const UserList = () => {
   const { t } = useTranslation()
   const router = useRouter()
 
@@ -124,9 +121,17 @@ export const UserList: FC = () => {
         setValuePagination(res.data.getUsers.pagination)
       })
       .catch(er => console.error(er))
-  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort, isSuccessUnBan])
-  }, [data, currentPage, isSuccess, valueSearch, pageSize, defaultValue, sort, isLoadingBan])
-
+  }, [
+    data,
+    currentPage,
+    isSuccess,
+    valueSearch,
+    pageSize,
+    defaultValue,
+    sort,
+    isSuccessUnBan,
+    isLoadingBan,
+  ])
 
   const onDebounce = (value: string) => {
     setValueSearch(value)
@@ -232,6 +237,7 @@ export const UserList: FC = () => {
         unblockUser={unblockUser}
         showModalUnban={showModalUnban}
         setShowModalUnban={setShowModalUnban}
+      />
       <ModalBan
         isLoadingBan={isLoadingBan}
         banUser={banUser}

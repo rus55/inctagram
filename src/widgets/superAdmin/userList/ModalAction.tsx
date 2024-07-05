@@ -14,17 +14,17 @@ type Props = {
   userName: string
   addValuesUser: (id: number, name: string) => void
   addValuesBanUser: (id: number, name: string) => void
+  valueBanUser: any
 }
+
 export const ModalAction = ({
   trigger,
   userId,
   userName,
   addValuesUser,
+  valueBanUser,
   addValuesBanUser,
 }: Props) => {
-  valueBanUser: (id: number, name: string) => void
-}
-export const ModalAction = ({ trigger, userId, userName, addValuesUser, valueBanUser }: Props) => {
   const { t } = useTranslation()
 
   const addValuesForDeleteUser = () => {
@@ -32,6 +32,7 @@ export const ModalAction = ({ trigger, userId, userName, addValuesUser, valueBan
   }
   const addValuesForUnBanUser = () => {
     addValuesBanUser(userId, userName)
+  }
   const addValuesForBanUser = () => {
     valueBanUser(userId, userName)
   }

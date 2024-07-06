@@ -127,7 +127,7 @@ export const en = {
     statistics: 'Statistics',
   },
   notification_menu: {
-    title: 'Notification',
+    title: 'Notifications',
   },
   add_following: {
     // title_of_delete_modal: 'Удалить подписку',
@@ -288,11 +288,20 @@ export const en = {
     more: 'More information',
     ban: 'Ban in the system',
     delete_user: 'Delete user',
+    unban_user: 'Un-ban user',
     confirmation: 'Are you sure to delete user',
+    confirmation_unBan: 'Are you sure want to un-ban',
 
+    reason_for_ban: 'Reason for ban',
+    bad_behavior: 'Bad behavior',
+    advertising_placement: 'Advertising placement',
+    another_reason: 'Another reason',
+
+    are_you_sure_you: 'Are you sure you want to ban the user',
+    user_blocking: 'User blocking',
     no: 'No',
     yes: 'Yes',
-
+    unBan: 'Un-ban',
     backToUserList: 'Back to User List',
   },
   user_info: {
@@ -307,5 +316,27 @@ export const en = {
     subscriptionDate: 'Subscription Date',
     not_found: 'Not found',
   },
+  notification(message: string) {
+    const datePattern = /(\d{2}\/\d{2}\/\d{4})/
+    const match = message?.match(datePattern)
+
+    if (match) {
+      const [month, day, year] = match[0].split('/')
+      const formattedDate = `${day}.${month}.${year}`
+
+      return `Your subscription has been activated and is valid until ${formattedDate}`
+    }
+    const messages = {
+      'Your subscription-ws ends in 1 day': 'Your subscription-ws ends in 1 day',
+      'Your subscription ends in 7 days': 'Your subscription ends in 7 days',
+      'The next subscription payment will be debited from your account after 1 day.':
+        'The next subscription payment will be debited from your account after 1 day.',
+    }
+
+    return messages[message as keyof typeof messages]
+  },
+  new_notification: 'New notification!',
+  new_title: 'new',
+  today: 'today',
 }
 export type LangType = typeof en

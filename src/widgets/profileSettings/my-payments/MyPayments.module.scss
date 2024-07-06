@@ -1,25 +1,5 @@
-@use "src/shared/assets/mixins";
-
-//.table {
-//  width: 100%;
-//  border: 1px solid var(--color-dark-500);
-//
-//  th {
-//    background-color: var(--color-dark-500);
-//  }
-//
-//  th,
-//  td {
-//    padding: 20px 30px;
-//    text-align: left;
-//    border-bottom: 1px solid var(--color-dark-500);
-//  }
-//}
-
-
-
+@use 'src/shared/assets/mixins';
 
 .table {
-  @include mixins.table_styles
+  @include mixins.table_styles;
 }
-

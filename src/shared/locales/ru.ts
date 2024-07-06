@@ -283,16 +283,26 @@ export const ru: LangType = {
     not_selected: 'Не выбрано',
     blocked: 'Заблокировано',
     not_blocked: 'Не заблокировано',
-
+    user_blocking: 'Блокировка пользователя',
     more: 'Подробнее',
     ban: 'Заблокировать',
     delete_user: 'Удалить пользователя',
     confirmation: 'Вы уверены, что хотите удалить пользователя',
+    unBan: 'Разблокировать',
+
+    reason_for_ban: 'Причина блокировки',
+    bad_behavior: 'Плохое поведение',
+    advertising_placement: 'Размещение рекламы',
+    another_reason: 'Другая причина',
+
+    are_you_sure_you: 'Вы уверены, что хотите заблокировать пользователя',
 
     no: 'Нет',
     yes: 'Да',
 
     backToUserList: 'Назад к списку пользователей',
+    unban_user: 'Блокировка пользователя',
+    confirmation_unBan: 'Вы уверены, что хотите снять запрет с ',
   },
   user_info: {
     usertId: 'ID Пользователя',
@@ -306,4 +316,26 @@ export const ru: LangType = {
     subscriptionDate: 'Дата подписки',
     not_found: 'Не найдено',
   },
+  notification(message: string) {
+    const datePattern = /(\d{2}\/\d{2}\/\d{4})/
+    const match = message?.match(datePattern)
+
+    if (match) {
+      const [month, day, year] = match[0].split('/')
+      const formattedDate = `${day}.${month}.${year}`
+
+      return `Ваша подписка активирована и действует до ${formattedDate}`
+    }
+    const messages = {
+      'Your subscription-ws ends in 1 day': 'Ваша подписка истекает через 1 день',
+      'Your subscription ends in 7 days': 'Ваша подписка истекает через 7 дней',
+      'The next subscription payment will be debited from your account after 1 day.':
+        'Следующий платеж у вас спишется через 1 день',
+    }
+
+    return messages[message as keyof typeof messages]
+  },
+  new_notification: 'Новое уведомление!',
+  new_title: 'Новое',
+  today: 'сегодня',
 }

@@ -1,0 +1,27 @@
+@use 'src/shared/assets/mixins';
+
+.table {
+  @include mixins.table_styles;
+
+  .tableRow {
+    display: flex;
+    justify-content: space-between;
+  }
+  th {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    width: 100%
+  }
+  .tableContent {
+    display: flex;
+
+    td {
+      width: 100%;
+    }
+  }
+}
+
+.search {
+  margin-bottom: 30px;
+}

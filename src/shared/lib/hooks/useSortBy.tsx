@@ -7,14 +7,17 @@ import { SortDirection } from '@/shared/constants/enum'
 
 export const useSortBy = () => {
   const [sort, setSort] = useState<SortDirection | 'default'>(SortDirection.DESC)
+  const [activeKey, setActiveKey] = useState<string | null>(null)
 
-  const onSortChange = () => {
+  const onSortChange = (key: string) => {
+    setActiveKey(key)
     if (sort === SortDirection.DESC) setSort(SortDirection.ASC)
     if (sort === SortDirection.ASC) setSort('default')
     if (sort === 'default') setSort(SortDirection.DESC)
   }
 
-  const icon = () => {
+  const icon = (key: string) => {
+    if (activeKey !== key) return <Filter />
     if (sort === SortDirection.DESC) return <Polygon />
     if (sort === SortDirection.ASC) return <PolygonUp />
     if (sort === 'default') return <Filter />

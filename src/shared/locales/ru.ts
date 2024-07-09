@@ -269,8 +269,10 @@ export const ru: LangType = {
   end_date_of_subscription: 'Дата окончания подписки',
   amount: 'Сумма',
   price: 'Цена',
+  subscription_text: 'Подписка',
   subscription_type: 'Тип подписки',
   payment_type: 'Тип оплаты',
+  payment_method: 'Способ оплаты',
   show: 'Показать',
   on_page: 'на странице',
 

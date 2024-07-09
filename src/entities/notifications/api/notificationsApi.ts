@@ -19,8 +19,6 @@ export const notificationsApi = createApi({
     }),
     updateNotifications: builder.mutation({
       query: ({ body, accessToken }) => {
-        console.log(body, accessToken)
-
         return {
           method: 'PUT',
           url: '/notifications/mark-as-read',

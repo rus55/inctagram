@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -15,6 +15,7 @@ import { EllipsisIcon } from '@/shared/assets/icons/EllipsisIcon'
 import { OptionsType, Pagination, SelectCustom } from '@/shared/components'
 import { UserBlockStatus, SortDirection } from '@/shared/constants/enum'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
+import usePagination from '@/shared/lib/hooks/usePagination'
 import { useSortBy } from '@/shared/lib/hooks/useSortBy'
 import { ModalBan } from '@/widgets/superAdmin/userList/banUser/ModalBan'
 import { DebouncedInput } from '@/widgets/superAdmin/userList/DebouncedInput'
@@ -40,8 +41,6 @@ export const UserList = () => {
 
   const [users, setUsers] = useState<User[]>([])
   const [valuePagination, setValuePagination] = useState<PaginationModel | null>(null)
-  const [currentPage, setCurrentPage] = useState<number | string>(1)
-  const [pageSize, setPageSize] = useState<number>(10)
   const [valueSearch, setValueSearch] = useState<string>('')
   const [defaultValue, setDefaultValue] = useState<statusType>(() => {
     if (typeof window !== 'undefined') {
@@ -73,6 +72,7 @@ export const UserList = () => {
   const [unblockUser, { isLoading: isLoadingUnBan, isSuccess: isSuccessUnBan }] =
     useUnBanUserMutation()
   const { icon, onSortChange, sort } = useSortBy()
+  const { currentPage, setCurrentPage, pageSize, setPageSize, sortBy, setSortBy } = usePagination()
 
   const options: OptionsType[] = [
     { label: t.user_list.not_selected, value: t.user_list.not_selected },
@@ -108,7 +108,7 @@ export const UserList = () => {
     const initObjectUsers: GetUsersType = {
       pageSize,
       pageNumber: currentPage as number,
-      sortBy: 'createdAt',
+      sortBy,
       sortDirection: sort === 'default' ? SortDirection.DESC : (sort as SortDirection),
       searchTerm: valueSearch,
       statusFilter: status[defaultValue as string] as UserBlockStatus,
@@ -131,6 +131,7 @@ export const UserList = () => {
     sort,
     isSuccessUnBan,
     isLoadingBan,
+    sortBy,
   ])
 
   const onDebounce = (value: string) => {
@@ -174,6 +175,11 @@ export const UserList = () => {
       })
   }
 
+  const onChangeSortBy = (e: React.MouseEvent<HTMLTableCellElement, MouseEvent>, key: string) => {
+    setSortBy(`${e.currentTarget.innerText}`)
+    onSortChange(key)
+  }
+
   useFetchLoader(isLoading || isLoadingBan)
 
   return (
@@ -194,14 +200,17 @@ export const UserList = () => {
         <tbody>
           <tr>
             <th>{t.user_list.id}</th>
-            <th onClick={onSortChange} className="flex items-center gap-1 cursor-pointer">
+            <th
+              onClick={e => onChangeSortBy(e, 'name')}
+              className="flex items-center gap-1 cursor-pointer"
+            >
               {t.user_list.name}
-              {icon()}
+              {icon('name')}
             </th>
             <th>{t.user_list.profile}</th>
-            <th onClick={onSortChange} className={s.date}>
+            <th onClick={e => onChangeSortBy(e, 'date')} className={s.date}>
               {t.user_list.date}
-              {icon()}
+              {icon('date')}
             </th>
           </tr>
           {users.map((user: User) => (

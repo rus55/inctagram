@@ -13,10 +13,14 @@
     align-items: center;
     width: 100%
   }
+
   .tableContent {
     display: flex;
 
     td {
+      display: flex;
+      align-items: center;
+      gap: 7px;
       width: 100%;
     }
   }

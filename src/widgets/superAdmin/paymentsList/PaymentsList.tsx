@@ -4,6 +4,7 @@ import styles from './PaymentsList.module.scss'
 
 import { useGetPaymentsLIstMutation } from '@/entities/users/api/usersApi'
 import { Pagination, Typography } from '@/shared/components'
+import { AvatarSmallView } from '@/shared/components/avatarSmallView'
 import { SortDirection } from '@/shared/constants/enum'
 import { tabType } from '@/shared/constants/tab'
 import { useFetchLoader, useTranslation } from '@/shared/lib'
@@ -79,7 +80,14 @@ export const PaymentsList = () => {
               </tr>
               {pagedData?.items.map(item => (
                 <tr className={styles.tableContent} key={item.id}>
-                  <td>{item.userName}</td>
+                  <td>
+                    <AvatarSmallView
+                      avatarOwner={item.avatars[1]?.url}
+                      width={item.avatars[1]?.width}
+                      height={item.avatars[1]?.height}
+                    />
+                    {item.userName}
+                  </td>
                   <td>{new Date(item.createdAt).toLocaleDateString('ru-RU')}</td>
                   <td>{item.amount}</td>
                   <td>{tabType[item.type]}</td>

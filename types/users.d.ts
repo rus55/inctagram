@@ -148,7 +148,7 @@ type FollowContent = Omit<SuperAdminPagePaymentsByUser, 'items'> & {
 
 type PaymentsAllItems = SuperAdminPayments & {
   userName: string
-  avatars: Avatar
+  avatars: Avatar[]
 }
 
 type PaymentsAll = Omit<SuperAdminPagePaymentsByUser, 'items'> & {

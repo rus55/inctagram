@@ -65,14 +65,20 @@ export const Follow = ({ tab, userId }: Props) => {
             <tbody>
               <tr>
                 <th>{t.user_info.usertId}</th>
-                <th onClick={onSortChange} className="flex items-center gap-1 cursor-pointer">
+                <th
+                  onClick={() => onSortChange('name')}
+                  className="flex items-center gap-1 cursor-pointer"
+                >
                   {t.user_info.userName}
-                  {icon()}
+                  {icon('name')}
                 </th>
                 <th>{t.user_info.profileLink}</th>
-                <th onClick={onSortChange} className="flex items-center gap-1 cursor-pointer">
+                <th
+                  onClick={() => onSortChange('subscription')}
+                  className="flex items-center gap-1 cursor-pointer"
+                >
                   {t.user_info.subscriptionDate}
-                  {icon()}
+                  {icon('subscription')}
                 </th>
               </tr>
               {items.map((item: FollowItems) => (

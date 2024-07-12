@@ -271,7 +271,9 @@ export const en = {
   amount: 'Amount',
   price: 'Price',
   subscription_type: 'Subscription Type',
+  subscription_text: 'Subscription',
   payment_type: 'Payment Type',
+  payment_method: 'Payment Method',
   show: 'Show',
   on_page: 'on page',
 

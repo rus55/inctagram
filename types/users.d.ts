@@ -114,7 +114,7 @@ type SuperAdminPayments = {
   type: SuperAdminType
 }
 
-type SuperAdminItems = {
+type SuperAdminItemsByUser = {
   id: number
   businessAccountId: number
   status: SuperAdminStatus
@@ -127,12 +127,12 @@ type SuperAdminItems = {
   payments: SuperAdminPayments[]
 }
 
-type SuperAdminPagePayments = {
+type SuperAdminPagePaymentsByUser = {
   pagesCount: number
   page: number
   pageSize: number
   totalCount: number
-  items: SuperAdminItems[]
+  items: SuperAdminItemsByUser[]
 }
 
 type FollowItems = {
@@ -142,6 +142,15 @@ type FollowItems = {
   createdAt: Date
 }
 
-type FollowContent = Omit<SuperAdminPagePayments, 'items'> & {
+type FollowContent = Omit<SuperAdminPagePaymentsByUser, 'items'> & {
   items: FollowItems[]
+}
+
+type PaymentsAllItems = SuperAdminPayments & {
+  userName: string
+  avatars: Avatar[]
+}
+
+type PaymentsAll = Omit<SuperAdminPagePaymentsByUser, 'items'> & {
+  items: PaymentsAllItems[]
 }

@@ -115,7 +115,35 @@ export const usersApi = createApi({
         }),
       }),
     }),
-
+    getPaymentsLIst: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              getPayments(
+                pageSize: ${data.pageSize},
+                pageNumber: ${data.pageNumber},
+                sortBy: "${data.sortBy}",
+                sortDirection: ${data.sortDirection},
+                searchTerm: "${data.searchTerm}"
+              ) {
+                pagesCount, page, pageSize, totalCount, items {
+                  id, userId, paymentMethod, amount, currency, createdAt, endDate, type, userName, avatars {
+                    url, width, height, fileSize
+                  }
+                }
+              }
+            }
+          `,
+        }),
+      }),
+    }),
     getPaymentsByUser: builder.mutation({
       query: data => ({
         url: '/graphql',
@@ -226,6 +254,7 @@ export const {
   useDeleteUserMutation,
   useGetUserMutation,
   useGetPostsByUserMutation,
+  useGetPaymentsLIstMutation,
   useGetPaymentsByUserMutation,
   useGetFollowersMutation,
   useGetFollowingMutation,

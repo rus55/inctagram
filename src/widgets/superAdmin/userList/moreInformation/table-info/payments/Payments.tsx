@@ -16,8 +16,8 @@ export const Payments = ({ userId }: Props) => {
 
   const [currentPage, setCurrentPage] = useState<number | string>(1)
   const [pageSize, setPageSize] = useState<number>(10)
-  const [paymentUser, setPaymentUser] = useState<SuperAdminPagePayments | null>(null)
-  const [array, setArray] = useState<SuperAdminItems[]>([])
+  const [paymentUser, setPaymentUser] = useState<SuperAdminPagePaymentsByUser | null>(null)
+  const [array, setArray] = useState<SuperAdminItemsByUser[]>([])
 
   const [data, { isLoading }] = useGetPaymentsByUserMutation()
 
@@ -56,7 +56,9 @@ export const Payments = ({ userId }: Props) => {
 
     const paymentArray = paymentUser?.items
 
-    setArray(getPageItems<SuperAdminItems>(currentPage as number, pageSize, paymentArray || []))
+    setArray(
+      getPageItems<SuperAdminItemsByUser>(currentPage as number, pageSize, paymentArray || [])
+    )
   }, [userId, currentPage, pageSize, setPaymentUser, setArray, paymentUser])
 
   useFetchLoader(isLoading)
@@ -75,7 +77,7 @@ export const Payments = ({ userId }: Props) => {
                   <th>{t.subscription_type}</th>
                   <th>{t.payment_type}</th>
                 </tr>
-                {array.map((item: SuperAdminItems) => (
+                {array.map((item: SuperAdminItemsByUser) => (
                   <tr key={item.id}>
                     <td>{new Date(item.dateOfPayment).toLocaleDateString('ru-RU')}</td>
                     <td>{new Date(item.endDate).toLocaleDateString('ru-RU')}</td>

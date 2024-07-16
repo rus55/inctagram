@@ -1,15 +1,20 @@
-import { Meta } from '@storybook/react'
+import {Meta, StoryObj} from '@storybook/react'
 
-import { Sidebar } from './Sidebar'
+import {Sidebar} from './Sidebar'
 
-export default {
-  title: 'Components/Sidebar',
-  component: Sidebar,
-} as Meta<typeof Sidebar>
 
-export const Default = {
-  // @ts-ignore
-  render: args => {
+const meta = {
+    title: 'Components/Sidebar',
+    component: Sidebar,
+    tags: ['autodocs'],
+
+} satisfies Meta<typeof Sidebar>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Default:Story = {
+  render: () => {
     return (
       <div>
         <div style={{ height: '50px', borderBottom: 'solid 1px #333' }}>Header</div>

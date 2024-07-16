@@ -34,7 +34,7 @@ type Props = {
   updatedAt: string
   isSSR: boolean
 
-  setModalType: (modalType: 'edit' | 'view') => void
+  setModalType?: (modalType: 'edit' | 'view') => void
   openDeleteModal: () => void
 }
 
@@ -66,7 +66,7 @@ export const PostModalHeader = ({
             align={'end'}
           >
             <CustomDropdownItem>
-              <Button variant={'link'} className={s.button} onClick={() => setModalType('edit')}>
+              <Button variant={'link'} className={s.button} onClick={() => setModalType ? setModalType('edit') :''}>
                 <EditPostIcon /> {t.post_view.edit}
               </Button>
             </CustomDropdownItem>

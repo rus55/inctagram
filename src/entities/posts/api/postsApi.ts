@@ -3,6 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { baseQueryWithReauth } from '..'
 
 import { getLargeImage } from '@/shared/lib'
+import {transformPostData} from "@/entities/publicPosts/api/publicPostsApi";
 
 export const postsApi = createApi({
   reducerPath: 'posts',
@@ -118,6 +119,20 @@ export const postsApi = createApi({
       },
       invalidatesTags: [],
     }),
+    getPostOfFollowers: builder.query<PostDataType,any>({
+      query: ({accessToken}) => ({
+        url: `/home/publications-followers`,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }),
+      providesTags: ['Posts'],
+      transformResponse: (response: PostDataType) => {
+        return transformPostData(response)
+      },
+    }),
   }),
 })
 
@@ -127,4 +142,5 @@ export const {
   usePublishPostsMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
+  useGetPostOfFollowersQuery
 } = postsApi

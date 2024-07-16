@@ -4,7 +4,7 @@ export const PublicPostsCardsListUI = ({ items }: { items: PostDataType[] }) => 
   return (
     <div className="flex items-center justify-center ">
       <div className="flex justify-center flex-wrap gap-x-3 ">
-        {items.map((el: PostDataType) => {
+         {items.map((el: PostDataType) => {
           return (
             <PublicPostCard
               key={el.id}

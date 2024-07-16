@@ -35,7 +35,7 @@ type Props = {
   isSSR: boolean
 
   setModalType?: (modalType: 'edit' | 'view') => void
-  openDeleteModal: () => void
+  openDeleteModal?: () => void
 }
 
 type PostModalHeaderProps = Omit<Props, 'description' | 'updatedAt'>
@@ -71,7 +71,7 @@ export const PostModalHeader = ({
               </Button>
             </CustomDropdownItem>
             <CustomDropdownItem>
-              <Button variant={'link'} className={s.button} onClick={() => openDeleteModal()}>
+              <Button variant={'link'} className={s.button} onClick={() => openDeleteModal ? openDeleteModal() :''}>
                 <DeletePostIcon /> {t.post_view.delete}
               </Button>
             </CustomDropdownItem>

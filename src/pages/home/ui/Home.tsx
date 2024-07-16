@@ -3,33 +3,30 @@ import {PostCommentsView} from "@/widgets/postViewModal/UI/PostCommentsView";
 import {useGetPostOfFollowersQuery} from "@/entities/posts/api/postsApi";
 import {useAuth} from "@/shared/lib/hooks/useAuth";
 import {useRouter} from "next/router";
-import {useModal} from "@/shared/lib/hooks/open-or-close-hook";
+import s from './home.module.scss'
+import {useGetPublicPostsQuery} from "@/entities/publicPosts";
 
-function Home()
-{
+function Home() {
     const isSSR = useRouter().asPath.includes('public-posts')
-    const { accessToken } = useAuth()
-    const { data, isLoading, error } = useGetPostOfFollowersQuery({ accessToken })
-    const {
-        isOpen: isDeleteOpen,
-        openModal: openDeleteModal,
-        closeModal: closeDeleteModal,
-    } = useModal()
-    return (
-        <div>
-            {data && data.updatedAt === undefined ? 'Нету друзей' : data &&
-            <PostCommentsView
-                isSSR={isSSR}
-                // setModalType={setModalType}
-                ownerId={data.ownerId}
-                avatarOwner={data.avatarOwner}
-                userName={data.userName}
-                description={data.description}
-                updatedAt={data.updatedAt}
-                openDeleteModal={openDeleteModal}
-                />
-           }
+    const {accessToken} = useAuth()
+    const {data, isLoading, error} = useGetPostOfFollowersQuery({accessToken})
+    const {data: fakePost} = useGetPublicPostsQuery()
 
+    return (
+        <div className={s.container}>
+            <div className={s.block}>{fakePost && fakePost.items.map((el: PostDataType) => {
+                return (
+                    <PostCommentsView
+                        isSSR={isSSR}
+                        ownerId={el.ownerId}
+                        avatarOwner={el.avatarOwner}
+                        userName={el.userName}
+                        description={el.description}
+                        updatedAt={el.updatedAt}
+                    />
+                )
+            })}
+            </div>
         </div>
     )
 }

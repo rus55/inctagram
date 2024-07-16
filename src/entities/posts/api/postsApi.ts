@@ -119,7 +119,7 @@ export const postsApi = createApi({
       },
       invalidatesTags: [],
     }),
-    getPostOfFollowers: builder.query<PostDataType,any>({
+    getPostOfFollowers: builder.query<PublicPostsResponseData,any>({
       query: ({accessToken}) => ({
         url: `/home/publications-followers`,
         method: 'GET',
@@ -129,8 +129,15 @@ export const postsApi = createApi({
         },
       }),
       providesTags: ['Posts'],
-      transformResponse: (response: PostDataType) => {
-        return transformPostData(response)
+      transformResponse: (response: PublicPostsResponseData) => {
+        const publicPostsData = response?.items.map(transformPostData)
+
+        return {
+          items: publicPostsData,
+          totalUsers: response.totalUsers,
+          totalCount: response.totalCount,
+          pageSize: response.pageSize,
+        }
       },
     }),
   }),

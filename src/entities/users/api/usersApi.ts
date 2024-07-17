@@ -173,6 +173,35 @@ export const usersApi = createApi({
         }),
       }),
     }),
+    getPostsList: builder.mutation({
+      query: data => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(`admin@gmail.com:admin`)}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              getPosts(
+                endCursorPostId: ${data.endCursorPostId},
+                searchTerm: "${data.searchTerm}",
+                pageSize: ${data.pageSize},
+                sortBy: "${data.sortBy}",
+                sortDirection: ${data.sortDirection},
+              ) {
+                pagesCount, pageSize, totalCount, items {
+                  images {id, createdAt, url, width, height, fileSize}, id, ownerId, description, createdAt, updatedAt, postOwner {
+                    id, userName, firstName, lastName, avatars {url, width, height, fileSize}
+                  }
+                }
+              }
+            }
+          `,
+        }),
+      }),
+    }),
     getFollowers: builder.mutation({
       query: data => ({
         url: '/graphql',
@@ -256,6 +285,7 @@ export const {
   useGetPostsByUserMutation,
   useGetPaymentsLIstMutation,
   useGetPaymentsByUserMutation,
+  useGetPostsListMutation,
   useGetFollowersMutation,
   useGetFollowingMutation,
   useUnBanUserMutation,

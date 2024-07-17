@@ -26,3 +26,21 @@
     border-bottom: 1px solid var(--color-dark-500);
   }
 }
+
+@mixin table_photo() {
+  border-collapse: separate;
+}
+
+.table td {
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.table tr td:first-child {
+  padding-left: 0;
+}
+
+.table tr td:last-child {
+  padding-right: 0;
+}
+

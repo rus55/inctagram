@@ -154,3 +154,19 @@ type PaymentsAllItems = SuperAdminPayments & {
 type PaymentsAll = Omit<SuperAdminPagePaymentsByUser, 'items'> & {
   items: PaymentsAllItems[]
 }
+
+type PostsAllItems = {
+  images: ImagePost[]
+  id: number
+  ownerId: number
+  description: string
+  createdAt: Date
+  updatedAt: Date
+  postOwner: Pick<ProfileUser, 'id' | 'userName' | 'firstName' | 'lastName'> & {
+    avatars: Avatar
+  }
+}
+
+type PostsAll = Omit<Post, 'items'> & {
+  items: PostsAllItems[]
+}

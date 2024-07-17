@@ -1,10 +1,11 @@
 import {getHeaderWithSidebarLayout} from '@/widgets/layouts'
 import {PostCommentsView} from "@/widgets/postViewModal/UI/PostCommentsView";
-import {useGetPostOfFollowersQuery} from "@/entities/posts/api/postsApi";
+import {useGetPostOfFollowersQuery, useUpdateCommentMutation} from "@/entities/posts/api/postsApi";
 import {useAuth} from "@/shared/lib/hooks/useAuth";
 import {useRouter} from "next/router";
 import s from './home.module.scss'
 import {useGetPublicPostsQuery} from "@/entities/publicPosts";
+import {useEffect} from "react";
 
 function Home() {
     const isSSR = useRouter().asPath.includes('public-posts')

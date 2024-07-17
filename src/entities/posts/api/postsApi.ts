@@ -140,6 +140,27 @@ export const postsApi = createApi({
         }
       },
     }),
+    updateComment: builder.mutation<
+        any,
+        {
+          content: string
+          postId: number
+          accessToken: string | undefined
+        }
+    >({
+      query: ({ content, postId, accessToken }) => {
+        return {
+          url: `/posts/${postId}/comments`,
+          body: { content },
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      invalidatesTags: ['Posts'],
+    }),
   }),
 })
 
@@ -149,5 +170,6 @@ export const {
   usePublishPostsMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
-  useGetPostOfFollowersQuery
+  useGetPostOfFollowersQuery,
+    useUpdateCommentMutation
 } = postsApi

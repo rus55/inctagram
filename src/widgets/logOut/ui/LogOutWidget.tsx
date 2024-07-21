@@ -20,7 +20,7 @@ export const LogOutWidget: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div
       onClick={onClose}
-      className="fixed left-0 top-0 flex justify-center h-screen w-screen items-center bg-dark-500 bg-opacity-60"
+      className="fixed left-0 top-0 flex justify-center h-screen w-screen items-center bg-dark-500 bg-opacity-60 z-10"
     >
       <div
         onClick={e => {

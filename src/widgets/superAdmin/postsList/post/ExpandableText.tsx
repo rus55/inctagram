@@ -1,3 +1,5 @@
+import React from 'react'
+
 const styles = {
   button: {
     cursor: 'pointer',
@@ -10,31 +12,30 @@ const styles = {
 }
 
 type Props = {
-  textRef: React.RefObject<HTMLDivElement>
-  expanded: { [key: number]: boolean }
-  toggleExpand: (id: number) => void
+  isExpanded: boolean
+  setIsExpanded: (value: boolean) => void
   maxLength: number
   text: string
-  id: number
 }
 
-export function ExpandableText({ textRef, maxLength, text, id, expanded, toggleExpand }: Props) {
+function ExpandableText({ maxLength, text, isExpanded, setIsExpanded }: Props) {
   const displayText =
-    !expanded[id] && text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
+    !isExpanded && text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
 
   return (
     <>
       <span
-        ref={textRef}
         style={{ ...styles.text, wordWrap: text.length > maxLength ? 'break-word' : undefined }}
       >
         {displayText}
       </span>
       {text.length > maxLength && (
-        <button onClick={() => toggleExpand(id)} style={styles.button}>
-          {expanded[id] ? 'hide' : 'show all'}
+        <button onClick={() => setIsExpanded(!isExpanded)} style={styles.button}>
+          {isExpanded ? 'hide' : 'show all'}
         </button>
       )}
     </>
   )
 }
+
+export default ExpandableText

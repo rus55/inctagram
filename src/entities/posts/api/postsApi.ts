@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { baseQueryWithReauth } from '..'
 
 import { getLargeImage } from '@/shared/lib'
-import {transformPostData} from "@/entities/publicPosts/api/publicPostsApi";
+import {transformCommentsData, transformPostData} from "@/entities/publicPosts/api/publicPostsApi";
 
 export const postsApi = createApi({
   reducerPath: 'posts',
@@ -161,6 +161,22 @@ export const postsApi = createApi({
       },
       invalidatesTags: ['Posts'],
     }),
+    getComment: builder.query({
+      query: ({ postId}) => {
+        return {
+          method: 'GET',
+          // body: { content },
+          url: `/posts/${postId}/comments`,
+          headers: {
+            'Content-Type': 'application/json',
+            // Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      providesTags: ['Posts'],
+    }),
+
+
   }),
 })
 
@@ -171,5 +187,7 @@ export const {
   useUpdatePostMutation,
   useDeletePostMutation,
   useGetPostOfFollowersQuery,
-    useUpdateCommentMutation
+    useUpdateCommentMutation,
+    useGetCommentQuery
 } = postsApi
+

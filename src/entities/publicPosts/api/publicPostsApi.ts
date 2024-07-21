@@ -14,6 +14,14 @@ export const transformPostData = (el: PostDataType): PostDataType => {
     userName: el.userName,
   }
 }
+export const transformCommentsData = (el: CommentsDataType): CommentsDataType => {
+  return {
+    id: el.id,
+    postId: el.postId,
+    from:el.from,
+    content:el.content
+  }
+}
 
 export const publicPostsApi = createApi({
   reducerPath: 'publicPosts',

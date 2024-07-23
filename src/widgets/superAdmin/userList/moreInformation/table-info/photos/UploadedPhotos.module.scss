@@ -1,16 +1,5 @@
+@use 'src/shared/assets/mixins';
+
 .table {
-  border-collapse: separate;
-}
-
-.table td {
-  padding: 5px;
-  border: 1px solid black;
-}
-
-.table tr td:first-child {
-  padding-left: 0;
-}
-
-.table tr td:last-child {
-  padding-right: 0;
+ @include mixins.table_photo
 }

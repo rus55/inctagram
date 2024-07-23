@@ -15,7 +15,6 @@ import {
   updateZoom,
 } from '@/app/services/cropper-slice'
 import { useAppDispatch } from '@/shared/lib'
-import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'
 import s from '@/widgets/addPostModal/AddPostModal.module.scss'
 import {
   AddNewPhotoTool,

@@ -340,5 +340,7 @@ export const en = {
   new_notification: 'New notification!',
   new_title: 'new',
   today: 'today',
+  hide: 'hide',
+  show_more: 'show more',
 }
 export type LangType = typeof en

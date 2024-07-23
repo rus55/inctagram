@@ -341,5 +341,5 @@ export const ru: LangType = {
   new_title: 'Новое',
   today: 'сегодня',
   hide: 'скрыть',
-  show_more: 'показать'
+  show_more: 'показать',
 }

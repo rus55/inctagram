@@ -340,4 +340,6 @@ export const ru: LangType = {
   new_notification: 'Новое уведомление!',
   new_title: 'Новое',
   today: 'сегодня',
+  hide: 'скрыть',
+  show_more: 'показать'
 }

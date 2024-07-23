@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from "@/shared/lib";
 
 const styles = {
   button: {
@@ -19,6 +20,7 @@ type Props = {
 }
 
 function ExpandableText({ maxLength, text, isExpanded, setIsExpanded }: Props) {
+  const { t } = useTranslation()
   const displayText =
     !isExpanded && text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
 
@@ -31,7 +33,7 @@ function ExpandableText({ maxLength, text, isExpanded, setIsExpanded }: Props) {
       </span>
       {text.length > maxLength && (
         <button onClick={() => setIsExpanded(!isExpanded)} style={styles.button}>
-          {isExpanded ? 'hide' : 'show all'}
+          {isExpanded ? t.hide : t.show_more}
         </button>
       )}
     </>

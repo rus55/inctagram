@@ -7,7 +7,7 @@ const httpLink = new HttpLink({
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://inctagram.work/api/v1/graphql`,
+  uri: `wss://inctagram.work/api/v1/graphql`,
   options: {
     reconnect: true,
   },

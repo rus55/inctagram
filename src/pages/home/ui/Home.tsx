@@ -1,5 +1,5 @@
 import {getHeaderWithSidebarLayout} from '@/widgets/layouts'
-import {PostCommentsView} from "@/widgets/postViewModal/UI/PostCommentsView";
+import {PostCommentsView, PostModalHeader} from "@/widgets/postViewModal/UI/PostCommentsView";
 import {useGetPostOfFollowersQuery, useUpdateCommentMutation} from "@/entities/posts/api/postsApi";
 import {useAuth} from "@/shared/lib/hooks/useAuth";
 import {useRouter} from "next/router";
@@ -8,7 +8,7 @@ import {useGetPublicPostsQuery} from "@/entities/publicPosts";
 import {useEffect} from "react";
 
 function Home() {
-    const isSSR = useRouter().asPath.includes('public-posts')
+    const isSSR = useRouter().asPath.includes('home')
     const {accessToken} = useAuth()
     const {data, isLoading, error} = useGetPostOfFollowersQuery({accessToken})
     const {data: fakePost} = useGetPublicPostsQuery()

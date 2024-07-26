@@ -144,7 +144,7 @@ export const postsApi = createApi({
         any,
         {
           content: string
-          postId: number
+          postId: number | undefined
           accessToken: string | undefined
         }
     >({
@@ -162,14 +162,25 @@ export const postsApi = createApi({
       invalidatesTags: ['Posts'],
     }),
     getComment: builder.query({
-      query: ({ postId}) => {
+      query: ({ postId,accessToken}) => {
         return {
           method: 'GET',
-          // body: { content },
           url: `/posts/${postId}/comments`,
           headers: {
             'Content-Type': 'application/json',
-            // Authorization: 'Bearer ' + accessToken,
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      providesTags: ['Posts'],
+    }),
+    getCommentUnAuthorization: builder.query({
+      query: ({ postId}) => {
+        return {
+          method: 'GET',
+          url: `/public-posts/${postId}/comments`,
+          headers: {
+            'Content-Type': 'application/json',
           },
         }
       },
@@ -188,6 +199,7 @@ export const {
   useDeletePostMutation,
   useGetPostOfFollowersQuery,
     useUpdateCommentMutation,
-    useGetCommentQuery
+    useGetCommentQuery,
+    useGetCommentUnAuthorizationQuery
 } = postsApi
 

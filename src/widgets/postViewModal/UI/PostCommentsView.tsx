@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import s from './PostCommentsView.module.scss'
 
-import {BookmarkOutlineIcon, DeletePostIcon, EditPostIcon, HeartOutline, HeartRed, TelegramIcon,} from '@/shared/assets'
+import {BookmarkOutlineIcon, DeletePostIcon, EditPostIcon, HeartOutline, TelegramIcon,} from '@/shared/assets'
 import ThreeDots from '@/shared/assets/icons/three-dots.png'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import PersonImg4 from '@/shared/assets/PersonImg4.png'
@@ -12,11 +12,17 @@ import {AvatarSmallView} from '@/shared/components/avatarSmallView'
 import {Scroller} from '@/shared/components/scroller/Scroller'
 import {useFormatDate, useTranslation} from '@/shared/lib'
 import {useAuth} from '@/shared/lib/hooks/useAuth'
-import {useGetCommentQuery, useUpdateCommentMutation} from "@/entities/posts/api/postsApi";
-import {useEffect, useState} from "react";
+import {
+    useGetCommentQuery,
+    useGetCommentUnAuthorizationQuery,
+    useUpdateCommentMutation
+} from "@/entities/posts/api/postsApi";
+import {useState} from "react";
 import {InputField} from "@/shared";
+import {PostAuthorizedAndUnauthorized} from "@/widgets/postViewModal/UI/PostAuthorizedAndUnauthorized";
 
 type Props = {
+    id?:number
     ownerId: number
     avatarOwner: string
     userName: string
@@ -76,6 +82,7 @@ export const PostModalHeader = ({
 }
 
 export const PostCommentsView = ({
+
                                      ownerId,
                                      avatarOwner,
                                      userName,
@@ -84,15 +91,19 @@ export const PostCommentsView = ({
                                      isSSR,
                                      setModalType,
                                      openDeleteModal,
+                                    id
                                  }: Props) => {
+
     const {t} = useTranslation()
     const {formatDate} = useFormatDate(t.lg)
     const [updateComments, {isLoading: isPostLoading}] = useUpdateCommentMutation()
     const {accessToken} = useAuth()
-    const [dataComments,setDataComments] = useState()
     const [comment, setComment] = useState<string>('')
-    const { data, isLoading, error } = useGetCommentQuery({postId: 12  })
-if (!data)return null
+    const { data:dataAuth } = useGetCommentQuery({postId: 12,accessToken  })
+    const { data, isLoading, error } = useGetCommentUnAuthorizationQuery({postId: id})
+const {isAuth} = useAuth()
+
+
     const submitClickHandler = ()=>{
         setComment('')
         updateComments({
@@ -103,6 +114,7 @@ if (!data)return null
     }
     return (
         <div>
+
             <div className={s.headerOnMiddle}>
                 <PostModalHeader
                     ownerId={ownerId}
@@ -118,6 +130,7 @@ if (!data)return null
                 <Scroller className={s.scrollContent}>
                     <div className={s.post}>
                         <AvatarSmallView avatarOwner={avatarOwner}/>
+
                         <div className={s.postContent}>
                             <Link href={`/public-posts/${ownerId}`}>
                                 <Typography as="span" variant="bold_text_14">
@@ -133,44 +146,10 @@ if (!data)return null
                             </Typography>
                         </div>
                     </div>
-                    {data.items.map((el:any)=> (
-                    <>
-                        <div className={s.comment}>
-                            <div className={s.post}>
-                                <Image
-                                    src={PersonImg3}
-                                    width={36}
-                                    height={36}
-                                    alt="Owner's avatar"
-                                    className={s.smallAvatarPost}
-                                />
-                                <div className={s.postContent}>
-                                    <Link href={'#'}>
-                                        <Typography as="span" variant="bold_text_14">
-                                            {el.from.username}
-                                        </Typography>
-                                    </Link>
-                                    &nbsp;&nbsp;
-                                    <Typography as="span" variant="medium_text_14">
-                                        {el.content}
-                                    </Typography>
-                                    <div>
-                                        <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
-                                            <TimeAgo updatedAt={updatedAt} lg={t.lg}/>
-                                        </Typography>
-                                        &nbsp;&nbsp;
-                                        <Typography as="span" variant="bold_text_14" className={s.updatedAt}>
-                                            {t.post_view.answer}
-                                        </Typography>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={s.like}>
-                                <HeartOutline/>
-                            </div>
-                        </div>
-                    </>
-                    ))}
+                    {isAuth ? dataAuth &&dataAuth.items.map((el:any)=> (
+                        <PostAuthorizedAndUnauthorized key={el.postId}  el={el} t={t} updatedAt={updatedAt}/>
+                    )) : data && data.items.map((el:any)=> (
+                        <PostAuthorizedAndUnauthorized key={el.postId} el={el} t={t} updatedAt={updatedAt}/>))}
 
                     {/*<div className={s.comment}>*/}
                     {/*    <div className={s.post}>*/}
@@ -288,14 +267,16 @@ if (!data)return null
                         {formatDate(updatedAt)}
                     </Typography>
                 </div>
+
                 <div className={s.addComment}>
-                    <InputField type={"email"} value={comment}
+                    <InputField disabled={!isAuth}
+                        type={"email"} value={comment}
                                 onChange={e => setComment(e.target.value)}
                                 placeholder={'sdsd'}
                                 className={s.updatedAt}
                                 label={''}/>
                     {/*{t.post_view.add_comment}*/}
-                    <Button variant="link" onClick={submitClickHandler}>{t.post_view.publish}</Button>
+                    <Button  disabled={!isAuth} variant="link" onClick={submitClickHandler}>{t.post_view.publish}</Button>
                 </div>
             </footer>
         </div>

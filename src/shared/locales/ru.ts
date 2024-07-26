@@ -342,4 +342,6 @@ export const ru: LangType = {
   today: 'сегодня',
   hide: 'скрыть',
   show_more: 'показать',
+  sendMessage: 'Написать',
+  publications: 'Публикаций',
 }

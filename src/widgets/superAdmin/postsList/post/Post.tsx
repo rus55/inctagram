@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 import { Navigation, Pagination, Scrollbar } from 'swiper/modules'
@@ -101,4 +101,4 @@ const Post = ({ ownerId, profileAvatar, imagesUrl, description, userName, update
   )
 }
 
-export default React.memo(Post)
+export default memo(Post)

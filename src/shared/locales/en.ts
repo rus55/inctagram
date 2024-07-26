@@ -342,5 +342,7 @@ export const en = {
   today: 'today',
   hide: 'hide',
   show_more: 'show more',
+  sendMessage: 'Send Message',
+  publications: 'Publications',
 }
 export type LangType = typeof en

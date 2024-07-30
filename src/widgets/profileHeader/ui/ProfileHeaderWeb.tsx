@@ -3,14 +3,14 @@ import Link from 'next/link'
 
 import s from './ProfileHeaderWeb.module.scss'
 
+import { useGetUserNameQuery } from '@/entities/users-follow/api/usersFollowApi'
 import { DefaultProfileImg } from '@/shared/assets'
 import { Typography, Button } from '@/shared/components'
 import { ModalOfFollowers } from '@/shared/components/followers-modal'
 import { ModalOfFollowing } from '@/shared/components/following-modal'
 import { useTranslation } from '@/shared/lib'
-import { cn } from '@/shared/lib/utils'
-import { useGetUserNameQuery } from '@/entities/users-follow/api/usersFollowApi'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
+import { cn } from '@/shared/lib/utils'
 
 type Props = {
   data: PublicProfile

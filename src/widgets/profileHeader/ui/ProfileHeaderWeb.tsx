@@ -9,8 +9,8 @@ import { ModalOfFollowers } from '@/shared/components/followers-modal'
 import { ModalOfFollowing } from '@/shared/components/following-modal'
 import { useTranslation } from '@/shared/lib'
 import { cn } from '@/shared/lib/utils'
-import { useGetUserNameQuery } from "@/entities/users-follow/api/usersFollowApi";
-import { useAuth } from "@/shared/lib/hooks/useAuth";
+import { useGetUserNameQuery } from '@/entities/users-follow/api/usersFollowApi'
+import { useAuth } from '@/shared/lib/hooks/useAuth'
 
 type Props = {
   data: PublicProfile

@@ -119,7 +119,6 @@ export const PostsList = () => {
       </div>
       <div className="flex items-center justify-center ">
         <div className="flex justify-between flex-wrap gap-y-3.5 ">
-          {/*<Post posts={loadedPosts?.items || []} />*/}
           {loadedPosts?.items.map(post => (
             <Post
               key={post.id}

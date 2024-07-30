@@ -100,8 +100,8 @@ export const PaymentsList = () => {
             totalCount={pagedData?.totalCount}
             currentPage={currentPage as number}
             pageSize={pageSize}
-            onPageSizeChange={value => setPageSize(value)}
-            onCurrentPageChange={value => setCurrentPage(value)}
+            onPageSizeChange={setPageSize}
+            onCurrentPageChange={setCurrentPage}
             options={[
               { label: '10', value: '10' },
               { label: '20', value: '20' },

@@ -3,11 +3,13 @@ import Link from 'next/link'
 
 import s from './ProfileHeaderWeb.module.scss'
 
+import { useGetUserNameQuery } from '@/entities/users-follow/api/usersFollowApi'
 import { DefaultProfileImg } from '@/shared/assets'
 import { Typography, Button } from '@/shared/components'
 import { ModalOfFollowers } from '@/shared/components/followers-modal'
 import { ModalOfFollowing } from '@/shared/components/following-modal'
 import { useTranslation } from '@/shared/lib'
+import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { cn } from '@/shared/lib/utils'
 
 type Props = {
@@ -18,6 +20,9 @@ type Props = {
 }
 export const ProfileHeaderWeb = ({ data, isAuth, userId, totalCount }: Props) => {
   const { t } = useTranslation()
+  const { accessToken } = useAuth()
+
+  const { data: dataUser } = useGetUserNameQuery({ name: data?.userName, accessToken })
 
   return (
     <div className={s.containerColumn}>
@@ -57,7 +62,7 @@ export const ProfileHeaderWeb = ({ data, isAuth, userId, totalCount }: Props) =>
           <div className={s.progressProfile}>
             <div className={s.info}>
               <Typography className={s.progressInfoValue} variant="bold_text_14">
-                87
+                {dataUser?.followingCount}
               </Typography>
               <div className={'max-lg:hidden'}>
                 <ModalOfFollowing />
@@ -71,7 +76,7 @@ export const ProfileHeaderWeb = ({ data, isAuth, userId, totalCount }: Props) =>
             </div>
             <div className={s.info}>
               <Typography className={s.progressInfoValue} variant="bold_text_14">
-                112
+                {dataUser?.followersCount}
               </Typography>
               <div className={'max-lg:hidden'}>
                 <ModalOfFollowers />

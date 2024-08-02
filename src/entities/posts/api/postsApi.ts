@@ -186,7 +186,28 @@ export const postsApi = createApi({
       },
       providesTags: ['Posts'],
     }),
-
+    likeComment: builder.mutation<
+        any,
+        {
+          likeStatus:string
+          postId: number | undefined
+          commentId:number
+          accessToken: string | undefined
+        }
+    >({
+      query: ({ commentId, postId, accessToken,likeStatus }) => {
+        return {
+          url: `/posts/${postId}/comments/${commentId}/like-status`,
+          body: { likeStatus },
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      invalidatesTags: ['Posts'],
+    }),
 
   }),
 })
@@ -200,6 +221,7 @@ export const {
   useGetPostOfFollowersQuery,
     useUpdateCommentMutation,
     useGetCommentQuery,
-    useGetCommentUnAuthorizationQuery
+    useGetCommentUnAuthorizationQuery,
+    useLikeCommentMutation
 } = postsApi
 

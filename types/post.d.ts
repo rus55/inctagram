@@ -55,6 +55,7 @@ type PostDataType = {
     owner: Owner
     avatarOwner: string
     updatedAt: string
+    createdAt:string
 }
 
 type CommentsDataType = {
@@ -62,5 +63,7 @@ type CommentsDataType = {
     postId: number
     from:From
     content:string
+    likeCount:number
+    isLiked:boolean
 
 }

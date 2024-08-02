@@ -3,13 +3,34 @@ import Image from "next/image";
 import PersonImg3 from "@/shared/assets/PersonImg3.png";
 import Link from "next/link";
 import {TimeAgo, Typography} from "@/shared/components";
-import {HeartOutline} from "@/shared/assets";
+import {HeartOutline, HeartRed} from "@/shared/assets";
+import {useLikeCommentMutation} from "@/entities/posts/api/postsApi";
+import {useAuth} from "@/shared/lib/hooks/useAuth";
+import {useCreateAnswerMutation} from "@/entities/comments/api/commentsApi";
+
 type Props ={
-    el:any
-    updatedAt:any
+    el:CommentsDataType
+    updatedAt:string
     t:any
+    setIsAnswer?:any
 }
-export const PostAuthorizedAndUnauthorized = ({t,updatedAt,el}:Props) => {
+export const PostAuthorizedAndUnauthorized = ({t,updatedAt,el,setIsAnswer}:Props) => {
+    const [createLike, {isLoading: isPostLoading}] = useLikeCommentMutation()
+
+    const {accessToken} = useAuth()
+    const submitClickHandler = ()=>{
+        createLike({
+            commentId: el.id,
+            likeStatus:"LIKE",
+            postId: el.postId,
+            accessToken,
+        })
+    }
+
+    const clickHandlerAnswer = ()=>{
+        setIsAnswer(true)
+    }
+
     return (
         <>
 
@@ -37,14 +58,18 @@ export const PostAuthorizedAndUnauthorized = ({t,updatedAt,el}:Props) => {
                                 <TimeAgo updatedAt={updatedAt} lg={t.lg}/>
                             </Typography>
                             &nbsp;&nbsp;
-                            <Typography as="span" variant="bold_text_14" className={s.updatedAt}>
+                            <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
+                                Like: {el.likeCount}
+                            </Typography>
+                            &nbsp;&nbsp;
+                            <Typography onClick={clickHandlerAnswer} as="span" variant="bold_text_14" className={s.updatedAt}>
                                 {t.post_view.answer}
                             </Typography>
                         </div>
                     </div>
                 </div>
                 <div className={s.like}>
-                    <HeartOutline/>
+                    <div onClick={submitClickHandler}>{el.isLiked ? <HeartRed/> :<HeartOutline/> }</div>
                 </div>
             </div>
         </>

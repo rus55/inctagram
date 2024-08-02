@@ -20,9 +20,11 @@ import {
 import {useState} from "react";
 import {InputField} from "@/shared";
 import {PostAuthorizedAndUnauthorized} from "@/widgets/postViewModal/UI/PostAuthorizedAndUnauthorized";
+import {useCreateAnswerMutation} from "@/entities/comments/api/commentsApi";
+import {ShowModalType} from "@/widgets/superAdmin/userList/UserList";
 
 type Props = {
-    id?:number
+    id?: number
     ownerId: number
     avatarOwner: string
     userName: string
@@ -91,26 +93,33 @@ export const PostCommentsView = ({
                                      isSSR,
                                      setModalType,
                                      openDeleteModal,
-                                    id
+                                     id
                                  }: Props) => {
 
     const {t} = useTranslation()
     const {formatDate} = useFormatDate(t.lg)
     const [updateComments, {isLoading: isPostLoading}] = useUpdateCommentMutation()
+    const [createAnswer, {isLoading: isCreateAnswer}] = useCreateAnswerMutation()
     const {accessToken} = useAuth()
     const [comment, setComment] = useState<string>('')
-    const { data:dataAuth } = useGetCommentQuery({postId: 12,accessToken  })
-    const { data, isLoading, error } = useGetCommentUnAuthorizationQuery({postId: id})
-const {isAuth} = useAuth()
-
-
-    const submitClickHandler = ()=>{
+    const {data: dataAuth} = useGetCommentQuery({postId: 12, accessToken})
+    const {data, isLoading, error} = useGetCommentUnAuthorizationQuery({postId: id})
+    const {isAuth} = useAuth()
+    const [isAnswer, setIsAnswer] = useState<boolean>(false)
+    const submitClickHandler = () => {
         setComment('')
-        updateComments({
+        if (isAnswer){
+            createAnswer({
+                content: comment,
+                commentId: dataAuth.items.map((el: CommentsDataType) => el.id),
+                postId: 12,
+                accessToken
+            })
+        }else updateComments({
             content: comment,
             postId: 12,
             accessToken,
-          })
+        })
     }
     return (
         <div>
@@ -146,84 +155,10 @@ const {isAuth} = useAuth()
                             </Typography>
                         </div>
                     </div>
-                    {isAuth ? dataAuth &&dataAuth.items.map((el:any)=> (
-                        <PostAuthorizedAndUnauthorized key={el.postId}  el={el} t={t} updatedAt={updatedAt}/>
-                    )) : data && data.items.map((el:any)=> (
+                    {isAuth ? dataAuth && dataAuth.items.map((el: CommentsDataType) => (
+                        <PostAuthorizedAndUnauthorized setIsAnswer={setIsAnswer} key={el.postId} el={el} t={t} updatedAt={updatedAt} />
+                    )) : data && data.items.map((el: any) => (
                         <PostAuthorizedAndUnauthorized key={el.postId} el={el} t={t} updatedAt={updatedAt}/>))}
-
-                    {/*<div className={s.comment}>*/}
-                    {/*    <div className={s.post}>*/}
-                    {/*        <Image*/}
-                    {/*            src={PersonImg4}*/}
-                    {/*            width={36}*/}
-                    {/*            height={36}*/}
-                    {/*            alt="Owner's avatar"*/}
-                    {/*            className={s.smallAvatarPost}*/}
-                    {/*        />*/}
-                    {/*        <div className={s.postContent}>*/}
-                    {/*            <Link href={'#'}>*/}
-                    {/*                <Typography as="span" variant="bold_text_14">*/}
-                    {/*                    URLProfiele*/}
-                    {/*                </Typography>*/}
-                    {/*            </Link>{' '}*/}
-                    {/*            <Typography as="span" variant="medium_text_14">*/}
-                    {/*                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor*/}
-                    {/*                incididunt ut labore et dolore magna aliqua*/}
-                    {/*            </Typography>*/}
-                    {/*            <div>*/}
-                    {/*                <Typography as="span" variant="medium_text_14" className={s.updatedAt}>*/}
-                    {/*                    <TimeAgo updatedAt={updatedAt} lg={t.lg}/>*/}
-                    {/*                </Typography>{' '}*/}
-                    {/*                &nbsp;&nbsp;*/}
-                    {/*                <Typography as="span" variant="bold_text_14" className={s.updatedAt}>*/}
-                    {/*                    {t.post_view.like}: 1*/}
-                    {/*                </Typography>*/}
-                    {/*                &nbsp;&nbsp;*/}
-                    {/*                <Typography as="span" variant="bold_text_14" className={s.updatedAt}>*/}
-                    {/*                    {t.post_view.answer}*/}
-                    {/*                </Typography>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*    <div className={s.like}>*/}
-                    {/*        <HeartRed/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    {/*<div className={s.comment}>*/}
-                    {/*    <div className={s.post}>*/}
-                    {/*        <Image*/}
-                    {/*            src={PersonImg3}*/}
-                    {/*            width={36}*/}
-                    {/*            height={36}*/}
-                    {/*            alt="Owner's avatar"*/}
-                    {/*            className={s.smallAvatarPost}*/}
-                    {/*        />*/}
-                    {/*        <div className={s.postContent}>*/}
-                    {/*            <Link href={'#'}>*/}
-                    {/*                <Typography as="span" variant="bold_text_14">*/}
-                    {/*                    URLProfiele*/}
-                    {/*                </Typography>*/}
-                    {/*            </Link>*/}
-                    {/*            &nbsp;&nbsp;*/}
-                    {/*            <Typography as="span" variant="medium_text_14">*/}
-                    {/*                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor*/}
-                    {/*                incididunt ut labore et dolore magna aliqua*/}
-                    {/*            </Typography>*/}
-                    {/*            <div>*/}
-                    {/*                <Typography as="span" variant="medium_text_14" className={s.updatedAt}>*/}
-                    {/*                    <TimeAgo updatedAt={updatedAt} lg={t.lg}/>*/}
-                    {/*                </Typography>*/}
-                    {/*                &nbsp;&nbsp;*/}
-                    {/*                <Typography as="span" variant="bold_text_14" className={s.updatedAt}>*/}
-                    {/*                    {t.post_view.answer}*/}
-                    {/*                </Typography>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*    <div className={s.like}>*/}
-                    {/*        <HeartOutline/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </Scroller>
             </main>
             <footer>
@@ -270,13 +205,14 @@ const {isAuth} = useAuth()
 
                 <div className={s.addComment}>
                     <InputField disabled={!isAuth}
-                        type={"email"} value={comment}
+                                type={"email"} value={isAnswer ? `@${userName},` + comment : comment}
                                 onChange={e => setComment(e.target.value)}
                                 placeholder={'sdsd'}
                                 className={s.updatedAt}
                                 label={''}/>
                     {/*{t.post_view.add_comment}*/}
-                    <Button  disabled={!isAuth} variant="link" onClick={submitClickHandler}>{t.post_view.publish}</Button>
+                    <Button disabled={!isAuth} variant="link"
+                            onClick={submitClickHandler}>{t.post_view.publish}</Button>
                 </div>
             </footer>
         </div>

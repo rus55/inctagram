@@ -1,8 +1,9 @@
 .container {
   display: flex;
+justify-content: flex-end;
   width: 60rem;
   height: 50rem;
-justify-content: flex-end;
+
 .block {
   width: 40rem;
   padding: 2rem;

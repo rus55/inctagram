@@ -13,7 +13,6 @@
 }
 
 .main {
-
   max-width: 500px;
   height: 321px;
   word-break: break-all;
@@ -90,8 +89,42 @@
 }
 
 .updatedAt {
-
   color: var(--color-light-900);
+}
+
+.InputField{
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.answer{
+  overflow-x: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  max-width: 480px;
+  margin-left: 3rem;
+}
+
+.answerNone{
+  display: none;
+}
+
+.buttonAnswer{
+  display: flex;
+  justify-content: space-evenly;
+
+  width: 14rem;
+  padding-bottom: 1px;
+
+font-size: 0.8rem;
+  color: gray;
+
+  &:hover{
+    color: gainsboro;
+  }
 }
 
 .comment {

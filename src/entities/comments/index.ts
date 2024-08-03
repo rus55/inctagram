@@ -5,5 +5,5 @@ export {
   useUpdateCommentMutation,
   useGetCommentQuery,
   useGetCommentUnAuthorizationQuery,
-  useLikeCommentMutation
+  useLikeCommentMutation,
 } from './api/commentsApi'

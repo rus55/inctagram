@@ -30,7 +30,7 @@ export const ModalContentUI = ({ data }: Props) => {
       <div className={s.commentsContainer}>
         {data && (
           <PostCommentsView
-              id={data.id}
+            id={data.id}
             isSSR={isSSR}
             setModalType={() => ({})}
             ownerId={data.ownerId}

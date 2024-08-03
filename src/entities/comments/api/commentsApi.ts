@@ -1,19 +1,19 @@
-import {createApi} from '@reduxjs/toolkit/query/react'
-import {baseQueryWithReauth} from "@/entities/posts";
+import { createApi } from '@reduxjs/toolkit/query/react'
 
+import { baseQueryWithReauth } from '@/entities/posts'
 
 export const commentsApi = createApi({
-  reducerPath: 'posts',
+  reducerPath: 'comments',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Posts', 'PublicPosts'],
+  tagTypes: ['Comments', 'PublicComments'],
   endpoints: builder => ({
     updateComment: builder.mutation<
-        any,
-        {
-          content: string
-          postId: number | undefined
-          accessToken: string | undefined
-        }
+      any,
+      {
+        content: string
+        postId: number | undefined
+        accessToken: string | undefined
+      }
     >({
       query: ({ content, postId, accessToken }) => {
         return {
@@ -26,10 +26,10 @@ export const commentsApi = createApi({
           },
         }
       },
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Comments'],
     }),
     getComment: builder.query({
-      query: ({ postId,accessToken}) => {
+      query: ({ postId, accessToken }) => {
         return {
           method: 'GET',
           url: `/posts/${postId}/comments`,
@@ -39,10 +39,10 @@ export const commentsApi = createApi({
           },
         }
       },
-      providesTags: ['Posts'],
+      providesTags: ['Comments'],
     }),
     getCommentUnAuthorization: builder.query({
-      query: ({ postId}) => {
+      query: ({ postId }) => {
         return {
           method: 'GET',
           url: `/public-posts/${postId}/comments`,
@@ -51,18 +51,32 @@ export const commentsApi = createApi({
           },
         }
       },
-      providesTags: ['Posts'],
+      providesTags: ['Comments'],
+    }),
+
+    getAnswer: builder.query({
+      query: ({ postId, commentId, accessToken }) => {
+        return {
+          method: 'GET',
+          url: `/posts/${postId}/comments/${commentId}/answers`,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      providesTags: ['Comments'],
     }),
     likeComment: builder.mutation<
-        any,
-        {
-          likeStatus:string
-          postId: number | undefined
-          commentId:number
-          accessToken: string | undefined
-        }
+      any,
+      {
+        likeStatus: string
+        postId: number | undefined
+        commentId: number
+        accessToken: string | undefined
+      }
     >({
-      query: ({ commentId, postId, accessToken,likeStatus }) => {
+      query: ({ commentId, postId, accessToken, likeStatus }) => {
         return {
           url: `/posts/${postId}/comments/${commentId}/like-status`,
           body: { likeStatus },
@@ -73,18 +87,41 @@ export const commentsApi = createApi({
           },
         }
       },
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Comments'],
+    }),
+    likeAnswer: builder.mutation<
+      any,
+      {
+        likeStatus: string
+        postId: number | undefined
+        commentId: number
+        accessToken: string | undefined
+        answerId: number
+      }
+    >({
+      query: ({ commentId, answerId, postId, accessToken, likeStatus }) => {
+        return {
+          url: `/posts/${postId}/comments/${commentId}/answers/${answerId}/like-status`,
+          body: { likeStatus },
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      invalidatesTags: ['Comments'],
     }),
     createAnswer: builder.mutation<
-        any,
-        {
-          content: string | undefined
-          commentId:number
-          postId: number | undefined
-          accessToken: string | undefined
-        }
+      any,
+      {
+        content: string | undefined
+        commentId: number | undefined
+        postId: number | undefined
+        accessToken: string | undefined
+      }
     >({
-      query: ({ content, postId, accessToken,commentId }) => {
+      query: ({ content, postId, accessToken, commentId }) => {
         return {
           url: `/posts/${postId}/comments/${commentId}/answers`,
           body: { content },
@@ -95,16 +132,17 @@ export const commentsApi = createApi({
           },
         }
       },
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Comments'],
     }),
   }),
 })
 
 export const {
-    useUpdateCommentMutation,
-    useGetCommentQuery,
-    useGetCommentUnAuthorizationQuery,
-    useLikeCommentMutation,
-    useCreateAnswerMutation
+  useUpdateCommentMutation,
+  useGetCommentQuery,
+  useGetCommentUnAuthorizationQuery,
+  useLikeCommentMutation,
+  useCreateAnswerMutation,
+  useGetAnswerQuery,
+  useLikeAnswerMutation,
 } = commentsApi
-

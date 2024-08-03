@@ -43,7 +43,10 @@ type From = {
     avatars: Avatar[];
 }
 type Avatar = {
-
+    url: string,
+    width: number,
+    height: number,
+    fileSize: number
 }
 
 type PostDataType = {
@@ -65,5 +68,6 @@ type CommentsDataType = {
     content:string
     likeCount:number
     isLiked:boolean
+    createdAt:string
 
 }

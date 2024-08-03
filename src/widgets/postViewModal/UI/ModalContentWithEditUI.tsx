@@ -106,6 +106,7 @@ export const ModalContentWithEditUI = ({
             <div className={s.commentsContainer}>
               {data && (
                 <PostCommentsView
+                  id={data.id}
                   isSSR={isSSR}
                   setModalType={setModalType}
                   ownerId={data.ownerId}

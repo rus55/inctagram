@@ -1,19 +1,13 @@
-import { Dispatch, useEffect, useState } from 'react'
+import {Dispatch, useEffect, useState} from 'react'
 
-import { useRouter } from 'next/router'
-
-import { useBanUserMutation } from '@/entities/users/api/usersApi'
-import { InputField } from '@/shared'
-import { Button, OptionsType, SelectCustom, Typography } from '@/shared/components'
-import { Modal } from '@/shared/components/modals'
-import { useTranslation } from '@/shared/lib'
-import {
-  BanType,
-  getValueBanByLang,
-  getValueByLang,
-  statusType,
-} from '@/widgets/superAdmin/userList/getValueByLang'
-import { ShowModalBanType } from '@/widgets/superAdmin/userList/UserList'
+import {useRouter} from 'next/router'
+import {InputField} from '@/shared'
+import {Button, OptionsType, SelectCustom, Typography} from '@/shared/components'
+import {Modal} from '@/shared/components/modals'
+import {useTranslation} from '@/shared/lib'
+import {BanType, getValueBanByLang,} from '@/widgets/superAdmin/userList/getValueByLang'
+import {ShowModalBanType} from '@/widgets/superAdmin/userList/UserList'
+import {useUnBanUserMutation} from "@/entities/users/api/usersApi";
 
 type Props = {
   isOpen: boolean
@@ -34,7 +28,8 @@ export const ModalBan = ({
 }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
-
+  const [unblockUser, { isLoading: isLoadingUnBan, isSuccess: isSuccessUnBan }] =
+      useUnBanUserMutation()
   const [selectedOption, setSelectedOption] = useState<BanType>('' as BanType)
 
   const [inputValue, setInputValue] = useState('')
@@ -56,9 +51,13 @@ export const ModalBan = ({
     if (id) {
       if (selectedOption === t.user_list.another_reason) {
         banUser({ banReason: inputValue, userId: id })
-      } else {
+      } else  {
         banUser({ banReason: selectedOption, userId: id })
       }
+    }else {
+      unblockUser({
+        userId:id
+      })
     }
     !isLoadingBan &&
       setShowModalBan({

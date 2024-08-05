@@ -1,10 +1,23 @@
 .container {
-  display: flex;
-justify-content: flex-end;
-  width: 60rem;
-  height: 50rem;
 
-.block {
-  width: 40rem;
-  padding: 2rem;
-}}
+  .block {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    //grid-column-gap: 16px;
+padding-left: 15rem;
+
+    .postCommentsView {
+      //grid-column: 2;
+    }
+  }
+}
+
+.Imglist {
+  border-bottom-right-radius: 1px;
+  border-top-right-radius: 1px;
+  padding-top: 1.5rem;
+  grid-column: 1;
+  height: 33.4rem;
+  width: 25rem;
+
+}

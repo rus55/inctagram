@@ -134,6 +134,7 @@ export const PostCommentsView = ({
         postId: id,
         accessToken,
       })
+      setIsAnswer(false)
     } else
       updateComments({
         content: comment,
@@ -211,7 +212,7 @@ export const PostCommentsView = ({
               ))}
         </Scroller>
       </main>
-      <footer>
+      <footer className={s.footer}>
         <div className={s.share}>
           <div className={s.shareIcons}>
             <div className={s.shareIconsStart}>
@@ -259,7 +260,7 @@ export const PostCommentsView = ({
             type={'text'}
             value={comment}
             onChange={e => setComment(e.target.value)}
-            placeholder={'Add a comment...'}
+            placeholder={t.post_view.add_comment}
             className={s.InputField}
           />
           {/*<input*/}

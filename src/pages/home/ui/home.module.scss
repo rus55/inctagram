@@ -1,23 +1,18 @@
 .container {
-
   .block {
     display: grid;
     grid-template-columns: auto 1fr;
-    //grid-column-gap: 16px;
-padding-left: 15rem;
-
-    .postCommentsView {
-      //grid-column: 2;
-    }
+    padding-left: 15rem;
   }
 }
 
 .Imglist {
-  border-bottom-right-radius: 1px;
-  border-top-right-radius: 1px;
-  padding-top: 1.5rem;
   grid-column: 1;
-  height: 33.4rem;
-  width: 25rem;
 
+  width: 25rem;
+  height: 33.4rem;
+  padding-top: 1.5rem;
+
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
 }

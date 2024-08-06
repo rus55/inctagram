@@ -73,7 +73,6 @@ export const UserList = () => {
   const [unblockUser, { isLoading: isLoadingUnBan, isSuccess: isSuccessUnBan }] =
     useUnBanUserMutation()
   const { icon, onSortChange, sort } = useSortBy()
-
   const options: OptionsType[] = [
     { label: t.user_list.not_selected, value: t.user_list.not_selected },
     { label: t.user_list.blocked, value: t.user_list.blocked },
@@ -205,33 +204,30 @@ export const UserList = () => {
             </th>
           </tr>
           {users.map((user: User) => (
-            <tr key={user.id}>
-              <td className="flex">
-                {user.userBan && <BlockIcon className="mr-2" />} {user.id}
-              </td>
-              <td>{user.userName}</td>
-              <td>{user.profile.userName}</td>
-              <td className="flex justify-between">
-                {new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}
-                <ModalAction
-                  trigger={<EllipsisIcon className={s.ellipsis} />}
-                  userId={user.id}
-                  userName={user.userName}
-                  addValuesUser={addValuesUser}
-                  addValuesBanUser={addValuesUnBanUser}
-                  valueBanUser={valueBanUser}
-                />
-              </td>
-            </tr>
+            <>
+              <tr key={user.id}>
+                <td className="flex">
+                  {user.userBan && <BlockIcon className="mr-2" />} {user.id}
+                </td>
+                <td>{user.userName}</td>
+                <td>{user.profile.userName}</td>
+                <td className="flex justify-between">
+                  {new Date(user.profile.createdAt).toLocaleDateString('ru-RU')}
+                  <ModalAction
+                    trigger={<EllipsisIcon className={s.ellipsis} />}
+                    userId={user.id}
+                    banUsers={user.userBan}
+                    userName={user.userName}
+                    addValuesUser={addValuesUser}
+                    addValuesBanUser={addValuesUnBanUser}
+                    valueBanUser={valueBanUser}
+                  />
+                </td>
+              </tr>
+            </>
           ))}
         </tbody>
       </table>
-      <ModalDelete
-        onDeleteUser={onDeleteUser}
-        isOpen={showModalDelete.isShow}
-        userName={showModalDelete.userName}
-        setShowModalDelete={setShowModalDelete}
-      />
       <ModalUnBan
         isLoadingUnBan={isLoadingUnBan}
         unblockUser={unblockUser}
@@ -245,6 +241,13 @@ export const UserList = () => {
         isOpen={showModalBan.isShow}
         userName={showModalBan.userName}
         setShowModalBan={setShowModalBan}
+      />
+
+      <ModalDelete
+        onDeleteUser={onDeleteUser}
+        isOpen={showModalDelete.isShow}
+        userName={showModalDelete.userName}
+        setShowModalDelete={setShowModalDelete}
       />
 
       <Pagination

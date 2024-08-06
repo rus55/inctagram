@@ -9,7 +9,6 @@ import s from './HeaderWithSidebarLayout.module.scss'
 
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { Sidebar } from '@/shared/components/sidebar'
-import { useAdmin } from '@/shared/lib/hooks/useAdmin'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { useClient } from '@/shared/lib/hooks/useClient'
 
@@ -21,7 +20,6 @@ export const HeaderWithSidebarLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
   const { isAuth } = useAuth()
   const { isClient } = useClient()
-  // const { isAdmin } = useAdmin()
 
   useEffect(() => {
     if (!isAuth && isClient) router.push('/signin')

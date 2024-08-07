@@ -12,8 +12,7 @@ import {useGetPostOfFollowersQuery} from "@/entities/posts/api/postsApi";
 function Home() {
   const isSSR = useRouter().asPath.includes('home')
   const { accessToken } = useAuth()
-  // const { data: fakePost } = useGetPostOfFollowersQuery({accessToken})
-  const { data: fakePost } = useGetPublicPostsQuery()
+  const { data: fakePost } = useGetPostOfFollowersQuery({accessToken})
 
   return (
     <div className={s.container}>

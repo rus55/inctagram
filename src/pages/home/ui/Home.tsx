@@ -6,6 +6,8 @@ import { useGetPublicPostsQuery } from '@/entities/publicPosts'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { getHeaderWithSidebarLayout } from '@/widgets/layouts'
 import { PostCommentsView } from '@/widgets/postViewModal/UI/PostCommentsView'
+import {SwiperSlider} from "@/shared/components";
+import {useGetPostOfFollowersQuery} from "@/entities/posts/api/postsApi";
 
 function Home() {
   const isSSR = useRouter().asPath.includes('home')
@@ -20,12 +22,8 @@ function Home() {
           fakePost.items.map((el: PostDataType) => {
             return (
               <>
-                <img
-                  className={s.Imglist}
-                  src={el.images.map(el => el.url).toString()}
-                  alt="photo"
-                />
-                <div className={s.postCommentsView}>
+                  <div className={s.imageContainer}>{fakePost && <SwiperSlider imagesUrl={el && el.images} />}</div>
+                  <div className={s.postCommentsView}>
                   <PostCommentsView
                     key={el.id}
                     isSSR={isSSR}

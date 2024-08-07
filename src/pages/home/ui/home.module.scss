@@ -5,14 +5,17 @@
     padding-left: 15rem;
   }
 }
+.imageContainer {
+  width: 509px;
+  height: 621px;
 
-.Imglist {
-  grid-column: 1;
+  padding-bottom: 24px;
+}
+.postCommentsView{
+  flex-basis: 450px;
+  flex-grow: 1;
 
-  width: 25rem;
-  height: 33.4rem;
-  padding-top: 1.5rem;
-
-  border-top-right-radius: 1px;
-  border-bottom-right-radius: 1px;
+  max-width: 500px;
+  min-height: 350px;
+  padding-top: 20px;
 }

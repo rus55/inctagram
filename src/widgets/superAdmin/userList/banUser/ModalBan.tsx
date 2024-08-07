@@ -1,13 +1,15 @@
-import {Dispatch, useEffect, useState} from 'react'
+import { Dispatch, useEffect, useState } from 'react'
 
-import {useRouter} from 'next/router'
-import {InputField} from '@/shared'
-import {Button, OptionsType, SelectCustom, Typography} from '@/shared/components'
-import {Modal} from '@/shared/components/modals'
-import {useTranslation} from '@/shared/lib'
-import {BanType, getValueBanByLang,} from '@/widgets/superAdmin/userList/getValueByLang'
-import {ShowModalBanType} from '@/widgets/superAdmin/userList/UserList'
+import { useRouter } from 'next/router'
+
 import s from './modalBan.module.scss'
+
+import { InputField } from '@/shared'
+import { Button, OptionsType, SelectCustom, Typography } from '@/shared/components'
+import { Modal } from '@/shared/components/modals'
+import { useTranslation } from '@/shared/lib'
+import { BanType, getValueBanByLang } from '@/widgets/superAdmin/userList/getValueByLang'
+import { ShowModalBanType } from '@/widgets/superAdmin/userList/UserList'
 
 type Props = {
   isOpen: boolean

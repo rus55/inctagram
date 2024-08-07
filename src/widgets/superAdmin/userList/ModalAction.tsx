@@ -15,6 +15,7 @@ type Props = {
   addValuesUser: (id: number, name: string) => void
   addValuesBanUser: (id: number, name: string) => void
   valueBanUser: any
+    userBan:any
 }
 
 export const ModalAction = ({
@@ -24,6 +25,7 @@ export const ModalAction = ({
   addValuesUser,
   valueBanUser,
   addValuesBanUser,
+                                userBan
 }: Props) => {
   const { t } = useTranslation()
 
@@ -45,19 +47,21 @@ export const ModalAction = ({
         title={t.user_list.delete_user}
         onClick={addValuesForDeleteUser}
       />
-      <CustomDropdownItemWithIcon
-        variant={'regular_text_14'}
-        icon={<BlockIcon />}
-        onClick={addValuesForBanUser}
-        title={t.user_list.ban}
-      />
+        {userBan ?
+            <CustomDropdownItemWithIcon
+                variant={'regular_text_14'}
+                title={t.user_list.unBan}
+                onClick={addValuesForUnBanUser}
+            />
+           : <CustomDropdownItemWithIcon
+                variant={'regular_text_14'}
+                icon={<BlockIcon />}
+                onClick={addValuesForBanUser}
+                title={t.user_list.ban}
+            />    }
 
-      <CustomDropdownItemWithIcon
-        variant={'regular_text_14'}
-        icon={<BlockIcon />}
-        title={t.user_list.unBan}
-        onClick={addValuesForUnBanUser}
-      />
+
+
       <Link
         href={{
           pathname: '/more-information',

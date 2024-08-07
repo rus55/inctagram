@@ -1,19 +1,13 @@
-import { Dispatch, useEffect, useState } from 'react'
+import {Dispatch, useEffect, useState} from 'react'
 
-import { useRouter } from 'next/router'
-
-import { useBanUserMutation } from '@/entities/users/api/usersApi'
-import { InputField } from '@/shared'
-import { Button, OptionsType, SelectCustom, Typography } from '@/shared/components'
-import { Modal } from '@/shared/components/modals'
-import { useTranslation } from '@/shared/lib'
-import {
-  BanType,
-  getValueBanByLang,
-  getValueByLang,
-  statusType,
-} from '@/widgets/superAdmin/userList/getValueByLang'
-import { ShowModalBanType } from '@/widgets/superAdmin/userList/UserList'
+import {useRouter} from 'next/router'
+import {InputField} from '@/shared'
+import {Button, OptionsType, SelectCustom, Typography} from '@/shared/components'
+import {Modal} from '@/shared/components/modals'
+import {useTranslation} from '@/shared/lib'
+import {BanType, getValueBanByLang,} from '@/widgets/superAdmin/userList/getValueByLang'
+import {ShowModalBanType} from '@/widgets/superAdmin/userList/UserList'
+import s from './modalBan.module.scss'
 
 type Props = {
   isOpen: boolean
@@ -37,7 +31,7 @@ export const ModalBan = ({
 
   const [selectedOption, setSelectedOption] = useState<BanType>('' as BanType)
 
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState<string>('')
 
   const handleSelectChange = (value: BanType) => {
     const currentValue = getValueBanByLang(value)
@@ -111,7 +105,7 @@ export const ModalBan = ({
       )}
 
       <div className="flex justify-between mt-13">
-        <Button onClick={onCloseModal} style={{ width: 60 }}>
+        <Button onClick={onCloseModal} className={s.button}>
           <Typography variant="h3">{t.user_list.no}</Typography>
         </Button>
         <Button onClick={onBanUser} variant={'outline'} style={{ width: 60 }}>

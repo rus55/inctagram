@@ -216,6 +216,7 @@ export const UserList = () => {
                 <ModalAction
                   trigger={<EllipsisIcon className={s.ellipsis} />}
                   userId={user.id}
+                  userBan={user.userBan}
                   userName={user.userName}
                   addValuesUser={addValuesUser}
                   addValuesBanUser={addValuesUnBanUser}

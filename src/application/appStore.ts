@@ -3,9 +3,9 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 import { authReducer, authApi } from '../entities/auth'
 
-import { appSlice, postSlice } from '@/app/services'
-import { adminSlice } from '@/app/services/admin-slice'
-import { croppersSlice } from '@/app/services/cropper-slice'
+import { appSlice, postSlice } from '@/application/services'
+import { adminSlice } from '@/application/services/admin-slice'
+import { croppersSlice } from '@/application/services/cropper-slice'
 import { countriesApi } from '@/entities/countries/'
 import { devicesApi } from "@/entities/device's"
 import { notificationsApi } from '@/entities/notifications/api/notificationsApi'

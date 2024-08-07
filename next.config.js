@@ -1,4 +1,6 @@
 const { NextFederationPlugin } = require('@module-federation/nextjs-mf')
+
+const { dependencies: deps } = require('./package.json')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -13,6 +15,18 @@ const nextConfig = {
         remotes: {
           messengerApp: `messenger_app@http://localhost:3001/remoteEntry.js`,
         },
+        // shared: {
+        //   react: {
+        //     eager: true,
+        //     requiredVersion: deps['react'],
+        //     singleton: true,
+        //   },
+        //   'react-dom': {
+        //     eager: true,
+        //     requiredVersion: deps['react-dom'],
+        //     singleton: true,
+        //   },
+        // },
         filename: 'remoteEntry.js',
       })
     )

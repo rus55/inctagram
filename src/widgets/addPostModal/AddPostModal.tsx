@@ -2,14 +2,14 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import s from './AddPostModal.module.scss'
 
-import { useAppSelector } from '@/app/appStore'
+import { useAppSelector } from '@/application/appStore'
 import {
   addNewPhoto,
   removeAllPhotos,
   setOriginalImage,
   updateFilterClass,
   updatePhotos,
-} from '@/app/services/cropper-slice'
+} from '@/application/services/cropper-slice'
 import { DefaultProfileImg } from '@/shared/assets'
 import { Button } from '@/shared/components'
 import { Modal } from '@/shared/components/modals'

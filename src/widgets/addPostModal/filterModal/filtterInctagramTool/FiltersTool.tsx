@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import s from './FiltersTool.module.scss'
 
-import { updateFilterClass } from '@/app/services/cropper-slice'
+import { updateFilterClass } from '@/application/services/cropper-slice'
 import { Typography } from '@/shared/components'
 import { useAppDispatch } from '@/shared/lib'
 

@@ -1,7 +1,3 @@
-import './styles/globals.css'
-import './styles/index.scss'
-import './styles/nprogress.css'
-
 import '@fontsource/inter/300.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
@@ -31,7 +27,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-export function App({ Component, pageProps }: AppPropsWithLayout) {
+function App({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? (page => page)
 
@@ -50,3 +46,5 @@ export function App({ Component, pageProps }: AppPropsWithLayout) {
     </ReduxProvider>
   )
 }
+
+export default App

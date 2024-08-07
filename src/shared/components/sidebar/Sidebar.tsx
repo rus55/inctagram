@@ -20,7 +20,7 @@ import {
 
 import s from './Sidebar.module.scss'
 
-import { addNewPhoto } from '@/app/services/cropper-slice'
+import { addNewPhoto } from '@/application/services/cropper-slice'
 import { useAppDispatch, useTranslation } from '@/shared/lib'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
 import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'

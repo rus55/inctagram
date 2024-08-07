@@ -9,7 +9,7 @@ import { SignUpAuth } from '../signUpAuth/SignUpAuth'
 
 import styles from './SignUpWidget.module.scss'
 
-import { AppDispatch } from '@/app/appStore'
+import { AppDispatch } from '@/application/appStore'
 import { useRegistrationMutation } from '@/entities/auth'
 import { setUser } from '@/entities/auth/model/authSlice'
 import { AUTH_URLS } from '@/shared'

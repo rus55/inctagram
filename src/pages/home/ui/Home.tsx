@@ -2,17 +2,16 @@ import { useRouter } from 'next/router'
 
 import s from './home.module.scss'
 
-import { useGetPublicPostsQuery } from '@/entities/publicPosts'
+import { useGetPostOfFollowersQuery } from '@/entities/posts/api/postsApi'
+import { SwiperSlider } from '@/shared/components'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { getHeaderWithSidebarLayout } from '@/widgets/layouts'
 import { PostCommentsView } from '@/widgets/postViewModal/UI/PostCommentsView'
-import {SwiperSlider} from "@/shared/components";
-import {useGetPostOfFollowersQuery} from "@/entities/posts/api/postsApi";
 
 function Home() {
   const isSSR = useRouter().asPath.includes('home')
   const { accessToken } = useAuth()
-  const { data: fakePost } = useGetPostOfFollowersQuery({accessToken})
+  const { data: fakePost } = useGetPostOfFollowersQuery({ accessToken })
 
   return (
     <div className={s.container}>
@@ -21,8 +20,10 @@ function Home() {
           fakePost.items.map((el: PostDataType) => {
             return (
               <>
-                  <div className={s.imageContainer}>{fakePost && <SwiperSlider imagesUrl={el && el.images} />}</div>
-                  <div className={s.postCommentsView}>
+                <div className={s.imageContainer}>
+                  {fakePost && <SwiperSlider imagesUrl={el && el.images} />}
+                </div>
+                <div className={s.postCommentsView}>
                   <PostCommentsView
                     key={el.id}
                     isSSR={isSSR}

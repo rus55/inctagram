@@ -1,22 +1,17 @@
-.container {
-  .block {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    padding-left: 15rem;
-  }
-}
-
-.imageContainer {
-  width: 509px;
-  height: 621px;
-  padding-bottom: 24px;
-}
 
 .postCommentsView {
-  flex-basis: 450px;
-  flex-grow: 1;
-
-  max-width: 500px;
+  //flex-basis: 450px;
+  //flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  width: 50rem;
+  //max-width: 500px;
   min-height: 350px;
   padding-top: 20px;
+}
+
+@media (width <= 576px) {
+  .postCommentsView {
+    justify-content: flex-start;
+  }
 }

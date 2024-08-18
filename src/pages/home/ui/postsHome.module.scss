@@ -12,9 +12,21 @@
 }
 
 .main {
+
   max-width: 500px;
   height: 321px;
   word-break: break-all;
+}
+@media (width <= 576px) {
+  .main {
+   width: 24rem;
+  }
+}
+
+
+.img {
+  min-width: 30.2rem;
+  min-height: 27.8rem;
 }
 
 @media (width <= 1024px) {
@@ -30,18 +42,27 @@
 .scrollContent {
   width: 100%;
 
-  background-color: var(--color-dark-300);
+  //background-color: var(--color-dark-300);
 }
 
 .footer {
+
+  padding-top: 4rem;
   width: 30.5rem;
-  background-color: var(--color-dark-300);
+  //background-color: var(--color-dark-300);
 }
 
 @media (width <= 576px) {
   .main {
     height: 190px;
   }
+  @media (width <= 576px) {
+    .buttonPublish {
+      width: 24rem;
+    }
+  }
+
+
 
   .scrollContent {
     background-color: transparent;
@@ -59,28 +80,9 @@
 }
 
 .smallAvatarPost {
-  min-width: 36px;
-  min-height: 36px;
-  padding-top: 0.3rem;
-  margin-left: 1.5rem;
+  margin-top: 10px;
   transform: translateY(5px);
   border-radius: 50%;
-}
-.smallAvatarPostHome{
-  min-width: 36px;
-  min-height: 36px;
-  padding-top: 0.3rem;
-  //margin-left: 1.5rem;
-  transform: translateY(5px);
-  border-radius: 50%;
-}
-.postContent{
-  //border: 1px solid red;
-  margin-right: 5rem;
-}
-.postContentHome{
-  margin-right: 1rem;
-  width: 30rem;
 }
 
 .dots {
@@ -98,10 +100,11 @@
 }
 
 .imageContainer {
-  width: 710px;
-  height: 491px;
-  padding-right: 13.9rem;
-  //padding-bottom: 24px;
+  //border: 1px solid red;
+  width: 100%;
+  height: 100%;
+  //padding-right: 1rem;
+  //padding-bottom: 1rem;
 }
 
 .button {
@@ -125,7 +128,8 @@
   display: initial;
   color: var(--color-light-900);
 }
-.allComment{
+
+.allComment {
   //padding: 5px;
   padding-left: 1.5rem;
   color: var(--color-light-900);
@@ -136,6 +140,7 @@
   background-color: transparent;
   border: none;
   outline: none;
+  word-wrap: break-word;
 }
 
 .answer {
@@ -191,10 +196,14 @@
   align-items: center;
   justify-content: space-between;
 }
+.commentIcon{
+  cursor: pointer;
+}
 
 .shareIconsStart {
   display: flex;
-  column-gap: 26px;
+  column-gap: 15px;
+  margin-bottom: 10px;
   align-items: center;
 }
 

@@ -26,7 +26,9 @@ export const ModalContentUI = ({ data }: Props) => {
           />
         </div>
       )}
-      <div className={s.imageContainer}>{data && <SwiperSlider imagesUrl={data.images}  postsHome={false}/>}</div>
+      <div className={s.imageContainer}>
+        {data && <SwiperSlider imagesUrl={data.images} postsHome={false} />}
+      </div>
       <div className={s.commentsContainer}>
         {data && (
           <PostCommentsView

@@ -26,7 +26,8 @@ import PersonImg4 from '@/shared/assets/PersonImg4.png'
 import {
   Button,
   CustomDropdown,
-  CustomDropdownItem, SwiperSlider,
+  CustomDropdownItem,
+  SwiperSlider,
   Textarea,
   TimeAgo,
   Typography,
@@ -113,7 +114,6 @@ export const PostCommentsView = ({
   setModalType,
   openDeleteModal,
   id,
-
 }: Props) => {
   const { t } = useTranslation()
   const { formatDate } = useFormatDate(t.lg)
@@ -193,7 +193,8 @@ export const PostCommentsView = ({
                     el={el}
                     t={t}
                     updatedAt={updatedAt}
-                   oneComments={false}/>
+                    oneComments={false}
+                  />
                   <AnswerData
                     commentId={commentId}
                     accessToken={accessToken}
@@ -210,7 +211,8 @@ export const PostCommentsView = ({
                   el={el}
                   t={t}
                   updatedAt={updatedAt}
-                 oneComments={false}/>
+                  oneComments={false}
+                />
               ))}
         </Scroller>
       </main>

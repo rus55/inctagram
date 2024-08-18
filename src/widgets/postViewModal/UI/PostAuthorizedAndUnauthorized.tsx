@@ -18,10 +18,17 @@ type Props = {
   setIsAnswer?: (isAnswer: boolean) => void
   setCommentId?: (answerId: number) => void
   id?: number
-  oneComments:boolean
-  home?:boolean
+  oneComments: boolean
+  home?: boolean
 }
-export const PostAuthorizedAndUnauthorized = ({ t, el, setIsAnswer, setCommentId,oneComments,home }: Props) => {
+export const PostAuthorizedAndUnauthorized = ({
+  t,
+  el,
+  setIsAnswer,
+  setCommentId,
+  oneComments,
+  home,
+}: Props) => {
   const { accessToken } = useAuth()
   const [createLike, { isLoading: isPostLoading }] = useLikeCommentMutation()
   const [like, setLike] = useState<'LIKE' | 'NONE'>('NONE')
@@ -55,15 +62,14 @@ export const PostAuthorizedAndUnauthorized = ({ t, el, setIsAnswer, setCommentId
     <div className={s.contentBlock}>
       <div className={s.comment}>
         <Image
-            src={PersonImg3}
-            width={36}
-            height={36}
-            alt="Owner's avatar"
-            className={home ? s.smallAvatarPostHome : s.smallAvatarPost}
+          src={PersonImg3}
+          width={36}
+          height={36}
+          alt="Owner's avatar"
+          className={home ? s.smallAvatarPostHome : s.smallAvatarPost}
         />
         <div className={s.post}>
-
-          <div className={home ? s.postContentHome :s.postContent }>
+          <div className={home ? s.postContentHome : s.postContent}>
             <Link href={'#'}>
               <Typography as="span" variant="bold_text_14">
                 {el.from.username}
@@ -73,35 +79,38 @@ export const PostAuthorizedAndUnauthorized = ({ t, el, setIsAnswer, setCommentId
             <Typography as="span" variant="medium_text_14">
               {el.content}
             </Typography>
-
-              {oneComments ? '' : (
-                  <>
-                  <div>
-                    <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
-                      <TimeAgo updatedAt={el.createdAt} lg={t.lg} />
-                    </Typography>
-                    &nbsp;&nbsp;
+            {oneComments ? (
+              ''
+            ) : (
+              <>
+                <div>
+                  <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
+                    <TimeAgo updatedAt={el.createdAt} lg={t.lg} />
+                  </Typography>
+                  &nbsp;&nbsp;
                   <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
                     Like: {el.likeCount}
                   </Typography>
-                    &nbsp;&nbsp;
-                    <Typography
-                        onClick={clickHandlerAnswer}
-                        as="span"
-                        variant="bold_text_14"
-                        className={s.updatedAt}
-                    >
-                      {t.post_view.answer}
-                    </Typography>
-                  </div>
-                  </>
-              )}
+                  &nbsp;&nbsp;
+                  <Typography
+                    onClick={clickHandlerAnswer}
+                    as="span"
+                    variant="bold_text_14"
+                    className={s.updatedAt}
+                  >
+                    {t.post_view.answer}
+                  </Typography>
+                </div>
+              </>
+            )}
           </div>
         </div>
-        {oneComments ? '' : (
-            <div className={s.like}>
-              <div onClick={submitClickHandler}>{el.isLiked ? <HeartRed /> : <HeartOutline />}</div>
-            </div>
+        {oneComments ? (
+          ''
+        ) : (
+          <div className={s.like}>
+            <div onClick={submitClickHandler}>{el.isLiked ? <HeartRed /> : <HeartOutline />}</div>
+          </div>
         )}
       </div>
     </div>

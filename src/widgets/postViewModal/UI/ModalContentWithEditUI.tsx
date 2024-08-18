@@ -101,7 +101,9 @@ export const ModalContentWithEditUI = ({
               </div>
             )}
             <div className={s.imageContainer}>
-              {data && data.id === modalId && <SwiperSlider imagesUrl={data.images} />}
+              {data && data.id === modalId && (
+                <SwiperSlider imagesUrl={data.images} postsHome={false} />
+              )}
             </div>
             <div className={s.commentsContainer}>
               {data && (

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Navigation, Pagination, Scrollbar } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
+
 import s from '../../../pages/home/ui/postsHome.module.scss'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -10,10 +11,10 @@ import './swiper-slider.scss'
 
 type Props = {
   imagesUrl: ImagesUrlData[]
-  postsHome:boolean
+  postsHome: boolean
 }
 
-export const SwiperSlider = ({ imagesUrl,postsHome }: Props) => {
+export const SwiperSlider = ({ imagesUrl, postsHome }: Props) => {
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar]}
@@ -28,9 +29,13 @@ export const SwiperSlider = ({ imagesUrl,postsHome }: Props) => {
         if (image.width !== 1440) return null
 
         return (
-          <SwiperSlide className={postsHome ? s.img : ''}  style={{ position: 'relative'}} key={index}>
+          <SwiperSlide
+            className={postsHome ? s.img : ''}
+            style={{ position: 'relative' }}
+            key={index}
+          >
             <Image
-              style={{ objectFit: 'contain'}}
+              style={{ objectFit: 'contain' }}
               priority
               fill
               sizes="70vw"

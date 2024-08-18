@@ -12,17 +12,16 @@
 }
 
 .main {
-
   max-width: 500px;
   height: 321px;
   word-break: break-all;
 }
+
 @media (width <= 576px) {
   .main {
-   width: 24rem;
+    width: 24rem;
   }
 }
-
 
 .img {
   min-width: 30.2rem;
@@ -41,31 +40,26 @@
 
 .scrollContent {
   width: 100%;
-
-  //background-color: var(--color-dark-300);
 }
 
 .footer {
-
-  padding-top: 4rem;
   width: 30.5rem;
-  //background-color: var(--color-dark-300);
+  padding-top: 4rem;
 }
 
 @media (width <= 576px) {
   .main {
     height: 190px;
   }
+
+  .scrollContent {
+    background-color: transparent;
+  }
+
   @media (width <= 576px) {
     .buttonPublish {
       width: 24rem;
     }
-  }
-
-
-
-  .scrollContent {
-    background-color: transparent;
   }
 }
 
@@ -80,8 +74,8 @@
 }
 
 .smallAvatarPost {
-  margin-top: 10px;
   transform: translateY(5px);
+  margin-top: 10px;
   border-radius: 50%;
 }
 
@@ -100,11 +94,8 @@
 }
 
 .imageContainer {
-  //border: 1px solid red;
   width: 100%;
   height: 100%;
-  //padding-right: 1rem;
-  //padding-bottom: 1rem;
 }
 
 .button {
@@ -124,23 +115,21 @@
 }
 
 .updatedAt {
-  padding-left: 5px;
   display: initial;
+  padding-left: 5px;
   color: var(--color-light-900);
 }
 
 .allComment {
-  //padding: 5px;
   padding-left: 1.5rem;
   color: var(--color-light-900);
-
 }
 
 .InputField {
+  word-wrap: break-word;
   background-color: transparent;
   border: none;
   outline: none;
-  word-wrap: break-word;
 }
 
 .answer {
@@ -196,15 +185,16 @@
   align-items: center;
   justify-content: space-between;
 }
-.commentIcon{
+
+.commentIcon {
   cursor: pointer;
 }
 
 .shareIconsStart {
   display: flex;
   column-gap: 15px;
-  margin-bottom: 10px;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .likeCounter {

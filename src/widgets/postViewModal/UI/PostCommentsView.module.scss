@@ -29,7 +29,6 @@
 
 .scrollContent {
   width: 100%;
-
   background-color: var(--color-dark-300);
 }
 
@@ -59,28 +58,33 @@
 }
 
 .smallAvatarPost {
+  transform: translateY(5px);
+
   min-width: 36px;
   min-height: 36px;
-  padding-top: 0.3rem;
   margin-left: 1.5rem;
-  transform: translateY(5px);
+  padding-top: 0.3rem;
+
   border-radius: 50%;
 }
-.smallAvatarPostHome{
+
+.smallAvatarPostHome {
+  transform: translateY(5px);
+
   min-width: 36px;
   min-height: 36px;
   padding-top: 0.3rem;
-  //margin-left: 1.5rem;
-  transform: translateY(5px);
+
   border-radius: 50%;
 }
-.postContent{
-  //border: 1px solid red;
+
+.postContent {
   margin-right: 5rem;
 }
-.postContentHome{
-  margin-right: 1rem;
+
+.postContentHome {
   width: 30rem;
+  margin-right: 1rem;
 }
 
 .dots {
@@ -101,7 +105,6 @@
   width: 710px;
   height: 491px;
   padding-right: 13.9rem;
-  //padding-bottom: 24px;
 }
 
 .button {
@@ -121,15 +124,14 @@
 }
 
 .updatedAt {
-  padding-left: 5px;
   display: initial;
+  padding-left: 5px;
   color: var(--color-light-900);
 }
-.allComment{
-  //padding: 5px;
+
+.allComment {
   padding-left: 1.5rem;
   color: var(--color-light-900);
-
 }
 
 .InputField {

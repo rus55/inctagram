@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,17 +8,20 @@ import s from './postsHome.module.scss'
 
 import { useGetCommentQuery, useUpdateCommentMutation } from '@/entities/comments'
 import { useCreateAnswerMutation } from '@/entities/comments/api/commentsApi'
-import { BookmarkOutlineIcon, HeartOutline, TelegramIcon } from '@/shared/assets'
+import {BookmarkOutlineIcon, EditPostIcon, HeartOutline, TelegramIcon} from '@/shared/assets'
 import { CommentIcon } from '@/shared/assets/icons/CommentIcon'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import PersonImg4 from '@/shared/assets/PersonImg4.png'
-import { Button, SwiperSlider, TimeAgo, Typography } from '@/shared/components'
+import {Button, SwiperSlider, Textarea, TimeAgo, Typography} from '@/shared/components'
 import { AvatarSmallView } from '@/shared/components/avatarSmallView'
 import { useFormatDate, useTranslation } from '@/shared/lib'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { PostViewModal } from '@/widgets/postViewModal'
 import { PostAuthorizedAndUnauthorized } from '@/widgets/postViewModal/UI/PostAuthorizedAndUnauthorized'
+import {PostModalHeader} from "@/widgets/postViewModal/UI/PostCommentsView";
+import ThreeDots from "@/shared/assets/icons/three-dots.png";
+import {InputField} from "@/shared";
 
 type Props = {
   id?: number
@@ -88,7 +91,6 @@ export const PostsHome = ({
 
         <div className={s.post}>
           <AvatarSmallView avatarOwner={avatarOwner} />
-
           <div className={s.postContent}>
             <Link href={`/public-posts/${ownerId}`}>
               <Typography as="span" variant="bold_text_14">
@@ -100,6 +102,7 @@ export const PostsHome = ({
             </Link>
             &nbsp;&nbsp;
           </div>
+          <Image src={ThreeDots} alt="menu-trigger" className={s.dots} />
         </div>
         <div className={s.imageContainer}>
           <SwiperSlider imagesUrl={img} postsHome />
@@ -109,7 +112,7 @@ export const PostsHome = ({
         <div className={s.share}>
           <div className={s.shareIcons}>
             <div className={s.shareIconsStart}>
-              <HeartOutline size={24} />
+              <HeartOutline size={20} />
               <div
                 className={s.commentIcon}
                 onClick={
@@ -122,9 +125,9 @@ export const PostsHome = ({
               >
                 <CommentIcon />
               </div>
-              <TelegramIcon />
+              <TelegramIcon size={15} />
             </div>
-            <BookmarkOutlineIcon />
+            <BookmarkOutlineIcon size={16}/>
           </div>
           {dataAuth && dataAuth.items.length > 0 && (
             <>
@@ -174,9 +177,18 @@ export const PostsHome = ({
           </Typography>
         </div>
         <Typography variant="medium_text_14" className={s.allComment}>
-          vui all comments ({dataAuth && dataAuth.totalCount})
+          <div    onClick={
+            openModal
+                ? () => {
+                  openModal(id)
+                }
+                : () => null
+          }>
+            {t.home.View_all_comments} ({dataAuth && dataAuth.totalCount})
+          </div>
         </Typography>
         <div className={s.addComment}>
+
           <input
             disabled={!isAuth}
             type={'text'}
@@ -185,8 +197,8 @@ export const PostsHome = ({
             placeholder={t.post_view.add_comment}
             className={s.InputField}
           />
+
           <Button
-            className={s.buttonPublish}
             disabled={!isAuth}
             variant="link"
             onClick={submitClickHandler}
@@ -195,6 +207,7 @@ export const PostsHome = ({
           </Button>
         </div>
       </footer>
+      <div className={s.line}></div>
     </div>
   )
 }

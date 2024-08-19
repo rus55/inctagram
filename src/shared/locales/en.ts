@@ -12,6 +12,7 @@ export const en = {
     statistics: 'Statistics',
     favorites: 'Favorites',
     profile_btn: 'Profile Settings',
+    View_all_comments:'View all comments'
   },
   resend: {
     title: 'Email verification link expired',

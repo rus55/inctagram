@@ -13,7 +13,7 @@ export const ru: LangType = {
     statistics: 'Статистика',
     favorites: 'Избранное',
     profile_btn: 'Настройки профиля',
-    View_all_comments: 'Посмотреть все комментарии'
+    View_all_comments: 'Посмотреть все комментарии',
   },
   resend: {
     title: 'Срок действия ссылки для подтверждения электронной почты истек',

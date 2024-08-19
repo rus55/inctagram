@@ -93,8 +93,8 @@
   justify-content: flex-start;
 }
 
-.dots{
-margin-left: 10rem;
+.dots1 {
+  margin-left: 10rem;
 }
 
 .button {
@@ -127,24 +127,30 @@ margin-left: 10rem;
 
 .InputField {
   height: 1rem;
+
   word-wrap: break-word;
+
   background-color: transparent;
   border: none;
   outline: none;
 }
+
 .line {
   position: relative;
 }
 
 .line::after {
   content: '';
+
   position: absolute;
   bottom: 0;
   left: 1.4rem;
+
   width: 90%;
   height: 2px;
+
+  background-color: var(--color-dark-100);
   border-radius: 4px;
-  background-color: var(--color-dark-100) ;
 }
 
 .answer {

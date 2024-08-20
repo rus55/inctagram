@@ -17,6 +17,21 @@
   word-break: break-all;
 }
 
+@media (width <= 576px) {
+  .main {
+    width: 24rem;
+  }
+}
+
+.postContent {
+  width: 100%;
+}
+
+.img {
+  min-width: 30.2rem;
+  min-height: 27.8rem;
+}
+
 @media (width <= 1024px) {
   .main {
     height: 180px;
@@ -29,12 +44,11 @@
 
 .scrollContent {
   width: 100%;
-  background-color: var(--color-dark-300);
 }
 
 .footer {
   width: 30.5rem;
-  background-color: var(--color-dark-300);
+  padding-top: 11.3rem;
 }
 
 @media (width <= 576px) {
@@ -44,6 +58,12 @@
 
   .scrollContent {
     background-color: transparent;
+  }
+
+  @media (width <= 576px) {
+    .buttonPublish {
+      width: 24rem;
+    }
   }
 }
 
@@ -59,32 +79,8 @@
 
 .smallAvatarPost {
   transform: translateY(5px);
-
-  min-width: 36px;
-  min-height: 36px;
-  margin-left: 1.5rem;
-  padding-top: 0.3rem;
-
+  margin-top: 10px;
   border-radius: 50%;
-}
-
-.smallAvatarPostHome {
-  transform: translateY(5px);
-
-  min-width: 36px;
-  min-height: 36px;
-  padding-top: 0.3rem;
-
-  border-radius: 50%;
-}
-
-.postContent {
-  margin-right: 5rem;
-}
-
-.postContentHome {
-  width: 30rem;
-  margin-right: 1rem;
 }
 
 .dots {
@@ -101,10 +97,11 @@
   justify-content: flex-start;
 }
 
-.imageContainer {
-  width: 710px;
-  height: 491px;
-  padding-right: 13.9rem;
+.dots1 {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 0.5rem;
+  margin-right: 3.9rem;
 }
 
 .button {
@@ -118,6 +115,7 @@
   column-gap: 12px;
   align-items: flex-start;
 
+  width: 110%;
   padding: 12px 24px;
 
   overflow-wrap: break-word;
@@ -125,19 +123,42 @@
 
 .updatedAt {
   display: initial;
-  padding-left: 5px;
+  padding-left: 4px;
   color: var(--color-light-900);
 }
 
 .allComment {
+  cursor: pointer;
   padding-left: 1.5rem;
   color: var(--color-light-900);
 }
 
 .InputField {
+  height: 1rem;
+
+  word-wrap: break-word;
+
   background-color: transparent;
   border: none;
   outline: none;
+}
+
+.line {
+  position: relative;
+}
+
+.line::after {
+  content: '';
+
+  position: absolute;
+  bottom: 0;
+  left: 1.4rem;
+
+  width: 90%;
+  height: 2px;
+
+  background-color: var(--color-dark-100);
+  border-radius: 4px;
 }
 
 .answer {
@@ -194,17 +215,34 @@
   justify-content: space-between;
 }
 
+.commentIcon {
+  cursor: pointer;
+}
+
 .shareIconsStart {
   display: flex;
-  column-gap: 26px;
+  column-gap: 15px;
   align-items: center;
+  margin-bottom: 9px;
 }
 
 .likeCounter {
   display: flex;
   column-gap: 12px;
   align-items: center;
+
+  margin-top: 0.5rem;
   padding: 0 24px 36px 0;
+}
+
+.descriptionPosts {
+  display: flex;
+  column-gap: 5px;
+  margin-top: 0.9rem;
+}
+
+.description {
+  color: #d5d4da;
 }
 
 .likeCounterNum {
@@ -243,4 +281,6 @@
 
   width: 30.5rem;
   padding: 12px 24px;
+
+  font-size: 0.9rem;
 }

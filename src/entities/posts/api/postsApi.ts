@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '..'
 
+import { transformCommentsData, transformPostData } from '@/entities/publicPosts/api/publicPostsApi'
 import { getLargeImage } from '@/shared/lib'
 
 export const postsApi = createApi({
@@ -118,6 +119,27 @@ export const postsApi = createApi({
       },
       invalidatesTags: [],
     }),
+    getPostOfFollowers: builder.query<PublicPostsResponseData, any>({
+      query: ({ accessToken }) => ({
+        url: `/home/publications-followers`,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }),
+      providesTags: ['Posts'],
+      transformResponse: (response: PublicPostsResponseData) => {
+        const publicPostsData = response?.items.map(transformPostData)
+
+        return {
+          items: publicPostsData,
+          totalUsers: response.totalUsers,
+          totalCount: response.totalCount,
+          pageSize: response.pageSize,
+        }
+      },
+    }),
   }),
 })
 
@@ -127,4 +149,5 @@ export const {
   usePublishPostsMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
+  useGetPostOfFollowersQuery,
 } = postsApi

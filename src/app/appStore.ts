@@ -6,6 +6,7 @@ import { authReducer, authApi } from '../entities/auth'
 import { appSlice, postSlice } from '@/app/services'
 import { adminSlice } from '@/app/services/admin-slice'
 import { croppersSlice } from '@/app/services/cropper-slice'
+import { commentsApi } from '@/entities/comments'
 import { countriesApi } from '@/entities/countries/'
 import { devicesApi } from "@/entities/device's"
 import { notificationsApi } from '@/entities/notifications/api/notificationsApi'
@@ -34,6 +35,7 @@ const store = configureStore({
     [usersApi.reducerPath]: usersApi.reducer,
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [usersFollowApi.reducerPath]: usersFollowApi.reducer,
+    [commentsApi.reducerPath]: commentsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -47,7 +49,9 @@ const store = configureStore({
       devicesApi.middleware,
       usersApi.middleware,
       notificationsApi.middleware,
-      usersFollowApi.middleware
+      usersFollowApi.middleware,
+      notificationsApi.middleware,
+      commentsApi.middleware
     ),
 })
 

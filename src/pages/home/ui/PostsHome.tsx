@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
+import ThreeDotsWhite from '../../../../public/icons/thre-dots-white.png'
+
 import s from './postsHome.module.scss'
 
 import { useGetCommentQuery, useUpdateCommentMutation } from '@/entities/comments'
@@ -12,7 +14,6 @@ import { InputField } from '@/shared'
 import { BookmarkOutlineIcon, EditPostIcon, HeartOutline, TelegramIcon } from '@/shared/assets'
 import { CommentIcon } from '@/shared/assets/icons/CommentIcon'
 // import ThreeDotsWhite from '@/shared/assets/icons/three-dots.png'
-import ThreeDotsWhite from '../../../../public/icons/thre-dots-white.png'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import PersonImg4 from '@/shared/assets/PersonImg4.png'
 import { Button, SwiperSlider, Textarea, TimeAgo, Typography } from '@/shared/components'
@@ -130,11 +131,16 @@ export const PostsHome = ({
             <BookmarkOutlineIcon size={16} />
           </div>
 
-     <div className={s.descriptionPosts}>
-       <AvatarSmallView avatarOwner={avatarOwner} />
-       <Typography as="span" variant="bold_text_14">{userName}</Typography>
-       <Typography as="span" className={s.description} variant="medium_text_14">  {description}</Typography>
-     </div>
+          <div className={s.descriptionPosts}>
+            <AvatarSmallView avatarOwner={avatarOwner} />
+            <Typography as="span" variant="bold_text_14">
+              {userName}
+            </Typography>
+            <Typography as="span" className={s.description} variant="medium_text_14">
+              {' '}
+              {description}
+            </Typography>
+          </div>
 
           <div className={s.likeCounter}>
             <div className={s.avatarLayers}>

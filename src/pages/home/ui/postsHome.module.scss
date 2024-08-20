@@ -130,7 +130,9 @@
 
 .InputField {
   height: 1rem;
+
   word-wrap: break-word;
+
   background-color: transparent;
   border: none;
   outline: none;
@@ -221,19 +223,23 @@
 
 .likeCounter {
   display: flex;
-  margin-top: 0.5rem;
   column-gap: 12px;
   align-items: center;
+
+  margin-top: 0.5rem;
   padding: 0 24px 36px 0;
 }
-.descriptionPosts{
+
+.descriptionPosts {
   display: flex;
-  margin-top: 0.9rem;
   column-gap: 5px;
+  margin-top: 0.9rem;
 }
-.description{
+
+.description {
   color: #d5d4da;
 }
+
 .likeCounterNum {
   transform: translateY(15px);
 }
@@ -264,11 +270,12 @@
 }
 
 .addComment {
-  font-size: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   width: 30.5rem;
   padding: 12px 24px;
+
+  font-size: 0.9rem;
 }

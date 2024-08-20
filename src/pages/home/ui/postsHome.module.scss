@@ -44,7 +44,7 @@
 
 .footer {
   width: 30.5rem;
-  padding-top: 13rem;
+  padding-top: 11.3rem;
 }
 
 @media (width <= 576px) {
@@ -118,7 +118,7 @@
 
 .updatedAt {
   display: initial;
-  padding-left: 5px;
+  padding-left: 4px;
   color: var(--color-light-900);
 }
 
@@ -218,7 +218,7 @@
   display: flex;
   column-gap: 15px;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .likeCounter {

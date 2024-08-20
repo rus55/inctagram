@@ -11,7 +11,8 @@ import { useCreateAnswerMutation } from '@/entities/comments/api/commentsApi'
 import { InputField } from '@/shared'
 import { BookmarkOutlineIcon, EditPostIcon, HeartOutline, TelegramIcon } from '@/shared/assets'
 import { CommentIcon } from '@/shared/assets/icons/CommentIcon'
-import ThreeDots from '@/shared/assets/icons/three-dots.png'
+// import ThreeDotsWhite from '@/shared/assets/icons/three-dots.png'
+import ThreeDotsWhite from '../../../../public/icons/thre-dots-white.png'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import PersonImg4 from '@/shared/assets/PersonImg4.png'
 import { Button, SwiperSlider, Textarea, TimeAgo, Typography } from '@/shared/components'
@@ -87,7 +88,6 @@ export const PostsHome = ({
     <div>
       <main className={s.main}>
         {!!modalId && <PostViewModal modalId={modalId} isOpen={isOpen} closeModal={closeModal} />}
-        <button onClick={() => !isOpen}></button>
 
         <div className={s.post}>
           <AvatarSmallView avatarOwner={avatarOwner} />
@@ -102,7 +102,7 @@ export const PostsHome = ({
             </Link>
             &nbsp;&nbsp;
           </div>
-          <Image src={ThreeDots} alt="menu-trigger" className={s.dots1} />
+          <Image src={ThreeDotsWhite} alt="menu-trigger" className={s.dots1} />
         </div>
         <div className={s.imageContainer}>
           <SwiperSlider imagesUrl={img} postsHome />
@@ -129,21 +129,13 @@ export const PostsHome = ({
             </div>
             <BookmarkOutlineIcon size={16} />
           </div>
-          {dataAuth && dataAuth.items.length > 0 && (
-            <>
-              <PostAuthorizedAndUnauthorized
-                home
-                oneComments
-                setIsAnswer={setIsAnswer}
-                id={id}
-                setCommentId={setCommentId}
-                key={dataAuth.items[0].postId}
-                el={dataAuth.items[0]}
-                t={t}
-                updatedAt={updatedAt}
-              />
-            </>
-          )}
+
+     <div className={s.descriptionPosts}>
+       <AvatarSmallView avatarOwner={avatarOwner} />
+       <Typography as="span" variant="bold_text_14">{userName}</Typography>
+       <Typography as="span" className={s.description} variant="medium_text_14">  {description}</Typography>
+     </div>
+
           <div className={s.likeCounter}>
             <div className={s.avatarLayers}>
               <AvatarSmallView avatarOwner={avatarOwner} className={s.smallAvatarLayer} />

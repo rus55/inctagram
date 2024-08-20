@@ -22,7 +22,9 @@
     width: 24rem;
   }
 }
-
+.postContent{
+width: 100%;
+}
 .img {
   min-width: 30.2rem;
   min-height: 27.8rem;
@@ -97,7 +99,7 @@
   width: 1.2rem;
   height: 1.2rem;
   margin-top: 0.5rem;
-  margin-left: 12rem;
+  margin-right: 3.9rem;
 }
 
 .button {
@@ -110,7 +112,7 @@
   display: flex;
   column-gap: 12px;
   align-items: flex-start;
-
+width: 110%;
   padding: 12px 24px;
 
   overflow-wrap: break-word;

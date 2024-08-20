@@ -2,17 +2,12 @@ import { Dispatch, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
-import { useBanUserMutation } from '@/entities/users/api/usersApi'
+import { useUnBanUserMutation } from '@/entities/users/api/usersApi'
 import { InputField } from '@/shared'
 import { Button, OptionsType, SelectCustom, Typography } from '@/shared/components'
 import { Modal } from '@/shared/components/modals'
 import { useTranslation } from '@/shared/lib'
-import {
-  BanType,
-  getValueBanByLang,
-  getValueByLang,
-  statusType,
-} from '@/widgets/superAdmin/userList/getValueByLang'
+import { BanType, getValueBanByLang } from '@/widgets/superAdmin/userList/getValueByLang'
 import { ShowModalBanType } from '@/widgets/superAdmin/userList/UserList'
 
 type Props = {
@@ -34,7 +29,8 @@ export const ModalBan = ({
 }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
-
+  const [unblockUser, { isLoading: isLoadingUnBan, isSuccess: isSuccessUnBan }] =
+    useUnBanUserMutation()
   const [selectedOption, setSelectedOption] = useState<BanType>('' as BanType)
 
   const [inputValue, setInputValue] = useState('')
@@ -59,6 +55,10 @@ export const ModalBan = ({
       } else {
         banUser({ banReason: selectedOption, userId: id })
       }
+    } else {
+      unblockUser({
+        userId: id,
+      })
     }
     !isLoadingBan &&
       setShowModalBan({

@@ -20,6 +20,7 @@ import { useFormatDate, useTranslation } from '@/shared/lib'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { PostViewModal } from '@/widgets/postViewModal'
+import {sendComment} from "@/widgets/postViewModal/sendComments/sendComments";
 
 type Props = {
   id?: number
@@ -59,23 +60,19 @@ export const PostsHome = ({
   useEffect(() => {
     postNumber && openModal(+postNumber)
   }, [postNumber])
+
   const submitClickHandler = () => {
-    setComment('')
-    if (isAnswer) {
-      createAnswer({
-        content: comment,
-        commentId: commentId,
-        postId: id,
-        accessToken,
-      })
-      setIsAnswer(false)
-    } else
-      updateComments({
-        content: comment,
-        postId: id,
-        accessToken,
-      })
-  }
+    setComment('');
+    sendComment({
+      isAnswer: isAnswer,
+      commentId: commentId,
+      postId: id,
+      accessToken: accessToken,
+      createAnswer: createAnswer,
+      updateComments: updateComments,
+      comment: comment,
+    });
+  };
 
   useEffect(() => {
     if (isAnswer) return setComment('@' + userName + ',')

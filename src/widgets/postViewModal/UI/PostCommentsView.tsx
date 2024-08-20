@@ -38,6 +38,7 @@ import { useFormatDate, useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { AnswerData } from '@/widgets/postViewModal/UI/AnswerData'
 import { PostAuthorizedAndUnauthorized } from '@/widgets/postViewModal/UI/PostAuthorizedAndUnauthorized'
+import {sendComment} from "@/widgets/postViewModal/sendComments/sendComments";
 
 type Props = {
   id?: number
@@ -126,24 +127,36 @@ export const PostCommentsView = ({
   const { isAuth } = useAuth()
   const [isAnswer, setIsAnswer] = useState<boolean>(false)
   const [commentId, setCommentId] = useState<number | undefined>()
-  const submitClickHandler = () => {
-    setComment('')
-    if (isAnswer) {
-      createAnswer({
-        content: comment,
-        commentId: commentId,
-        postId: id,
-        accessToken,
-      })
-      setIsAnswer(false)
-    } else
-      updateComments({
-        content: comment,
-        postId: id,
-        accessToken,
-      })
-  }
+  // const submitClickHandler = () => {
+  //   setComment('')
+  //   if (isAnswer) {
+  //     createAnswer({
+  //       content: comment,
+  //       commentId: commentId,
+  //       postId: id,
+  //       accessToken,
+  //     })
+  //     setIsAnswer(false)
+  //   } else
+  //     updateComments({
+  //       content: comment,
+  //       postId: id,
+  //       accessToken,
+  //     })
+  // }
 
+  const submitClickHandler = () => {
+    setComment('');
+    sendComment({
+      isAnswer: isAnswer,
+      commentId: commentId,
+      postId: id,
+      accessToken: accessToken,
+      createAnswer: createAnswer,
+      updateComments: updateComments,
+      comment: comment,
+    });
+  };
   useEffect(() => {
     if (isAnswer) return setComment('@' + userName + ',')
   }, [isAnswer])

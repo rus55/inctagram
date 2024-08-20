@@ -149,6 +149,5 @@ export const {
   usePublishPostsMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
-  useGetUserPostsQuery,
   useGetPostOfFollowersQuery,
 } = postsApi

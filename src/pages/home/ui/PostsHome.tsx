@@ -1,25 +1,25 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import {useSearchParams} from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 import ThreeDotsWhite from '../../../../public/icons/thre-dots-white.png'
 
 import s from './postsHome.module.scss'
 
-import {useGetCommentQuery, useUpdateCommentMutation} from '@/entities/comments'
-import {useCreateAnswerMutation} from '@/entities/comments/api/commentsApi'
-import {BookmarkOutlineIcon, HeartOutline, TelegramIcon} from '@/shared/assets'
-import {CommentIcon} from '@/shared/assets/icons/CommentIcon'
+import { useGetCommentQuery, useUpdateCommentMutation } from '@/entities/comments'
+import { useCreateAnswerMutation } from '@/entities/comments/api/commentsApi'
+import { BookmarkOutlineIcon, HeartOutline, TelegramIcon } from '@/shared/assets'
+import { CommentIcon } from '@/shared/assets/icons/CommentIcon'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import PersonImg4 from '@/shared/assets/PersonImg4.png'
-import {Button, SwiperSlider, TimeAgo, Typography} from '@/shared/components'
-import {AvatarSmallView} from '@/shared/components/avatarSmallView'
-import {useFormatDate, useTranslation} from '@/shared/lib'
-import {useModal} from '@/shared/lib/hooks/open-or-close-hook'
-import {useAuth} from '@/shared/lib/hooks/useAuth'
-import {PostViewModal} from '@/widgets/postViewModal'
+import { Button, SwiperSlider, TimeAgo, Typography } from '@/shared/components'
+import { AvatarSmallView } from '@/shared/components/avatarSmallView'
+import { useFormatDate, useTranslation } from '@/shared/lib'
+import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
+import { useAuth } from '@/shared/lib/hooks/useAuth'
+import { PostViewModal } from '@/widgets/postViewModal'
 
 type Props = {
   id?: number
@@ -90,7 +90,7 @@ export const PostsHome = ({
           <AvatarSmallView avatarOwner={avatarOwner} />
           <div className={s.postContent}>
             <Link href={`/public-posts/${ownerId}`}>
-              <Typography  as="span" variant="bold_text_14">
+              <Typography as="span" variant="bold_text_14">
                 {userName}
                 <Typography variant="medium_text_14" className={s.updatedAt}>
                   <TimeAgo updatedAt={updatedAt} lg={t.lg} />

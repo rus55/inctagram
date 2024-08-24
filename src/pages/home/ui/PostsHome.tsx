@@ -185,7 +185,7 @@ export const PostsHome = ({
             disabled={!isAuth}
             type={'text'}
             value={comment}
-            onChange={(e: any) => setComment(e.target.value)}
+            onChange={e => setComment(e.target.value)}
             placeholder={t.post_view.add_comment}
             className={s.InputField}
           />

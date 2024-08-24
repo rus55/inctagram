@@ -127,23 +127,6 @@ export const PostCommentsView = ({
   const { isAuth } = useAuth()
   const [isAnswer, setIsAnswer] = useState<boolean>(false)
   const [commentId, setCommentId] = useState<number | undefined>()
-  // const submitClickHandler = () => {
-  //   setComment('')
-  //   if (isAnswer) {
-  //     createAnswer({
-  //       content: comment,
-  //       commentId: commentId,
-  //       postId: id,
-  //       accessToken,
-  //     })
-  //     setIsAnswer(false)
-  //   } else
-  //     updateComments({
-  //       content: comment,
-  //       postId: id,
-  //       accessToken,
-  //     })
-  // }
 
   const submitClickHandler = () => {
     setComment('');
@@ -194,15 +177,13 @@ export const PostCommentsView = ({
               </Typography>
             </div>
           </div>
-          {isAuth
-            ? dataAuth &&
-              dataAuth.items.map((el: CommentsDataType) => (
+          {isAuth ?
+             dataAuth?.items.map((el: CommentsDataType) => (
                 <>
                   <PostAuthorizedAndUnauthorized
                     setIsAnswer={setIsAnswer}
                     id={id}
                     setCommentId={setCommentId}
-                    key={el.postId}
                     el={el}
                     t={t}
                     updatedAt={updatedAt}
@@ -217,10 +198,9 @@ export const PostCommentsView = ({
                   />
                 </>
               ))
-            : data &&
-              data.items.map((el: any) => (
+            :
+              data?.items.map((el: any) => (
                 <PostAuthorizedAndUnauthorized
-                  key={el.postId}
                   el={el}
                   t={t}
                   updatedAt={updatedAt}
@@ -280,16 +260,6 @@ export const PostCommentsView = ({
             placeholder={t.post_view.add_comment}
             className={s.InputField}
           />
-          {/*<input*/}
-          {/*    disabled={!isAuth}*/}
-          {/*    type={"email"}*/}
-          {/*    value={comment}*/}
-          {/*    onChange={e => setComment(e.target.value)}*/}
-          {/*    placeholder={''}*/}
-          {/*    className={s.updatedAt}*/}
-          {/*/>*/}
-
-          {/*{t.post_view.add_comment}*/}
           <Button disabled={!isAuth} variant="link" onClick={submitClickHandler}>
             {t.post_view.publish}
           </Button>

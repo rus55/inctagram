@@ -25,7 +25,6 @@ function Home() {
         {fakePost &&
           fakePost.items.map((el: PostDataType) => {
             return (
-              <>
                 <div className={s.postCommentsView}>
                   <PostsHome
                     img={el.images}
@@ -39,7 +38,6 @@ function Home() {
                     updatedAt={el.updatedAt}
                   />
                 </div>
-              </>
             )
           })}
       </div>

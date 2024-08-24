@@ -2,7 +2,7 @@ type Props = {
     isAnswer:boolean
     commentId:number | undefined
     postId:number | undefined
-    accessToken:any
+    accessToken:string | undefined
     createAnswer:any
     updateComments:any
     comment:string

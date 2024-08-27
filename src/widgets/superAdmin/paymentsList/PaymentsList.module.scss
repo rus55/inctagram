@@ -7,11 +7,12 @@
     display: flex;
     justify-content: space-between;
   }
+
   th {
     display: flex;
     gap: 3px;
     align-items: center;
-    width: 100%
+    width: 100%;
   }
 
   .tableContent {
@@ -19,8 +20,8 @@
 
     td {
       display: flex;
-      align-items: center;
       gap: 7px;
+      align-items: center;
       width: 100%;
     }
   }

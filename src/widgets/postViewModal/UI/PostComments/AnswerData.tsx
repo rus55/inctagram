@@ -9,6 +9,7 @@ import { useGetAnswerQuery, useLikeAnswerMutation } from '@/entities/comments/ap
 import { HeartOutline, HeartRed } from '@/shared/assets'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import { Button, TimeAgo, Typography } from '@/shared/components'
+import { useTranslation } from '@/shared/lib'
 import { useUpdateLikeStatus } from '@/widgets/postViewModal/updateLikeStatus/useUpdateLikeStatus'
 
 type Props = {
@@ -21,8 +22,6 @@ type Props = {
 export const AnswerData = ({ commentId, id, accessToken, t, el }: Props) => {
   const { data: dataAnswer } = useGetAnswerQuery({ postId: id, commentId: el.id, accessToken })
   const [createAnswerLike, { isLoading: createAnswerLikeLoading }] = useLikeAnswerMutation()
-
-  console.log(dataAnswer && dataAnswer.items)
   const [isHideAnswer, setIsHideAnswer] = useState<boolean>(false)
   const [like, setLike] = useState<'LIKE' | 'NONE'>('NONE')
   const clickHeandler = () => {
@@ -56,7 +55,7 @@ export const AnswerData = ({ commentId, id, accessToken, t, el }: Props) => {
     <>
       {dataAnswer.totalCount !== 0 ? (
         <Button className={s.buttonAnswer} onClick={clickHeandler} variant={'link'}>
-          - Show answers ({dataAnswer.totalCount})
+          - {t.Comment.show_answer} ({dataAnswer.totalCount})
         </Button>
       ) : (
         ''
@@ -88,12 +87,9 @@ export const AnswerData = ({ commentId, id, accessToken, t, el }: Props) => {
                 </Typography>
                 &nbsp;&nbsp;
                 <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
-                  Like: {el.likeCount}
+                  {t.Comment.like}: {el.likeCount}
                 </Typography>
                 &nbsp;&nbsp;
-                {/*<Typography onClick={clickHandlerAnswer} as="span" variant="bold_text_14" className={s.updatedAt}>*/}
-                {/*    {t.post_view.answer}*/}
-                {/*</Typography>*/}
               </div>
             </div>
           </div>

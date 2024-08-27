@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 
-import { PostCommentsView, PostModalHeader } from './PostCommentsView'
-import s from './PostViewModal.module.scss'
+import { PostCommentsView, PostModalHeader } from '../PostComments/PostCommentsView'
 
 import { SwiperSlider } from '@/shared/components'
+import s from '@/widgets/postViewModal/UI/PostView/PostViewModal.module.scss'
 
 type Props = {
   data: PostDataType
@@ -26,12 +26,11 @@ export const ModalContentUI = ({ data }: Props) => {
           />
         </div>
       )}
-      <div className={s.imageContainer}>
-        {data && <SwiperSlider imagesUrl={data.images} postsHome={false} />}
-      </div>
+      <div className={s.imageContainer}>{data && <SwiperSlider imagesUrl={data.images} />}</div>
       <div className={s.commentsContainer}>
         {data && (
           <PostCommentsView
+            isLiked={data.isLiked}
             id={data.id}
             isSSR={isSSR}
             setModalType={() => ({})}

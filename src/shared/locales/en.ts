@@ -177,6 +177,10 @@ export const en = {
     button_yes: 'Yes',
     button_no: 'No',
   },
+  Comment: {
+    like: 'Like',
+    show_answer: 'Show answer',
+  },
   following_modal: {
     input_placeholder: 'Search',
     title: 'Following',

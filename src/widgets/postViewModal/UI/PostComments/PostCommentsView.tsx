@@ -12,12 +12,14 @@ import {
   useGetCommentUnAuthorizationQuery,
   useUpdateCommentMutation,
 } from '@/entities/comments/api/commentsApi'
+import { useGetLikePostsQuery, useLikePostsMutation } from '@/entities/posts/api/postsApi'
 import { InputField } from '@/shared'
 import {
   BookmarkOutlineIcon,
   DeletePostIcon,
   EditPostIcon,
   HeartOutline,
+  HeartRed,
   TelegramIcon,
 } from '@/shared/assets'
 import ThreeDots from '@/shared/assets/icons/three-dots.png'
@@ -36,9 +38,10 @@ import { AvatarSmallView } from '@/shared/components/avatarSmallView'
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { useFormatDate, useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
-import { AnswerData } from '@/widgets/postViewModal/UI/AnswerData'
-import { PostAuthorizedAndUnauthorized } from '@/widgets/postViewModal/UI/PostAuthorizedAndUnauthorized'
-import {sendComment} from "@/widgets/postViewModal/sendComments/sendComments";
+import { likeStatus } from '@/widgets/postViewModal/sendComments/LikeStatus'
+import { sendComment } from '@/widgets/postViewModal/sendComments/sendComments'
+import { AnswerData } from '@/widgets/postViewModal/UI/PostComments/AnswerData'
+import { PostAuthorizedAndUnauthorized } from '@/widgets/postViewModal/UI/PostComments/PostAuthorizedAndUnauthorized'
 
 type Props = {
   id?: number
@@ -48,7 +51,8 @@ type Props = {
   description: string
   updatedAt: string
   isSSR: boolean
-
+  isLiked?: boolean
+  likesCount?: number
   setModalType?: (modalType: 'edit' | 'view') => void
   openDeleteModal?: () => void
 }
@@ -115,6 +119,8 @@ export const PostCommentsView = ({
   setModalType,
   openDeleteModal,
   id,
+  likesCount,
+  isLiked,
 }: Props) => {
   const { t } = useTranslation()
   const { formatDate } = useFormatDate(t.lg)
@@ -123,13 +129,16 @@ export const PostCommentsView = ({
   const { accessToken } = useAuth()
   const [comment, setComment] = useState<string>('')
   const { data: dataAuth } = useGetCommentQuery({ postId: id, accessToken })
+  const { data: dataLikePost } = useGetLikePostsQuery({ postId: id, accessToken })
   const { data, isLoading, error } = useGetCommentUnAuthorizationQuery({ postId: id })
   const { isAuth } = useAuth()
   const [isAnswer, setIsAnswer] = useState<boolean>(false)
   const [commentId, setCommentId] = useState<number | undefined>()
+  const [createLike, { isLoading: isLikeLoading }] = useLikePostsMutation()
+  const [like, setLike] = useState<'LIKE' | 'NONE'>(isLiked ? 'LIKE' : 'NONE')
 
   const submitClickHandler = () => {
-    setComment('');
+    setComment('')
     sendComment({
       isAnswer: isAnswer,
       commentId: commentId,
@@ -138,10 +147,22 @@ export const PostCommentsView = ({
       createAnswer: createAnswer,
       updateComments: updateComments,
       comment: comment,
-    });
-  };
+    })
+  }
+
+  const LikeStatusHandler = () => {
+    likeStatus({
+      accessToken,
+      postId: id,
+      setLike,
+      createLike,
+      like,
+    })
+  }
+  // const Avatar =dataLikePost=== undefined ? '' : dataLikePost.items.avatars.map((el:any)=>el.url)
+
   useEffect(() => {
-    if (isAnswer) return setComment('@' + userName + ',')
+    if (isAnswer) return setComment('@' + userName)
   }, [isAnswer])
 
   return (
@@ -177,9 +198,9 @@ export const PostCommentsView = ({
               </Typography>
             </div>
           </div>
-          {isAuth ?
-             dataAuth?.items.map((el: CommentsDataType) => (
-                <>
+          {isAuth
+            ? dataAuth?.items.map((el: CommentsDataType) => (
+                <React.Fragment key={el.postId}>
                   <PostAuthorizedAndUnauthorized
                     setIsAnswer={setIsAnswer}
                     id={id}
@@ -187,7 +208,6 @@ export const PostCommentsView = ({
                     el={el}
                     t={t}
                     updatedAt={updatedAt}
-                    oneComments={false}
                   />
                   <AnswerData
                     commentId={commentId}
@@ -196,15 +216,14 @@ export const PostCommentsView = ({
                     el={el}
                     t={t}
                   />
-                </>
+                </React.Fragment>
               ))
-            :
-              data?.items.map((el: any) => (
+            : data?.items.map((el: CommentsDataType) => (
                 <PostAuthorizedAndUnauthorized
+                  key={el.postId}
                   el={el}
                   t={t}
                   updatedAt={updatedAt}
-                  oneComments={false}
                 />
               ))}
         </Scroller>
@@ -213,32 +232,29 @@ export const PostCommentsView = ({
         <div className={s.share}>
           <div className={s.shareIcons}>
             <div className={s.shareIconsStart}>
-              <HeartOutline size={24} />
+              <div onClick={LikeStatusHandler}>
+                {isLiked ? <HeartRed size={30} /> : <HeartOutline size={24} />}
+              </div>
               <TelegramIcon />
             </div>
             <BookmarkOutlineIcon />
           </div>
           <div className={s.likeCounter}>
             <div className={s.avatarLayers}>
-              <AvatarSmallView avatarOwner={avatarOwner} className={s.smallAvatarLayer} />
-              <Image
-                src={PersonImg3}
-                width={36}
-                height={36}
-                alt="Owner's avatar"
-                className={s.smallAvatarLayer}
-              />
-              <Image
-                src={PersonImg4}
-                width={36}
-                height={36}
-                alt="Owner's avatar"
-                className={s.smallAvatarLayer}
-              />
+              {dataLikePost &&
+                dataLikePost.items
+                  .slice(0, 3)
+                  .map(item => (
+                    <AvatarSmallView
+                      key={item.id}
+                      avatarOwner={item.avatars[0] && item.avatars[0].url}
+                      className={s.smallAvatarLayer}
+                    />
+                  ))}
             </div>
             <span className={s.likeCounterNum}>
               <Typography as="span" variant="regular_text_14">
-                2 243
+                {likesCount}
               </Typography>
               &nbsp;
               <Typography as="span" variant="bold_text_14">

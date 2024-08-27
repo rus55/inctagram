@@ -3,9 +3,8 @@ import { Dispatch, SetStateAction } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { PostCommentsView, PostModalHeader } from './PostCommentsView'
-import { PostEdit } from './PostEdit'
-import s from './PostViewModal.module.scss'
+import { PostCommentsView, PostModalHeader } from '../PostComments/PostCommentsView'
+import { PostEdit } from '../PostEdit'
 
 import { postsApi, useDeletePostMutation } from '@/entities/posts'
 import { publicPostsApi, useGetSinglePostQuery } from '@/entities/publicPosts'
@@ -14,6 +13,7 @@ import { ConfirmModal } from '@/shared/components/modals'
 import { useAppDispatch, useErrorHandler, useFetchLoader, useTranslation } from '@/shared/lib'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
+import s from '@/widgets/postViewModal/UI/PostView/PostViewModal.module.scss'
 
 type Props = {
   modalId: number
@@ -101,14 +101,14 @@ export const ModalContentWithEditUI = ({
               </div>
             )}
             <div className={s.imageContainer}>
-              {data && data.id === modalId && (
-                <SwiperSlider imagesUrl={data.images} postsHome={false} />
-              )}
+              {data && data.id === modalId && <SwiperSlider imagesUrl={data.images} />}
             </div>
             <div className={s.commentsContainer}>
               {data && (
                 <PostCommentsView
+                  isLiked={data.isLiked}
                   id={data.id}
+                  likesCount={data.likesCount}
                   isSSR={isSSR}
                   setModalType={setModalType}
                   ownerId={data.ownerId}

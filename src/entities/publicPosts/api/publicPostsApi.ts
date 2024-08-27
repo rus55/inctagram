@@ -13,6 +13,8 @@ export const transformPostData = (el: PostDataType): PostDataType => {
     updatedAt: el.updatedAt,
     userName: el.userName,
     createdAt: el.createdAt,
+    likesCount: el.likesCount,
+    isLiked: el.isLiked,
   }
 }
 export const transformCommentsData = (el: CommentsDataType): CommentsDataType => {
@@ -24,14 +26,16 @@ export const transformCommentsData = (el: CommentsDataType): CommentsDataType =>
     createdAt: el.createdAt,
     isLiked: el.isLiked,
     likeCount: el.likeCount,
+    avatars: el.avatars,
   }
 }
-export const transformAnswerData = (el: any): any => {
+export const transformGetLikedData = (el: any): any => {
   return {
     id: el.id,
-    postId: el.postId,
-    from: el.from,
-    content: el.content,
+    userId: el.userId,
+    userName: el.userName,
+    createdAt: el.createdAt,
+    avatars: el.avatars,
   }
 }
 

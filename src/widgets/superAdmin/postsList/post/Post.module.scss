@@ -22,11 +22,12 @@
 
 .sticky {
   z-index: 1;
-  padding: 0 7px;
+
   align-self: flex-end;
 
   width: 100%;
   min-height: 150px;
+  padding: 0 7px;
 
   background-color: var(--color-dark-700);
 }
@@ -36,6 +37,8 @@
 }
 
 .description {
+  margin-top: 5px;
+
   .text {
     width: 360px;
 
@@ -45,10 +48,10 @@
     line-height: 24px;
     color: var(--light-100, #fff);
   }
-  margin-top: 5px;
 
   .toggleButton {
     cursor: pointer;
+
     margin-left: 7px;
 
     font-size: 14px;

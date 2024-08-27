@@ -1,5 +1,5 @@
 @use 'src/shared/assets/mixins';
 
 .table {
- @include mixins.table_photo
+  @include mixins.table_photo;
 }

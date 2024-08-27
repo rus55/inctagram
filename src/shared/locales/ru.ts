@@ -178,6 +178,10 @@ export const ru: LangType = {
     button_yes: 'Да',
     button_no: 'Нет',
   },
+  Comment: {
+    like: 'Лайк',
+    show_answer: 'Показать ответ',
+  },
   delete_following: {
     title_of_delete_modal: 'Удалить подписку',
     delete_button: 'Отписаться',

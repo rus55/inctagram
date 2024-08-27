@@ -1,4 +1,4 @@
-import { ModalContentUI } from '..'
+import { ModalContentUI } from '../../index'
 
 import s from './PostViewModal.module.scss'
 

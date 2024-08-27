@@ -2,7 +2,11 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '..'
 
-import { transformCommentsData, transformPostData } from '@/entities/publicPosts/api/publicPostsApi'
+import {
+  transformCommentsData,
+  transformGetLikedData,
+  transformPostData,
+} from '@/entities/publicPosts/api/publicPostsApi'
 import { getLargeImage } from '@/shared/lib'
 
 export const postsApi = createApi({
@@ -140,6 +144,40 @@ export const postsApi = createApi({
         }
       },
     }),
+    likePosts: builder.mutation<
+      any,
+      {
+        likeStatus: string
+        postId: number | undefined
+        accessToken: string | undefined
+      }
+    >({
+      query: ({ postId, accessToken, likeStatus }) => {
+        return {
+          url: `/posts/${postId}/like-status`,
+          body: { likeStatus },
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      invalidatesTags: ['Posts'],
+    }),
+    getLikePosts: builder.query<PublicPostsGetLikes, any>({
+      query: ({ postId, accessToken }) => {
+        return {
+          method: 'GET',
+          url: `/posts/${postId}/likes`,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      },
+      providesTags: ['Posts'],
+    }),
   }),
 })
 
@@ -150,4 +188,6 @@ export const {
   useUpdatePostMutation,
   useDeletePostMutation,
   useGetPostOfFollowersQuery,
+  useLikePostsMutation,
+  useGetLikePostsQuery,
 } = postsApi

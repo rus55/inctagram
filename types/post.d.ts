@@ -26,6 +26,11 @@ type PublicPostsResponseData = {
     pageSize: number
     totalUsers: number
 }
+type PublicPostsGetLikes = {
+    items: GetLikedData[]
+    totalCount: number
+    pageSize: number
+}
 
 type CommentsResponseData = {
     items: CommentsDataType[]
@@ -59,6 +64,15 @@ type PostDataType = {
     avatarOwner: string
     updatedAt: string
     createdAt:string
+    likesCount:number
+    isLiked:boolean
+}
+type GetLikedData = {
+    id: number,
+    userId:number,
+    userName:string,
+    createdAt: string,
+    avatars:Avatar[]
 }
 
 type CommentsDataType = {
@@ -69,5 +83,5 @@ type CommentsDataType = {
     likeCount:number
     isLiked:boolean
     createdAt:string
-
+    avatars:any
 }

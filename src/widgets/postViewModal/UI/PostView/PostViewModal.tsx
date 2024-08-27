@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ModalContentWithEditUI } from '..'
+import { ModalContentWithEditUI } from '../../index'
 
 import { Modal } from '@/shared/components/modals'
 import { useTranslation } from '@/shared/lib'

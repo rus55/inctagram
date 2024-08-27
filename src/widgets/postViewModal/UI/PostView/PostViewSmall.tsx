@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ModalContentWithEditUI } from '..'
+import { ModalContentWithEditUI } from '../../index'
 
 import s from './PostViewModal.module.scss'
 

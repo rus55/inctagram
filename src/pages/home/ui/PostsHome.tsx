@@ -10,7 +10,8 @@ import s from './postsHome.module.scss'
 
 import { useGetCommentQuery, useUpdateCommentMutation } from '@/entities/comments'
 import { useCreateAnswerMutation } from '@/entities/comments/api/commentsApi'
-import { BookmarkOutlineIcon, HeartOutline, TelegramIcon } from '@/shared/assets'
+import { useGetLikePostsQuery, useLikePostsMutation } from '@/entities/posts/api/postsApi'
+import { BookmarkOutlineIcon, HeartOutline, HeartRed, TelegramIcon } from '@/shared/assets'
 import { CommentIcon } from '@/shared/assets/icons/CommentIcon'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import PersonImg4 from '@/shared/assets/PersonImg4.png'
@@ -20,7 +21,8 @@ import { useFormatDate, useTranslation } from '@/shared/lib'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { PostViewModal } from '@/widgets/postViewModal'
-import {sendComment} from "@/widgets/postViewModal/sendComments/sendComments";
+import { likeStatus } from '@/widgets/postViewModal/sendComments/LikeStatus'
+import { sendComment } from '@/widgets/postViewModal/sendComments/sendComments'
 
 type Props = {
   id?: number
@@ -31,6 +33,8 @@ type Props = {
   updatedAt: string
   isSSR: boolean
   img: any
+  likeCount: number
+  isLiked: boolean
 }
 export const PostsHome = ({
   ownerId,
@@ -38,9 +42,10 @@ export const PostsHome = ({
   userName,
   description,
   updatedAt,
-  isSSR,
   id,
   img,
+  likeCount,
+  isLiked,
 }: Props) => {
   const { t } = useTranslation()
   const { formatDate } = useFormatDate(t.lg)
@@ -56,13 +61,25 @@ export const PostsHome = ({
   const { isOpen, openModal, closeModal, modalId } = useModal()
   const searchParams = useSearchParams()
   const postNumber = searchParams?.get('modalId') as string | undefined
+  const [createLike, { isLoading: isLikeLoading }] = useLikePostsMutation()
+  const [like, setLike] = useState<'LIKE' | 'NONE'>(isLiked ? 'LIKE' : 'NONE')
+  const { data: dataLikePost } = useGetLikePostsQuery({ postId: id, accessToken })
+  const LikeStatusHandler = () => {
+    likeStatus({
+      accessToken,
+      postId: id,
+      setLike,
+      createLike,
+      like,
+    })
+  }
 
   useEffect(() => {
     postNumber && openModal(+postNumber)
   }, [postNumber])
 
   const submitClickHandler = () => {
-    setComment('');
+    setComment('')
     sendComment({
       isAnswer: isAnswer,
       commentId: commentId,
@@ -71,13 +88,14 @@ export const PostsHome = ({
       createAnswer: createAnswer,
       updateComments: updateComments,
       comment: comment,
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (isAnswer) return setComment('@' + userName + ',')
   }, [isAnswer])
 
+  // console.log(dataLikePost && dataLikePost)
   return (
     <div>
       <main className={s.main}>
@@ -99,14 +117,16 @@ export const PostsHome = ({
           <Image src={ThreeDotsWhite} alt="menu-trigger" className={s.dots1} />
         </div>
         <div className={s.imageContainer}>
-          <SwiperSlider imagesUrl={img} postsHome />
+          <SwiperSlider imagesUrl={img} />
         </div>
       </main>
       <footer className={s.footer}>
         <div className={s.share}>
           <div className={s.shareIcons}>
             <div className={s.shareIconsStart}>
-              <HeartOutline size={20} />
+              <div onClick={LikeStatusHandler}>
+                {isLiked ? <HeartRed size={20} /> : <HeartOutline size={20} />}
+              </div>
               <div
                 className={s.commentIcon}
                 onClick={
@@ -130,32 +150,26 @@ export const PostsHome = ({
               {userName}
             </Typography>
             <Typography as="span" className={s.description} variant="medium_text_14">
-              {' '}
               {description}
             </Typography>
           </div>
 
           <div className={s.likeCounter}>
             <div className={s.avatarLayers}>
-              <AvatarSmallView avatarOwner={avatarOwner} className={s.smallAvatarLayer} />
-              <Image
-                src={PersonImg3}
-                width={36}
-                height={36}
-                alt="Owner's avatar"
-                className={s.smallAvatarLayer}
-              />
-              <Image
-                src={PersonImg4}
-                width={36}
-                height={36}
-                alt="Owner's avatar"
-                className={s.smallAvatarLayer}
-              />
+              {dataLikePost &&
+                dataLikePost.items
+                  .slice(0, 3)
+                  .map(item => (
+                    <AvatarSmallView
+                      key={item.id}
+                      avatarOwner={item.avatars[0] && item.avatars[0].url}
+                      className={s.smallAvatarLayer}
+                    />
+                  ))}
             </div>
             <span className={s.likeCounterNum}>
               <Typography as="span" variant="regular_text_14">
-                2 243
+                {likeCount}
               </Typography>
               &nbsp;
               <Typography as="span" variant="bold_text_14">

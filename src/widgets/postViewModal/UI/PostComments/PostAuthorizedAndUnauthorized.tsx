@@ -10,6 +10,7 @@ import { TimeAgo, Typography } from '@/shared/components'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { likeStatus } from '@/widgets/postViewModal/sendComments/LikeStatus'
 import s from '@/widgets/postViewModal/UI/PostComments/PostCommentsView.module.scss'
+import { useFetchLoader } from '@/shared/lib'
 
 type Props = {
   el: CommentsDataType
@@ -40,7 +41,7 @@ export const PostAuthorizedAndUnauthorized = ({
       like,
     })
   }
-
+  useFetchLoader(isPostLoading)
   const clickHandlerAnswer = () => {
     setCommentId && setCommentId(el.id)
     setIsAnswer && setIsAnswer(true)

@@ -5,13 +5,11 @@ import Link from 'next/link'
 
 import { useLikeCommentMutation } from '@/entities/comments'
 import { HeartOutline, HeartRed } from '@/shared/assets'
-import PersonImg3 from '@/shared/assets/PersonImg3.png'
+import SmileImg from '@/shared/assets/SmileImg.png'
 import { TimeAgo, Typography } from '@/shared/components'
-import { AvatarSmallView } from '@/shared/components/avatarSmallView'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { likeStatus } from '@/widgets/postViewModal/sendComments/LikeStatus'
 import s from '@/widgets/postViewModal/UI/PostComments/PostCommentsView.module.scss'
-import { useUpdateLikeStatus } from '@/widgets/postViewModal/updateLikeStatus/useUpdateLikeStatus'
 
 type Props = {
   el: CommentsDataType
@@ -52,7 +50,7 @@ export const PostAuthorizedAndUnauthorized = ({
     <div className={s.contentBlock}>
       <div className={s.comment}>
         <Image
-          src={el.from.avatars[0].url}
+          src={el.from.avatars[0].url || SmileImg}
           width={36}
           height={36}
           alt="Owner's avatar"

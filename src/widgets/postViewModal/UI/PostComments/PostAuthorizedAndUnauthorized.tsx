@@ -50,7 +50,7 @@ export const PostAuthorizedAndUnauthorized = ({
     <div className={s.contentBlock}>
       <div className={s.comment}>
         <Image
-          src={(el.from.avatars[0].url && el.from.avatars[0].url) || SmileImg}
+          src={el?.from?.avatars[0]?.url || SmileImg}
           width={36}
           height={36}
           alt="Owner's avatar"

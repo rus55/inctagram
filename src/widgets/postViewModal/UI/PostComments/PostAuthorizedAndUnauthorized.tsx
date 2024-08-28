@@ -47,13 +47,12 @@ export const PostAuthorizedAndUnauthorized = ({
     setCommentId && setCommentId(el.id)
     setIsAnswer && setIsAnswer(true)
   }
-  const img = el.from.avatars[0].url
 
   return (
     <div className={s.contentBlock}>
       <div className={s.comment}>
         <Image
-          src={img}
+          src={el.from.avatars[0].url}
           width={36}
           height={36}
           alt="Owner's avatar"

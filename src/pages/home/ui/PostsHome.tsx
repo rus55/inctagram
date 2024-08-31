@@ -95,7 +95,6 @@ export const PostsHome = ({
     if (isAnswer) return setComment('@' + userName + ',')
   }, [isAnswer])
 
-  // console.log(dataLikePost && dataLikePost)
   return (
     <div>
       <main className={s.main}>
@@ -124,7 +123,7 @@ export const PostsHome = ({
         <div className={s.share}>
           <div className={s.shareIcons}>
             <div className={s.shareIconsStart}>
-              <div onClick={LikeStatusHandler}>
+              <div className={s.likePost} onClick={LikeStatusHandler}>
                 {isLiked ? <HeartRed size={20} /> : <HeartOutline size={20} />}
               </div>
               <div

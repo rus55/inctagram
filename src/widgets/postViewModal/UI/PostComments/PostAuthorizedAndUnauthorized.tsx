@@ -7,14 +7,14 @@ import { useLikeCommentMutation } from '@/entities/comments'
 import { HeartOutline, HeartRed } from '@/shared/assets'
 import SmileImg from '@/shared/assets/SmileImg.png'
 import { TimeAgo, Typography } from '@/shared/components'
+import { useFetchLoader } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
 import { likeStatus } from '@/widgets/postViewModal/sendComments/LikeStatus'
 import s from '@/widgets/postViewModal/UI/PostComments/PostCommentsView.module.scss'
-import { useFetchLoader } from '@/shared/lib'
 
 type Props = {
   el: CommentsDataType
-  updatedAt: string
+  updatedAt: string | undefined
   t: any
   setIsAnswer?: (isAnswer: boolean) => void
   setCommentId?: (answerId: number) => void
@@ -41,6 +41,7 @@ export const PostAuthorizedAndUnauthorized = ({
       like,
     })
   }
+
   useFetchLoader(isPostLoading)
   const clickHandlerAnswer = () => {
     setCommentId && setCommentId(el.id)

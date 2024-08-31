@@ -49,8 +49,11 @@
 
 .avatar {
   display: flex;
-  column-gap: 12px;
   align-items: center;
+}
+
+.infAvatars {
+  margin-left: 2.8rem;
 }
 
 .smallAvatar {
@@ -182,6 +185,10 @@
 .like {
   cursor: pointer;
   padding: 24px 24px 0 0;
+}
+
+.likePost {
+  cursor: pointer;
 }
 
 .share {

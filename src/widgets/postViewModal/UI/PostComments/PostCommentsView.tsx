@@ -48,8 +48,8 @@ type Props = {
   ownerId: number
   avatarOwner: string
   userName: string
-  description: string
-  updatedAt: string
+  description?: string | undefined
+  updatedAt?: string | undefined
   isSSR: boolean
   isLiked?: boolean
   likesCount?: number
@@ -57,7 +57,7 @@ type Props = {
   openDeleteModal?: () => void
 }
 
-type PostModalHeaderProps = Omit<Props, 'description' | 'updatedAt'>
+// type PostModalHeaderProps = Omit<Props, 'description' | 'updatedAt'>
 
 export const PostModalHeader = ({
   avatarOwner,
@@ -66,17 +66,27 @@ export const PostModalHeader = ({
   isSSR,
   setModalType,
   openDeleteModal,
-}: PostModalHeaderProps) => {
+  updatedAt,
+  description,
+}: Props) => {
   const { t } = useTranslation()
   const { isAuth, userId } = useAuth()
 
   return (
     <header className={s.header}>
       <div className={s.avatar}>
-        {/*<AvatarSmallView avatarOwner={avatarOwner} />*/}
-        {/*<Link href={`/public-posts/${ownerId}`}>*/}
-        {/*  <Typography variant="bold_text_14">{userName}</Typography>*/}
-        {/*</Link>*/}
+        <AvatarSmallView avatarOwner={avatarOwner} />
+        <div className={s.infAvatars}>
+          <Link href={`/public-posts/${ownerId}`}>
+            <Typography as="span" variant="bold_text_14">
+              {userName}
+            </Typography>
+          </Link>
+          &nbsp;&nbsp;
+          <Typography className={s.descriptionPost} as="span" variant="medium_text_14">
+            {description}
+          </Typography>
+        </div>
       </div>
       {isAuth && userId == ownerId && !isSSR && (
         <div className={s.wrappedActionMenu}>
@@ -159,7 +169,6 @@ export const PostCommentsView = ({
       like,
     })
   }
-  // const Avatar =dataLikePost=== undefined ? '' : dataLikePost.items.avatars.map((el:any)=>el.url)
 
   useEffect(() => {
     if (isAnswer) return setComment('@' + userName)
@@ -175,29 +184,13 @@ export const PostCommentsView = ({
           isSSR={isSSR}
           setModalType={setModalType}
           openDeleteModal={openDeleteModal}
+          description={description}
+          updatedAt={updatedAt}
         />
       </div>
 
       <main className={s.main}>
         <Scroller className={s.scrollContent}>
-          <div className={s.post}>
-            <AvatarSmallView avatarOwner={avatarOwner} />
-
-            <div className={s.postContent}>
-              <Link href={`/public-posts/${ownerId}`}>
-                <Typography as="span" variant="bold_text_14">
-                  {userName}
-                </Typography>
-              </Link>
-              &nbsp;&nbsp;
-              <Typography as="span" variant="medium_text_14">
-                {description}
-              </Typography>
-              <Typography variant="medium_text_14" className={s.updatedAt}>
-                <TimeAgo updatedAt={updatedAt} lg={t.lg} />
-              </Typography>
-            </div>
-          </div>
           {isAuth
             ? dataAuth?.items.map((el: CommentsDataType) => (
                 <React.Fragment key={el.postId}>
@@ -232,7 +225,7 @@ export const PostCommentsView = ({
         <div className={s.share}>
           <div className={s.shareIcons}>
             <div className={s.shareIconsStart}>
-              <div onClick={LikeStatusHandler}>
+              <div className={s.likePost} onClick={LikeStatusHandler}>
                 {isLiked ? <HeartRed size={30} /> : <HeartOutline size={24} />}
               </div>
               <TelegramIcon />
@@ -263,7 +256,7 @@ export const PostCommentsView = ({
             </span>
           </div>
           <Typography variant="small_text" className={s.updatedAt}>
-            {formatDate(updatedAt)}
+            {formatDate(updatedAt ? updatedAt : '')}
           </Typography>
         </div>
 

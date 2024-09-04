@@ -14,7 +14,13 @@
 .main {
   max-width: 500px;
   height: 321px;
+
   word-break: break-all;
+
+  border-top: 2px solid var(--color-dark-500);
+  border-right: none;
+  border-bottom: 2px solid var(--color-dark-500);
+  border-left: none;
 }
 
 @media (width <= 1024px) {

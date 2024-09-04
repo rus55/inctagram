@@ -7,13 +7,11 @@ import s from './PostCommentsView.module.scss'
 
 import {
   useCreateAnswerMutation,
-  useGetAnswerQuery,
   useGetCommentQuery,
   useGetCommentUnAuthorizationQuery,
   useUpdateCommentMutation,
 } from '@/entities/comments/api/commentsApi'
 import { useGetLikePostsQuery, useLikePostsMutation } from '@/entities/posts/api/postsApi'
-import { InputField } from '@/shared'
 import {
   BookmarkOutlineIcon,
   DeletePostIcon,
@@ -23,17 +21,7 @@ import {
   TelegramIcon,
 } from '@/shared/assets'
 import ThreeDots from '@/shared/assets/icons/three-dots.png'
-import PersonImg3 from '@/shared/assets/PersonImg3.png'
-import PersonImg4 from '@/shared/assets/PersonImg4.png'
-import {
-  Button,
-  CustomDropdown,
-  CustomDropdownItem,
-  SwiperSlider,
-  Textarea,
-  TimeAgo,
-  Typography,
-} from '@/shared/components'
+import { Button, CustomDropdown, CustomDropdownItem, Typography } from '@/shared/components'
 import { AvatarSmallView } from '@/shared/components/avatarSmallView'
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { useFormatDate, useTranslation } from '@/shared/lib'
@@ -188,39 +176,40 @@ export const PostCommentsView = ({
           updatedAt={updatedAt}
         />
       </div>
-
-      <main className={s.main}>
-        <Scroller className={s.scrollContent}>
-          {isAuth
-            ? dataAuth?.items.map((el: CommentsDataType) => (
-                <React.Fragment key={el.postId}>
+      <div className={s.CubeGrey}>
+        <main className={s.main}>
+          <Scroller className={s.scrollContent}>
+            {isAuth
+              ? dataAuth?.items.map((el: CommentsDataType) => (
+                  <React.Fragment key={el.postId}>
+                    <PostAuthorizedAndUnauthorized
+                      setIsAnswer={setIsAnswer}
+                      id={id}
+                      setCommentId={setCommentId}
+                      el={el}
+                      t={t}
+                      updatedAt={updatedAt}
+                    />
+                    <AnswerData
+                      commentId={commentId}
+                      accessToken={accessToken}
+                      id={id}
+                      el={el}
+                      t={t}
+                    />
+                  </React.Fragment>
+                ))
+              : data?.items.map((el: CommentsDataType) => (
                   <PostAuthorizedAndUnauthorized
-                    setIsAnswer={setIsAnswer}
-                    id={id}
-                    setCommentId={setCommentId}
+                    key={el.postId}
                     el={el}
                     t={t}
                     updatedAt={updatedAt}
                   />
-                  <AnswerData
-                    commentId={commentId}
-                    accessToken={accessToken}
-                    id={id}
-                    el={el}
-                    t={t}
-                  />
-                </React.Fragment>
-              ))
-            : data?.items.map((el: CommentsDataType) => (
-                <PostAuthorizedAndUnauthorized
-                  key={el.postId}
-                  el={el}
-                  t={t}
-                  updatedAt={updatedAt}
-                />
-              ))}
-        </Scroller>
-      </main>
+                ))}
+          </Scroller>
+        </main>
+      </div>
       <footer className={s.footer}>
         <div className={s.share}>
           <div className={s.shareIcons}>

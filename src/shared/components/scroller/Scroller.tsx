@@ -26,7 +26,7 @@ export const Scroller = (props: ScrollerProps) => {
         width: props.customWidth,
       }}
     >
-      <ScrollArea.Viewport className={s.scrollAreaViewport}>
+      <ScrollArea.Viewport className={cn(s.scrollAreaViewport, props.className)}>
         <div className={props.className}>{props.children}</div>
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar className={s.scrollAreaScrollbar} orientation="vertical">

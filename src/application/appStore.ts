@@ -1,4 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
+// eslint-disable-next-line import/no-unresolved
+import { messengerApi } from 'messengerApp/messengerApi'
+// eslint-disable-next-line import/no-unresolved
+import { usersApi as usersRemoteApi } from 'messengerApp/usersRemoteApi'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 import { authReducer, authApi } from '../entities/auth'
@@ -34,9 +38,12 @@ const store = configureStore({
     [usersApi.reducerPath]: usersApi.reducer,
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [usersFollowApi.reducerPath]: usersFollowApi.reducer,
+
+    [messengerApi?.reducerPath]: messengerApi?.reducer,
+    [usersRemoteApi?.reducerPath]: usersRemoteApi?.reducer,
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(
+  middleware: getDefaultMiddleware => {
+    const middlewares = [
       authApi.middleware,
       // authGoogleApi.middleware,
       profileApi.middleware,
@@ -47,8 +54,14 @@ const store = configureStore({
       devicesApi.middleware,
       usersApi.middleware,
       notificationsApi.middleware,
-      usersFollowApi.middleware
-    ),
+      usersFollowApi.middleware,
+    ]
+
+    if (messengerApi) middlewares.push(messengerApi.middleware)
+    if (usersRemoteApi) middlewares.push(usersRemoteApi.middleware)
+
+    return getDefaultMiddleware().concat(...middlewares)
+  },
 })
 
 export default store

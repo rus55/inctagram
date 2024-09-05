@@ -13,20 +13,11 @@ const nextConfig = {
       new NextFederationPlugin({
         name: 'inctagram',
         remotes: {
-          messengerApp: `messenger_app@http://localhost:3001/remoteEntry.js`,
+          messengerApp: `messengerRemote@http://localhost:3001/remoteEntry.js`,
         },
-        // shared: {
-        //   react: {
-        //     eager: true,
-        //     requiredVersion: deps['react'],
-        //     singleton: true,
-        //   },
-        //   'react-dom': {
-        //     eager: true,
-        //     requiredVersion: deps['react-dom'],
-        //     singleton: true,
-        //   },
-        // },
+        extraOptions: {
+          automaticAsyncBoundary: true,
+        },
         filename: 'remoteEntry.js',
       })
     )

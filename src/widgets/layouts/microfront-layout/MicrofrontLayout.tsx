@@ -35,9 +35,7 @@ export const MicrofrontLayout: FC<Props> = ({ children }) => {
           <Sidebar />
         </div>
 
-        <div className={s.wrapperContent}>
-          {children}
-        </div>
+        <div className={s.wrapperContent}>{children}</div>
       </main>
       <BottomNavigation />
     </div>

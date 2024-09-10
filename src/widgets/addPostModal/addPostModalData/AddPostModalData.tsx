@@ -1,19 +1,18 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import Cropper from 'react-easy-crop'
 import { Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import '@/shared/assets/swiperStyle/post-images-slider.scss'
-import { useAppSelector } from '@/app/appStore'
+import { useAppSelector } from '@/application/appStore'
 import {
   addNewPhoto,
   updateAspect,
   updateCrop,
   updateCroppedAreaPixels,
   updateZoom,
-} from '@/app/services/cropper-slice'
+} from '@/application/services/cropper-slice'
 import { useAppDispatch } from '@/shared/lib'
 import s from '@/widgets/addPostModal/AddPostModal.module.scss'
 import {

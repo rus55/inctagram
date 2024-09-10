@@ -1,3 +1,6 @@
+const { NextFederationPlugin } = require('@module-federation/nextjs-mf')
+
+const { dependencies: deps } = require('./package.json')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -6,6 +9,18 @@ const nextConfig = {
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     })
+    config.plugins.push(
+      new NextFederationPlugin({
+        name: 'inctagram',
+        remotes: {
+          messengerApp: `messengerRemote@http://localhost:3001/remoteEntry.js`,
+        },
+        extraOptions: {
+          automaticAsyncBoundary: true,
+        },
+        filename: 'remoteEntry.js',
+      })
+    )
 
     return config
   },

@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
+// eslint-disable-next-line import/no-unresolved
+import { messengerApi } from 'messengerApp/messengerApi'
+// eslint-disable-next-line import/no-unresolved
+import { usersApi as usersRemoteApi } from 'messengerApp/usersRemoteApi'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 import { authReducer, authApi } from '../entities/auth'
 
-import { appSlice, postSlice } from '@/app/services'
-import { adminSlice } from '@/app/services/admin-slice'
-import { croppersSlice } from '@/app/services/cropper-slice'
-import { commentsApi } from '@/entities/comments'
+import { appSlice, postSlice } from '@/application/services'
+import { adminSlice } from '@/application/services/admin-slice'
+import { croppersSlice } from '@/application/services/cropper-slice'
 import { countriesApi } from '@/entities/countries/'
 import { devicesApi } from "@/entities/device's"
 import { notificationsApi } from '@/entities/notifications/api/notificationsApi'
@@ -35,10 +38,12 @@ const store = configureStore({
     [usersApi.reducerPath]: usersApi.reducer,
     [notificationsApi.reducerPath]: notificationsApi.reducer,
     [usersFollowApi.reducerPath]: usersFollowApi.reducer,
-    [commentsApi.reducerPath]: commentsApi.reducer,
+
+    [messengerApi?.reducerPath]: messengerApi?.reducer,
+    [usersRemoteApi?.reducerPath]: usersRemoteApi?.reducer,
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(
+  middleware: getDefaultMiddleware => {
+    const middlewares = [
       authApi.middleware,
       // authGoogleApi.middleware,
       profileApi.middleware,
@@ -50,9 +55,13 @@ const store = configureStore({
       usersApi.middleware,
       notificationsApi.middleware,
       usersFollowApi.middleware,
-      notificationsApi.middleware,
-      commentsApi.middleware
-    ),
+    ]
+
+    if (messengerApi) middlewares.push(messengerApi.middleware)
+    if (usersRemoteApi) middlewares.push(usersRemoteApi.middleware)
+
+    return getDefaultMiddleware().concat(...middlewares)
+  },
 })
 
 export default store

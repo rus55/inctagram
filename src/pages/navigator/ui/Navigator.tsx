@@ -1,7 +1,5 @@
 import Link from 'next/link'
 
-import { useAuth } from '@/shared/lib/hooks/useAuth'
-
 export function Navigator() {
   return (
     <div>

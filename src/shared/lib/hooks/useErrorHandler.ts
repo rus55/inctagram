@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 import { useAppDispatch, useTranslation } from '.'
 
-import { setAlert } from '@/app/services'
+import { setAlert } from '@/application/services'
 import { clearLocalUserData } from '@/entities/auth'
 
 export const useErrorHandler = (error: CustomerError) => {

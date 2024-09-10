@@ -8,7 +8,7 @@ import 'swiper/scss'
 import 'swiper/scss/effect-cube'
 import 'swiper/scss/navigation'
 import 'swiper/scss/pagination'
-import { useAppSelector } from '@/app/appStore'
+import { useAppSelector } from '@/application/appStore'
 import s from '@/widgets/addPostModal/filterModal/FilterModal.module.scss'
 import { FiltersTool } from '@/widgets/addPostModal/filterModal/filtterInctagramTool'
 type Props = {

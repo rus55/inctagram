@@ -10,7 +10,7 @@ import { useCountries } from '../model/useCountries'
 import { AsyncSelect } from './AsyncSelect'
 import s from './GeneralInformation.module.scss'
 
-import { setAlert } from '@/app/services'
+import { setAlert } from '@/application/services'
 import { clearLocalUserData } from '@/entities/auth'
 import { useGetProfileQuery } from '@/entities/profile'
 import { usePutProfileMutation } from '@/entities/profile/api/profileApi'

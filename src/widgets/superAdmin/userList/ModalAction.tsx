@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import Link from 'next/link'
 
@@ -15,6 +15,7 @@ type Props = {
   addValuesUser: (id: number, name: string) => void
   addValuesBanUser: (id: number, name: string) => void
   valueBanUser: any
+  banUsers: any
 }
 
 export const ModalAction = ({
@@ -24,8 +25,10 @@ export const ModalAction = ({
   addValuesUser,
   valueBanUser,
   addValuesBanUser,
+  banUsers,
 }: Props) => {
   const { t } = useTranslation()
+  const [isBan, setIsBan] = useState(banUsers)
 
   const addValuesForDeleteUser = () => {
     addValuesUser(userId, userName)
@@ -45,19 +48,22 @@ export const ModalAction = ({
         title={t.user_list.delete_user}
         onClick={addValuesForDeleteUser}
       />
-      <CustomDropdownItemWithIcon
-        variant={'regular_text_14'}
-        icon={<BlockIcon />}
-        onClick={addValuesForBanUser}
-        title={t.user_list.ban}
-      />
+      {banUsers ? (
+        <CustomDropdownItemWithIcon
+          variant={'regular_text_14'}
+          icon={<BlockIcon />}
+          title={t.user_list.unBan}
+          onClick={addValuesForUnBanUser}
+        />
+      ) : (
+        <CustomDropdownItemWithIcon
+          variant={'regular_text_14'}
+          icon={<BlockIcon />}
+          onClick={addValuesForBanUser}
+          title={t.user_list.ban}
+        />
+      )}
 
-      <CustomDropdownItemWithIcon
-        variant={'regular_text_14'}
-        icon={<BlockIcon />}
-        title={t.user_list.unBan}
-        onClick={addValuesForUnBanUser}
-      />
       <Link
         href={{
           pathname: '/more-information',

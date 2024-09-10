@@ -1,7 +1,7 @@
 import { ImageCard } from '@/shared/components/imageCard'
 
 type Props = {
-  posts: PostDataToComponent[]
+  posts: any[]
   openModal?: (id: number) => void
 }
 

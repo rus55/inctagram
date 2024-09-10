@@ -13,6 +13,7 @@ export const ru: LangType = {
     statistics: 'Статистика',
     favorites: 'Избранное',
     profile_btn: 'Настройки профиля',
+    View_all_comments: 'Посмотреть все комментарии',
   },
   resend: {
     title: 'Срок действия ссылки для подтверждения электронной почты истек',
@@ -202,7 +203,7 @@ export const ru: LangType = {
   post_view: {
     edit: 'Редактировать',
     delete: 'Удалить пост',
-    answer: 'Ответ',
+    answer: 'Ответить',
     like: 'Нравится',
     add_comment: 'Добавить комментарий...',
     publish: 'Опубликовать',

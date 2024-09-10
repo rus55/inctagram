@@ -3,13 +3,13 @@ import { Meta } from '@storybook/react'
 import { SidebarAdmin } from './SidebarAdmin'
 
 export default {
-  title: 'Components/Sidebar',
+  title: 'Components/SidebarAdmin',
   component: SidebarAdmin,
-} as Meta<typeof SidebarAdmin>
+  tags: ['autodocs'],
+} satisfies Meta<typeof SidebarAdmin>
 
 export const Default = {
-  // @ts-ignore
-  render: args => {
+  render: () => {
     return (
       <div>
         <div style={{ height: '50px', borderBottom: 'solid 1px #333' }}>Header</div>

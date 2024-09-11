@@ -9,7 +9,6 @@ import { useGetAnswerQuery, useLikeAnswerMutation } from '@/entities/comments/ap
 import { HeartOutline, HeartRed } from '@/shared/assets'
 import PersonImg3 from '@/shared/assets/PersonImg3.png'
 import { Button, TimeAgo, Typography } from '@/shared/components'
-import { useUpdateLikeStatus } from '@/widgets/postViewModal/updateLikeStatus/useUpdateLikeStatus'
 
 type Props = {
   commentId: number | undefined
@@ -22,7 +21,6 @@ export const AnswerData = ({ commentId, id, accessToken, t, el }: Props) => {
   const { data: dataAnswer } = useGetAnswerQuery({ postId: id, commentId: el.id, accessToken })
   const [createAnswerLike, { isLoading: createAnswerLikeLoading }] = useLikeAnswerMutation()
 
-  console.log(dataAnswer && dataAnswer.items)
   const [isHideAnswer, setIsHideAnswer] = useState<boolean>(false)
   const [like, setLike] = useState<'LIKE' | 'NONE'>('NONE')
   const clickHeandler = () => {
@@ -91,9 +89,6 @@ export const AnswerData = ({ commentId, id, accessToken, t, el }: Props) => {
                   Like: {el.likeCount}
                 </Typography>
                 &nbsp;&nbsp;
-                {/*<Typography onClick={clickHandlerAnswer} as="span" variant="bold_text_14" className={s.updatedAt}>*/}
-                {/*    {t.post_view.answer}*/}
-                {/*</Typography>*/}
               </div>
             </div>
           </div>

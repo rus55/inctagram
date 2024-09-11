@@ -6,7 +6,7 @@ import s from '../AddProfilePhotoModal.module.scss'
 
 import getCroppedImg from './crropUtils'
 
-import { setAlert } from '@/app/services'
+import { setAlert } from '@/application/services'
 import { clearLocalUserData } from '@/entities/auth'
 import { useSavePhotoMutation } from '@/entities/profile/api/profileApi'
 import { DefaultProfileImg } from '@/shared/assets'

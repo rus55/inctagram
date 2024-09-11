@@ -10,7 +10,7 @@ import { SignInAuth } from '../signInAuth/SignInAuth'
 
 import styles from './SignInWidget.module.scss'
 
-import { adminSlice } from '@/app/services/admin-slice'
+import { adminSlice } from '@/application/services/admin-slice'
 import { useLoginAdminMutation, useLoginMutation } from '@/entities/auth'
 import { AUTH_URLS } from '@/shared'
 import { GithubIcon, GoogleIcon } from '@/shared/assets'

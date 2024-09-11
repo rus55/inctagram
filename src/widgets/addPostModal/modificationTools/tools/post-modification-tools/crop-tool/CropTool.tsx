@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { updateAspect } from '@/app/services/cropper-slice'
+import { updateAspect } from '@/application/services/cropper-slice'
 import { DefaultProfileImg } from '@/shared/assets'
 import { FullSizeIcon } from '@/shared/assets/icons/FullSizeIcon'
 import { IconRectangleVertical } from '@/shared/assets/icons/RectangleIcon'

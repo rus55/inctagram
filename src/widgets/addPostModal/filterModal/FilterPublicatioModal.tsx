@@ -6,9 +6,9 @@ import 'swiper/scss/navigation'
 import 'swiper/scss/pagination'
 import 'swiper/scss/scrollbar'
 import 'swiper/scss/effect-cube'
-import { useAppSelector } from '@/app/appStore'
-import { setAlert } from '@/app/services'
-import { removeAllPhotos, updatePhotos } from '@/app/services/cropper-slice'
+import { useAppSelector } from '@/application/appStore'
+import { setAlert } from '@/application/services'
+import { removeAllPhotos, updatePhotos } from '@/application/services/cropper-slice'
 import { postsApi } from '@/entities/posts'
 import {
   usePublishPostsImageMutation,

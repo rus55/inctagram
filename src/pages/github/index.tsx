@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
-import { AppDispatch } from '@/app/appStore'
+import { AppDispatch } from '@/application/appStore'
 import { setLoginUser } from '@/entities/auth/model/authSlice'
 import { useClient } from '@/shared/lib/hooks/useClient'
 

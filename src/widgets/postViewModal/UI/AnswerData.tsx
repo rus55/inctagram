@@ -22,7 +22,6 @@ export const AnswerData = ({ commentId, id, accessToken, t, el }: Props) => {
   const { data: dataAnswer } = useGetAnswerQuery({ postId: id, commentId: el.id, accessToken })
   const [createAnswerLike, { isLoading: createAnswerLikeLoading }] = useLikeAnswerMutation()
 
-  console.log(dataAnswer && dataAnswer.items)
   const [isHideAnswer, setIsHideAnswer] = useState<boolean>(false)
   const [like, setLike] = useState<'LIKE' | 'NONE'>('NONE')
   const clickHeandler = () => {

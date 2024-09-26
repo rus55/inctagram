@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { JwtPayload, jwtDecode } from 'jwt-decode'
 
-import { RootState } from '@/app/appStore'
+import { RootState } from '@/application/appStore'
 
 interface IInitialState {
   userId: number

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { clearAlert, selectAlert } from '@/app/services'
+import { clearAlert, selectAlert } from '@/application/services'
 import { Alert } from '@/shared/components/alert/Alert'
 import { useAppDispatch, useAppSelector } from '@/shared/lib'
 

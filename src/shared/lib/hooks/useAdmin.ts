@@ -1,6 +1,6 @@
 import { useAppSelector } from './index'
 
-import { selectIsAdmin } from '@/app/services/admin-slice'
+import { selectIsAdmin } from '@/application/services/admin-slice'
 
 export const useAdmin = () => {
   const isAdmin = useAppSelector(selectIsAdmin)

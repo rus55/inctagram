@@ -20,25 +20,21 @@ export const ModalUnBan = ({
 }: Props) => {
   const { t } = useTranslation()
 
-  const onUnbanUser = () => {
-    const id = showModalUnban.userId
-
-    if (id) {
-      unblockUser({ userId: id })
-    }
-    !isLoadingUnBan &&
-      setShowModalUnban({
-        userId: null,
-        userName: null,
-        isShow: false,
-      })
-  }
   const onCloseModal = () => {
     setShowModalUnban({
       userId: null,
       userName: null,
       isShow: false,
     })
+  }
+
+  const onUnbanUser = () => {
+    const id = showModalUnban.userId
+
+    if (id) {
+      unblockUser({ userId: id })
+    }
+    !isLoadingUnBan && onCloseModal()
   }
 
   return (

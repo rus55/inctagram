@@ -4,12 +4,12 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 3162
-        NAMESPACE = "incta-online"
+        PORT = 3534
+        NAMESPACE = "mypicto-ru"
         REGISTRY_HOSTNAME = "elem15ten"
         REGISTRY = "registry.hub.docker.com"
-        PROJECT = "incta-online"
-        DEPLOYMENT_NAME = "incta-online-deployment"
+        PROJECT = "incta"
+        DEPLOYMENT_NAME = "incta-deployment"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
         DOCKER_BUILD_NAME = "${env.REGISTRY_HOSTNAME}/${env.PROJECT}:${env.IMAGE_NAME}"
     }
@@ -33,7 +33,7 @@ pipeline {
              steps {
                  echo "Push image started..."
                      script {
-                          docker.withRegistry("https://${env.REGISTRY}", 'incta-online') {
+                          docker.withRegistry("https://${env.REGISTRY}", 'mypicto-ru') {
                             app.push("${env.IMAGE_NAME}")
                         }
                      }

@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { clearLocalUserData, setLoginUser } from '../model/authSlice'
-
+import { clearLocalUserData, setLoginUser } from '@/entities/auth'
 import { BACKEND_URL, BASE_WORK_URL } from '@/shared/constants/ext-urls'
 import { consoleErrors } from '@/shared/lib'
 import { IEmailBaseUrl, IEmailPassword, IEmailPasswordUser } from '@/shared/types'
@@ -86,6 +85,26 @@ export const authApi = createApi({
         }
       },
     }),
+
+    loginAdmin: builder.mutation({
+      query: credentials => ({
+        url: '/graphql',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            mutation {
+              loginAdmin(email: "${credentials.email}", password: "${credentials.password}") {
+                logged
+              }
+            }
+          `,
+        }),
+      }),
+    }),
+
     refreshToken: builder.mutation<any, void>({
       query: () => ({
         url: '/auth/update-tokens',
@@ -137,6 +156,7 @@ export const authApi = createApi({
         method: 'POST',
       }),
     }),
+
     googleLogin: builder.mutation<any, string>({
       query: code => ({
         body: { code },
@@ -164,6 +184,7 @@ export const {
   useRegistrationMutation,
   useRegistrationConfirmationMutation,
   useLoginMutation,
+  useLoginAdminMutation,
   useSendCaptchaMutation,
   useCreateNewPasswordMutation,
   useValidCodeMutation,

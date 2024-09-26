@@ -1,0 +1,53 @@
+.content {
+  cursor: pointer;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+
+  &:active {
+    color: var(--color-accent-500);
+    fill: var(--color-accent-500);
+    stroke: var(--color-accent-500);
+  }
+
+  &:hover {
+    color: var(--color-accent-100);
+    stroke: var(--color-accent-100);
+  }
+
+  &:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid var(--color-accent-700);
+  }
+
+  &:disabled {
+    color: var(--color-dark-100);
+    stroke: var(--color-dark-100);
+  }
+}
+
+.marginBox {
+  margin-bottom: 60px;
+}
+
+.activeLink {
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px;
+  color: var(--color-accent-500);
+}
+
+.wrappedActionMenu {
+  @media (width >1023px) {
+    display: none;
+  }
+}
+
+.buttonWrapper {
+  @media (width <= 1023px) {
+    display: none;
+  }
+}

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { BACKEND_URL } from '@/shared/constants/ext-urls'
 
-const transformPostData = (el: PostDataType): PostDataType => {
+export const transformPostData = (el: PostDataType): PostDataType => {
   return {
     id: el.id,
     ownerId: el.ownerId,
@@ -12,6 +12,26 @@ const transformPostData = (el: PostDataType): PostDataType => {
     avatarOwner: el.avatarOwner,
     updatedAt: el.updatedAt,
     userName: el.userName,
+    createdAt: el.createdAt,
+  }
+}
+export const transformCommentsData = (el: CommentsDataType): CommentsDataType => {
+  return {
+    id: el.id,
+    postId: el.postId,
+    from: el.from,
+    content: el.content,
+    createdAt: el.createdAt,
+    isLiked: el.isLiked,
+    likeCount: el.likeCount,
+  }
+}
+export const transformAnswerData = (el: any): any => {
+  return {
+    id: el.id,
+    postId: el.postId,
+    from: el.from,
+    content: el.content,
   }
 }
 

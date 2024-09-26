@@ -13,7 +13,7 @@ type Props = ImageProps & {
   openModal?: (postId: number) => void
 }
 
-export const ImageCard = ({ postId, src, alt, cardClassName, width, height, openModal }: Props) => {
+export const ImageCard = ({ postId, src, alt, cardClassName, openModal }: Props) => {
   const [loading, setLoading] = useState(true)
 
   useFetchLoader(loading)
@@ -25,17 +25,19 @@ export const ImageCard = ({ postId, src, alt, cardClassName, width, height, open
         onClick={
           openModal
             ? () => {
-              openModal(postId)
-            }
+                openModal(postId)
+              }
             : () => null
         }
       >
         <Image
           src={src}
+          style={{ objectFit: 'contain' }}
           className={cardClassName}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          fill
+          priority={true}
           alt={alt}
-          width={width}
-          height={height}
           onLoadingComplete={() => setLoading(false)}
         />
       </div>

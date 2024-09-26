@@ -1,7 +1,9 @@
 import React from 'react'
 
-import { Button, Typography } from '@/shared/components'
+// import { Button, Typography } from '@/shared/components'
+import { Button } from '@/shared/components/button'
 import { Modal } from '@/shared/components/modals'
+import { Typography } from '@/shared/components/typography'
 import { useTranslation } from '@/shared/lib'
 
 type Props = {

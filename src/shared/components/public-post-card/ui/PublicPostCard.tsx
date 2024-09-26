@@ -59,10 +59,12 @@ export const PublicPostCard: FC<PublicPostCardProps> = ({
           }}
         >
           {imagesUrl?.map((image: any, index: number) => {
+            if (image.width !== 1440) return null
+
             return (
               <SwiperSlide key={index} className={s.item}>
                 <Image
-                  style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+                  style={{ height: '100%', width: '100%', objectFit: 'contain' }}
                   priority
                   fill
                   sizes="(min-width: 1280px) 360px, (max-width: 1280px) 240px"

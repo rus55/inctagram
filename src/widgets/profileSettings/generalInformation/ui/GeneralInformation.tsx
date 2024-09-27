@@ -92,6 +92,10 @@ const Information = () => {
       body.aboutMe = ' '
     }
 
+    if (!body.dateOfBirth) {
+      body.dateOfBirth = profile?.dateOfBirth
+    }
+
     putProfile({
       body,
       accessToken,
@@ -100,7 +104,6 @@ const Information = () => {
 
   useEffect(() => {
     if (profile) {
-      trigger()
       setTimeout(() => {
         date && handleDate(date)
       })
@@ -113,11 +116,19 @@ const Information = () => {
     profile?.lastName && setValue('lastName', profile.lastName)
     profile?.userName && setValue('userName', profile.userName)
     profile?.aboutMe && setValue('aboutMe', profile.aboutMe)
+    profile?.aboutMe && setValue('dateOfBirth', profile.dateOfBirth)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps, prettier/prettier
-  }, [profile?.firstName, profile?.lastName, profile?.userName, profile?.aboutMe])
+  }, [
+    profile?.firstName,
+    profile?.lastName,
+    profile?.userName,
+    profile?.aboutMe,
+    profile?.dateOfBirth,
+  ])
 
   useEffect(() => {
+    trigger()
     isSuccess && dispatch(setAlert({ message: t.profile.success, variant: 'info' }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])

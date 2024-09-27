@@ -12,6 +12,7 @@ export const en = {
     statistics: 'Statistics',
     favorites: 'Favorites',
     profile_btn: 'Profile Settings',
+    View_all_comments: 'View all comments',
   },
   resend: {
     title: 'Email verification link expired',
@@ -120,8 +121,14 @@ export const en = {
     settings: 'Profile Settings',
     log_out: 'Log Out',
   },
+  sidebarAdmin: {
+    userList: 'User list',
+    paymentsList: 'Payments list',
+    postsList: 'Posts list',
+    statistics: 'Statistics',
+  },
   notification_menu: {
-    title: 'Notification',
+    title: 'Notifications',
   },
   add_following: {
     // title_of_delete_modal: 'Удалить подписку',
@@ -231,5 +238,112 @@ export const en = {
     save_draft: 'Save draft',
     add_img_message: 'You have added the maximum number of photos allowed!',
   },
+  subscription: {
+    day: '$10 per 1 Day',
+    week: '$50 per 7 Day',
+    month: '$100 per month',
+  },
+  text_subscription_costs: 'Your subscription costs',
+  current_subscription: 'Current Subscription',
+
+  text_account: 'Account type',
+  account_type: {
+    personal: 'Personal',
+    business: 'Business',
+  },
+  text_success: 'Success',
+  payment_success: 'Payment was successful!',
+  button_ok: 'OK',
+
+  text_error: 'Error',
+  transaction_failed: 'Transaction failed. Please, write to support',
+  button_back: 'Back to payment',
+
+  auto_renewal: 'Auto-Renewal',
+  expire_at: 'Expire at',
+  next_payment: 'Next payment',
+  devices: {
+    log_out: 'Log Out',
+    Terminate_sessions: 'Terminate all other sessions',
+  },
+
+  date_of_payment: 'Date of Payment',
+  end_date_of_subscription: 'End date of subscription',
+  amount: 'Amount',
+  price: 'Price',
+  subscription_type: 'Subscription Type',
+  subscription_text: 'Subscription',
+  payment_type: 'Payment Type',
+  payment_method: 'Payment Method',
+  show: 'Show',
+  on_page: 'on page',
+
+  user_list: {
+    id: 'User ID',
+    name: 'Username',
+    profile: 'Profile link',
+    date: 'Date added',
+
+    not_selected: 'Not Selected',
+    blocked: 'Blocked',
+    not_blocked: 'Not Blocked',
+
+    more: 'More information',
+    ban: 'Ban in the system',
+    delete_user: 'Delete user',
+    unban_user: 'Un-ban user',
+    confirmation: 'Are you sure to delete user',
+    confirmation_unBan: 'Are you sure want to un-ban',
+
+    reason_for_ban: 'Reason for ban',
+    bad_behavior: 'Bad behavior',
+    advertising_placement: 'Advertising placement',
+    another_reason: 'Another reason',
+
+    are_you_sure_you: 'Are you sure you want to ban the user',
+    user_blocking: 'User blocking',
+    no: 'No',
+    yes: 'Yes',
+    unBan: 'Un-ban',
+    backToUserList: 'Back to User List',
+  },
+  user_info: {
+    usertId: 'User ID',
+    profileDate: 'Profile Creation Date',
+    uploaded_photos: 'Uploaded photos',
+    payments: 'Payments',
+    followers: 'Followers',
+    following: 'Following',
+    userName: 'UserName',
+    profileLink: 'Profile link',
+    subscriptionDate: 'Subscription Date',
+    not_found: 'Not found',
+  },
+  notification(message: string) {
+    const datePattern = /(\d{2}\/\d{2}\/\d{4})/
+    const match = message?.match(datePattern)
+
+    if (match) {
+      const [month, day, year] = match[0].split('/')
+      const formattedDate = `${day}.${month}.${year}`
+
+      return `Your subscription has been activated and is valid until ${formattedDate}`
+    }
+    const messages = {
+      'Your subscription-ws ends in 1 day': 'Your subscription-ws ends in 1 day',
+      'Your subscription ends in 7 days': 'Your subscription ends in 7 days',
+      'The next subscription payment will be debited from your account after 1 day.':
+        'The next subscription payment will be debited from your account after 1 day.',
+    }
+
+    return messages[message as keyof typeof messages]
+  },
+  new_notification: 'New notification!',
+  new_title: 'new',
+  today: 'today',
+  hide: 'hide',
+  show_more: 'show more',
+  sendMessage: 'Send Message',
+  publications: 'Publications',
 }
 export type LangType = typeof en

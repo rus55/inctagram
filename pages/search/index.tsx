@@ -1,1 +1,1 @@
-export { Search as default } from '@/pages/search'
+export { SearchPage as default } from '@/pages/search'

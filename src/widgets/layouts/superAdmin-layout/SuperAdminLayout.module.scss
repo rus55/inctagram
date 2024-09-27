@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--color-dark-700);
+
+  .main {
+    display: flex;
+    flex-grow: 1;
+    max-height: calc(100vh - 4rem);
+  }
+
+  .sidebar {
+    @media (width < 1024px) {
+      display: none;
+    }
+  }
+
+  .header {
+    position: relative;
+  }
+
+  .wrapperContent {
+    overflow: auto;
+    width: 100%;
+  }
+}

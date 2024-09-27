@@ -1,25 +1,37 @@
-import React, { FC } from 'react'
-
-import { Typography } from '..'
+import React from 'react'
 
 import s from './NotificationItem.module.scss'
 
-export const NotificationItem: FC = () => {
+import { Typography } from '@/shared/components'
+import { useTranslation } from '@/shared/lib'
+
+type Props = {
+  message: string
+  newMessage?: boolean
+  notifyAt: Date
+}
+export const NotificationItem = ({ message, newMessage, notifyAt, ...restProps }: Props) => {
+  const { t } = useTranslation()
+
   return (
-    <div className={s.wrapper}>
+    <div className={s.wrapper} {...restProps}>
       <div>
         <Typography as="span" variant="bold_text_16">
-          Новое уведомление!
+          {t.new_notification}
         </Typography>
-        <Typography as="span" variant="small_text" className={s.textSm}>
-          Новое
-        </Typography>
+        {newMessage && (
+          <Typography as="span" variant="small_text" className={s.textSm}>
+            {t.new_title}
+          </Typography>
+        )}
       </div>
       <Typography as="span" className={s.textBase}>
-        Следующий платеж у вас спишется через 1 день
+        {t.notification(message)}
       </Typography>
       <Typography variant="small_text" className={s.textSb}>
-        1 день назад
+        {new Date(notifyAt).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)
+          ? t.today
+          : new Date(notifyAt).toLocaleDateString('ru-RU')}
       </Typography>
     </div>
   )

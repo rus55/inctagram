@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
+import Image from 'next/image'
 import { A11y, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -18,6 +19,7 @@ export const PublicationData = ({ photos }: Props) => {
   const { userId, accessToken } = useAuth()
   const dispatch = useAppDispatch()
 
+  const [editedPhotos, setEditedPhotos] = useState<CropperState[]>([])
   const { data: profileData } = useGetProfileQuery({ profileId: +userId, accessToken })
   const [wordCount, setWordCount] = useState(0)
   const { t } = useTranslation()
@@ -28,6 +30,10 @@ export const PublicationData = ({ photos }: Props) => {
 
     setWordCount(value.length)
   }
+
+  useEffect(() => {
+    setEditedPhotos(photos)
+  }, [photos])
 
   return (
     <div className={s.modBox}>
@@ -41,11 +47,17 @@ export const PublicationData = ({ photos }: Props) => {
           slidesPerView={1}
         >
           <div>
-            {photos.map(photo => {
+            {editedPhotos.map(photo => {
               return (
                 <SwiperSlide key={photo.id} className={s.swiper}>
                   <div className={s.imageBox}>
-                    <img src={photo.image} style={{ filter: photo.filterClass }} alt={''} />
+                    <Image
+                      src={photo.image}
+                      style={{ filter: photo.filterClass, objectFit: 'contain' }}
+                      priority
+                      fill
+                      alt={''}
+                    />
                   </div>
                 </SwiperSlide>
               )
@@ -58,7 +70,7 @@ export const PublicationData = ({ photos }: Props) => {
         <div className={s.textareaBox}>
           <div className={s.avaAndUserName}>
             {profileData?.avatars[0] ? (
-              <img src={profileData.avatars[0].url} className={s.avatar} alt={'postImg'} />
+              <Image src={profileData.avatars[0].url} className={s.avatar} alt={'postImg'} />
             ) : (
               <IconUser className={s.avatar} />
             )}

@@ -20,8 +20,10 @@ import {
 
 import s from './Sidebar.module.scss'
 
-import { useTranslation } from '@/shared/lib'
+import { addNewPhoto } from '@/app/services/cropper-slice'
+import { useAppDispatch, useTranslation } from '@/shared/lib'
 import { useModal } from '@/shared/lib/hooks/open-or-close-hook'
+import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'
 import { AddPostModal } from '@/widgets/addPostModal/AddPostModal'
 import { LogOutButton } from '@/widgets/logOut'
 
@@ -29,10 +31,21 @@ export const Sidebar = () => {
   const router = useRouter()
   const { t } = useTranslation()
   const { isOpen, openModal, closeModal } = useModal()
+  const { getAllPhotos } = useIndexedDB('photoGalleryDB', { photoStore: 'photos' })
+  const dispatch = useAppDispatch()
+
   const handleOpenMyProfileAndAddPost = () => {
     router.push('/my-profile')
     openModal()
   }
+
+  getAllPhotos(photos => {
+    photos.forEach(item => {
+      if (item) {
+        dispatch(addNewPhoto(item.imageUrl))
+      }
+    })
+  })
 
   return (
     <div className={s.box}>

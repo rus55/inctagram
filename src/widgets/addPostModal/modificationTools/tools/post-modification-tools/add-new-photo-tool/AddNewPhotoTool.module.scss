@@ -18,16 +18,16 @@
 .box {
   opacity: 0.8;
 }
+
 .boxTool {
   position: absolute;
-  width: 100%;
-  top: 87%;
   z-index: 12;
+  top: 87%;
   left: 90%;
-  @media screen and (width<=910px) {
-    //top:
-  }
+
+  width: 100%;
 }
+
 .menuBox {
   position: relative;
 }

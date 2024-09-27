@@ -1,0 +1,44 @@
+.search {
+  width: 750px;
+}
+
+.select {
+  width: 190px;
+  margin-bottom: 4px;
+}
+
+.panelSearchAndSort {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table {
+  border: 1px solid var(--color-dark-500);
+
+  th {
+    width: 250px;
+    background-color: var(--color-dark-500);
+  }
+
+  th,
+  td {
+    padding: 20px 30px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-dark-500);
+  }
+
+  .date {
+    cursor: pointer;
+
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    width: 450px;
+  }
+}
+
+.ellipsis {
+  cursor: pointer;
+}

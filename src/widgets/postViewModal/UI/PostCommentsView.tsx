@@ -1,14 +1,23 @@
+import React, { useEffect, useState } from 'react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
 import s from './PostCommentsView.module.scss'
 
 import {
+  useCreateAnswerMutation,
+  useGetAnswerQuery,
+  useGetCommentQuery,
+  useGetCommentUnAuthorizationQuery,
+  useUpdateCommentMutation,
+} from '@/entities/comments/api/commentsApi'
+import { InputField } from '@/shared'
+import {
   BookmarkOutlineIcon,
   DeletePostIcon,
   EditPostIcon,
   HeartOutline,
-  HeartRed,
   TelegramIcon,
 } from '@/shared/assets'
 import ThreeDots from '@/shared/assets/icons/three-dots.png'
@@ -18,6 +27,8 @@ import {
   Button,
   CustomDropdown,
   CustomDropdownItem,
+  SwiperSlider,
+  Textarea,
   TimeAgo,
   Typography,
 } from '@/shared/components'
@@ -25,8 +36,11 @@ import { AvatarSmallView } from '@/shared/components/avatarSmallView'
 import { Scroller } from '@/shared/components/scroller/Scroller'
 import { useFormatDate, useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
+import { AnswerData } from '@/widgets/postViewModal/UI/AnswerData'
+import { PostAuthorizedAndUnauthorized } from '@/widgets/postViewModal/UI/PostAuthorizedAndUnauthorized'
 
 type Props = {
+  id?: number
   ownerId: number
   avatarOwner: string
   userName: string
@@ -34,8 +48,8 @@ type Props = {
   updatedAt: string
   isSSR: boolean
 
-  setModalType: (modalType: 'edit' | 'view') => void
-  openDeleteModal: () => void
+  setModalType?: (modalType: 'edit' | 'view') => void
+  openDeleteModal?: () => void
 }
 
 type PostModalHeaderProps = Omit<Props, 'description' | 'updatedAt'>
@@ -54,10 +68,10 @@ export const PostModalHeader = ({
   return (
     <header className={s.header}>
       <div className={s.avatar}>
-        <AvatarSmallView avatarOwner={avatarOwner} />
-        <Link href={`/public-posts/${ownerId}`}>
-          <Typography variant="bold_text_14">{userName}</Typography>
-        </Link>
+        {/*<AvatarSmallView avatarOwner={avatarOwner} />*/}
+        {/*<Link href={`/public-posts/${ownerId}`}>*/}
+        {/*  <Typography variant="bold_text_14">{userName}</Typography>*/}
+        {/*</Link>*/}
       </div>
       {isAuth && userId == ownerId && !isSSR && (
         <div className={s.wrappedActionMenu}>
@@ -66,12 +80,20 @@ export const PostModalHeader = ({
             align={'end'}
           >
             <CustomDropdownItem>
-              <Button variant={'link'} className={s.button} onClick={() => setModalType('edit')}>
+              <Button
+                variant={'link'}
+                className={s.button}
+                onClick={() => (setModalType ? setModalType('edit') : '')}
+              >
                 <EditPostIcon /> {t.post_view.edit}
               </Button>
             </CustomDropdownItem>
             <CustomDropdownItem>
-              <Button variant={'link'} className={s.button} onClick={() => openDeleteModal()}>
+              <Button
+                variant={'link'}
+                className={s.button}
+                onClick={() => (openDeleteModal ? openDeleteModal() : '')}
+              >
                 <DeletePostIcon /> {t.post_view.delete}
               </Button>
             </CustomDropdownItem>
@@ -91,9 +113,40 @@ export const PostCommentsView = ({
   isSSR,
   setModalType,
   openDeleteModal,
+  id,
 }: Props) => {
   const { t } = useTranslation()
   const { formatDate } = useFormatDate(t.lg)
+  const [updateComments, { isLoading: isPostLoading }] = useUpdateCommentMutation()
+  const [createAnswer, { isLoading: isCreateAnswer }] = useCreateAnswerMutation()
+  const { accessToken } = useAuth()
+  const [comment, setComment] = useState<string>('')
+  const { data: dataAuth } = useGetCommentQuery({ postId: id, accessToken })
+  const { data, isLoading, error } = useGetCommentUnAuthorizationQuery({ postId: id })
+  const { isAuth } = useAuth()
+  const [isAnswer, setIsAnswer] = useState<boolean>(false)
+  const [commentId, setCommentId] = useState<number | undefined>()
+  const submitClickHandler = () => {
+    setComment('')
+    if (isAnswer) {
+      createAnswer({
+        content: comment,
+        commentId: commentId,
+        postId: id,
+        accessToken,
+      })
+      setIsAnswer(false)
+    } else
+      updateComments({
+        content: comment,
+        postId: id,
+        accessToken,
+      })
+  }
+
+  useEffect(() => {
+    if (isAnswer) return setComment('@' + userName + ',')
+  }, [isAnswer])
 
   return (
     <div>
@@ -107,10 +160,12 @@ export const PostCommentsView = ({
           openDeleteModal={openDeleteModal}
         />
       </div>
+
       <main className={s.main}>
         <Scroller className={s.scrollContent}>
           <div className={s.post}>
             <AvatarSmallView avatarOwner={avatarOwner} />
+
             <div className={s.postContent}>
               <Link href={`/public-posts/${ownerId}`}>
                 <Typography as="span" variant="bold_text_14">
@@ -126,117 +181,42 @@ export const PostCommentsView = ({
               </Typography>
             </div>
           </div>
-          <div className={s.comment}>
-            <div className={s.post}>
-              <Image
-                src={PersonImg3}
-                width={36}
-                height={36}
-                alt="Owner's avatar"
-                className={s.smallAvatarPost}
-              />
-              <div className={s.postContent}>
-                <Link href={'#'}>
-                  <Typography as="span" variant="bold_text_14">
-                    URLProfiele
-                  </Typography>
-                </Link>
-                &nbsp;&nbsp;
-                <Typography as="span" variant="medium_text_14">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua
-                </Typography>
-                <div>
-                  <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
-                    <TimeAgo updatedAt={updatedAt} lg={t.lg} />
-                  </Typography>
-                  &nbsp;&nbsp;
-                  <Typography as="span" variant="bold_text_14" className={s.updatedAt}>
-                    {t.post_view.answer}
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            <div className={s.like}>
-              <HeartOutline />
-            </div>
-          </div>
-          <div className={s.comment}>
-            <div className={s.post}>
-              <Image
-                src={PersonImg4}
-                width={36}
-                height={36}
-                alt="Owner's avatar"
-                className={s.smallAvatarPost}
-              />
-              <div className={s.postContent}>
-                <Link href={'#'}>
-                  <Typography as="span" variant="bold_text_14">
-                    URLProfiele
-                  </Typography>
-                </Link>{' '}
-                <Typography as="span" variant="medium_text_14">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua
-                </Typography>
-                <div>
-                  <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
-                    <TimeAgo updatedAt={updatedAt} lg={t.lg} />
-                  </Typography>{' '}
-                  &nbsp;&nbsp;
-                  <Typography as="span" variant="bold_text_14" className={s.updatedAt}>
-                    {t.post_view.like}: 1
-                  </Typography>
-                  &nbsp;&nbsp;
-                  <Typography as="span" variant="bold_text_14" className={s.updatedAt}>
-                    {t.post_view.answer}
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            <div className={s.like}>
-              <HeartRed />
-            </div>
-          </div>
-          <div className={s.comment}>
-            <div className={s.post}>
-              <Image
-                src={PersonImg3}
-                width={36}
-                height={36}
-                alt="Owner's avatar"
-                className={s.smallAvatarPost}
-              />
-              <div className={s.postContent}>
-                <Link href={'#'}>
-                  <Typography as="span" variant="bold_text_14">
-                    URLProfiele
-                  </Typography>
-                </Link>
-                &nbsp;&nbsp;
-                <Typography as="span" variant="medium_text_14">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua
-                </Typography>
-                <div>
-                  <Typography as="span" variant="medium_text_14" className={s.updatedAt}>
-                    <TimeAgo updatedAt={updatedAt} lg={t.lg} />
-                  </Typography>
-                  &nbsp;&nbsp;
-                  <Typography as="span" variant="bold_text_14" className={s.updatedAt}>
-                    {t.post_view.answer}
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            <div className={s.like}>
-              <HeartOutline />
-            </div>
-          </div>
+          {isAuth
+            ? dataAuth &&
+              dataAuth.items.map((el: CommentsDataType) => (
+                <>
+                  <PostAuthorizedAndUnauthorized
+                    setIsAnswer={setIsAnswer}
+                    id={id}
+                    setCommentId={setCommentId}
+                    key={el.postId}
+                    el={el}
+                    t={t}
+                    updatedAt={updatedAt}
+                    oneComments={false}
+                  />
+                  <AnswerData
+                    commentId={commentId}
+                    accessToken={accessToken}
+                    id={id}
+                    el={el}
+                    t={t}
+                  />
+                </>
+              ))
+            : data &&
+              data.items.map((el: any) => (
+                <PostAuthorizedAndUnauthorized
+                  key={el.postId}
+                  el={el}
+                  t={t}
+                  updatedAt={updatedAt}
+                  oneComments={false}
+                />
+              ))}
         </Scroller>
       </main>
-      <footer>
+      <footer className={s.footer}>
         <div className={s.share}>
           <div className={s.shareIcons}>
             <div className={s.shareIconsStart}>
@@ -277,11 +257,29 @@ export const PostCommentsView = ({
             {formatDate(updatedAt)}
           </Typography>
         </div>
+
         <div className={s.addComment}>
-          <Typography variant="regular_text_14" className={s.updatedAt}>
-            {t.post_view.add_comment}
-          </Typography>
-          <Button variant="link">{t.post_view.publish}</Button>
+          <input
+            disabled={!isAuth}
+            type={'text'}
+            value={comment}
+            onChange={e => setComment(e.target.value)}
+            placeholder={t.post_view.add_comment}
+            className={s.InputField}
+          />
+          {/*<input*/}
+          {/*    disabled={!isAuth}*/}
+          {/*    type={"email"}*/}
+          {/*    value={comment}*/}
+          {/*    onChange={e => setComment(e.target.value)}*/}
+          {/*    placeholder={''}*/}
+          {/*    className={s.updatedAt}*/}
+          {/*/>*/}
+
+          {/*{t.post_view.add_comment}*/}
+          <Button disabled={!isAuth} variant="link" onClick={submitClickHandler}>
+            {t.post_view.publish}
+          </Button>
         </div>
       </footer>
     </div>

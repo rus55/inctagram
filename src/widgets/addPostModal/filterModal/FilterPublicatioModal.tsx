@@ -17,6 +17,7 @@ import {
 import { Modal } from '@/shared/components/modals'
 import { useAppDispatch, useFetchLoader, useTranslation } from '@/shared/lib'
 import { useAuth } from '@/shared/lib/hooks/useAuth'
+import useIndexedDB from '@/shared/lib/hooks/useIndexedDB'
 import { CloseCrop } from '@/widgets/addPostModal/CloseCrop'
 import { FilteringData } from '@/widgets/addPostModal/filterModal/FilterData'
 import { PublicationData } from '@/widgets/addPostModal/publicationModal/PublicationData'
@@ -24,10 +25,11 @@ import { createImage } from '@/widgets/addProfilePhoto/addAvaWithoutRotation/crr
 
 type Props = {
   isOpenFilter: boolean
-
   closeFilter: () => void
   setImageScr: (img: string | null) => void
   closeCroppingModal: () => void
+  setIsDraft: (value: boolean) => void
+  setModalPost: (value: boolean) => void
 }
 
 export const FilterPublicationModal: FC<Props> = ({
@@ -35,6 +37,8 @@ export const FilterPublicationModal: FC<Props> = ({
   closeCroppingModal,
   setImageScr,
   closeFilter,
+  setIsDraft,
+  setModalPost,
 }) => {
   const croppers = useAppSelector(state => state.croppersSlice)
   const [openClosCrop, setCloseCrop] = useState(false)
@@ -47,9 +51,16 @@ export const FilterPublicationModal: FC<Props> = ({
   const [mode, setMode] = useState<'filter' | 'publish'>('filter')
   const dispatch = useAppDispatch()
   const [isButtonDisabled, setButtonDisabled] = useState(false)
+  const [flag, setFlag] = useState<boolean>(false)
+  const { deletePhotos } = useIndexedDB('photoGalleryDB', { photoStore: 'photos' })
 
   useFetchLoader(isLoading || isPostLoading)
+  if (!croppers.length || flag) {
+    return
+  }
+
   const handleDiscard = () => {
+    setFlag(true)
     closeFilter()
     setCloseCrop(false)
     closeCroppingModal()
@@ -116,7 +127,7 @@ export const FilterPublicationModal: FC<Props> = ({
         dispatch(setAlert({ variant: 'error', message: error }))
       })
   }
-  const handleInteractOutside = (event: Event) => {
+  const handleInteractOutside = () => {
     setCloseCrop(true)
   }
   const handleSaveFilterPost = () => {
@@ -125,12 +136,26 @@ export const FilterPublicationModal: FC<Props> = ({
   const handleCloseCrop = () => {
     setCloseCrop(false)
   }
-  const handleOpenNexts = () => {
+  const handleDiscordCrop = () => {
+    deletePhotos()
+    dispatch(removeAllPhotos())
+    setImageScr(null)
+    setIsDraft(false)
+    closeCroppingModal()
+    setCloseCrop(false)
+  }
+  const handleOpenNext = () => {
     if (mode === 'filter') {
       setMode('publish')
     } else {
+      deletePhotos()
+      setIsDraft(false)
       handlePublish()
     }
+  }
+  const onCloseFilter = () => {
+    setModalPost(true)
+    closeFilter()
   }
   const onPrevStep = () => {
     setMode('filter')
@@ -141,15 +166,15 @@ export const FilterPublicationModal: FC<Props> = ({
       <CloseCrop
         openCloseCrop={openClosCrop}
         closeCrop={handleCloseCrop}
-        onDiscard={handleCloseCrop}
+        onDiscard={handleDiscordCrop}
         savePhotoInDraft={handleSaveFilterPost}
       />
       <Modal
         open={isOpenFilter}
         size={'lg'}
         isCropHeader={true}
-        onClickNext={handleOpenNexts}
-        closePostModal={mode === 'filter' ? closeFilter : onPrevStep}
+        onClickNext={handleOpenNext}
+        closePostModal={mode === 'filter' ? onCloseFilter : onPrevStep}
         title={mode === 'filter' ? t.post.filter_modal : t.post.publication_modal}
         showCloseButton={false}
         isPost

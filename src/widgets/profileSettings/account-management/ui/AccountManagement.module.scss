@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.wrapper {
+  margin-top: 10px;
+  padding: 24px 0 0 20px;
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-300);
+}
+
+.wrapperWithFlex {
+  display: flex;
+  gap: 50px;
+  justify-content: left;
+  padding-bottom: 24px;
+}
+
+.time {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.colorText {
+  color: var(--color-light-900);
+}
+
+.checkbox {
+  margin-top: 10px;
+  margin-left: -0.6rem;
+}
+
+.businessContainer {
+  position: relative;
+}
+
+.payPalAndStripe {
+  position: absolute;
+  right: 0;
+
+  display: flex;
+  gap: 50px;
+  align-items: center;
+
+  margin-top: 20px;
+
+  button {
+    padding: 0;
+  }
+}
+
+.payPal {
+  padding: 10px;
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 7px;
+}
+
+.successButton {
+  margin-top: 40px;
+}

@@ -13,6 +13,7 @@ export const ru: LangType = {
     statistics: 'Статистика',
     favorites: 'Избранное',
     profile_btn: 'Настройки профиля',
+    View_all_comments: 'Посмотреть все комментарии',
   },
   resend: {
     title: 'Срок действия ссылки для подтверждения электронной почты истек',
@@ -119,6 +120,12 @@ export const ru: LangType = {
     settings: 'Настройки профиля',
     log_out: 'Выйти',
   },
+  sidebarAdmin: {
+    userList: 'Список пользователей',
+    paymentsList: 'Список платежей',
+    postsList: 'Список постов',
+    statistics: 'Статистика',
+  },
   notification_menu: {
     title: 'Уведомления',
   },
@@ -196,7 +203,7 @@ export const ru: LangType = {
   post_view: {
     edit: 'Редактировать',
     delete: 'Удалить пост',
-    answer: 'Ответ',
+    answer: 'Ответить',
     like: 'Нравится',
     add_comment: 'Добавить комментарий...',
     publish: 'Опубликовать',
@@ -230,4 +237,112 @@ export const ru: LangType = {
     save_draft: 'Сохранить',
     add_img_message: 'Ты добавил максимально допустимое количество фотографий!',
   },
+  subscription: {
+    day: '10$ за один день',
+    week: '50$ за неделю',
+    month: '100$ за месяц',
+  },
+  text_subscription_costs: 'Стоимость подписки',
+  current_subscription: 'Текущая подписка',
+
+  text_account: 'Тип аккаунта',
+  account_type: {
+    personal: 'Персональный',
+    business: 'Бизнес',
+  },
+  text_success: 'Успешно',
+  payment_success: 'Оплата прошла успешно!',
+  button_ok: 'ОТЛИЧНО',
+
+  text_error: 'Ошибка',
+  transaction_failed: 'Транзакция не прошла. Пожалуйста, напишите в службу поддержки',
+  button_back: 'Назад к оплате',
+
+  auto_renewal: 'Автопродление',
+  expire_at: 'Истекает',
+  next_payment: 'Следующий платеж',
+  devices: {
+    log_out: 'Выйти',
+    Terminate_sessions: 'Завершить все остальные сеансы',
+  },
+
+  date_of_payment: 'Дата оплаты',
+  end_date_of_subscription: 'Дата окончания подписки',
+  amount: 'Сумма',
+  price: 'Цена',
+  subscription_text: 'Подписка',
+  subscription_type: 'Тип подписки',
+  payment_type: 'Тип оплаты',
+  payment_method: 'Способ оплаты',
+  show: 'Показать',
+  on_page: 'на странице',
+
+  user_list: {
+    id: 'ID пользователя',
+    name: 'Имя пользователя',
+    profile: 'Ссылка профиля',
+    date: 'Дата регистрации',
+
+    not_selected: 'Не выбрано',
+    blocked: 'Заблокировано',
+    not_blocked: 'Не заблокировано',
+    user_blocking: 'Блокировка пользователя',
+    more: 'Подробнее',
+    ban: 'Заблокировать',
+    delete_user: 'Удалить пользователя',
+    confirmation: 'Вы уверены, что хотите удалить пользователя',
+    unBan: 'Разблокировать',
+
+    reason_for_ban: 'Причина блокировки',
+    bad_behavior: 'Плохое поведение',
+    advertising_placement: 'Размещение рекламы',
+    another_reason: 'Другая причина',
+
+    are_you_sure_you: 'Вы уверены, что хотите заблокировать пользователя',
+
+    no: 'Нет',
+    yes: 'Да',
+
+    backToUserList: 'Назад к списку пользователей',
+    unban_user: 'Блокировка пользователя',
+    confirmation_unBan: 'Вы уверены, что хотите снять запрет с ',
+  },
+  user_info: {
+    usertId: 'ID Пользователя',
+    profileDate: 'Дата создания профиля',
+    uploaded_photos: 'Загруженные фотографии',
+    payments: 'Платежи',
+    followers: 'Подписчики',
+    following: 'Подписки',
+    userName: 'Имя пользователя',
+    profileLink: 'Ссылка на профиль',
+    subscriptionDate: 'Дата подписки',
+    not_found: 'Не найдено',
+  },
+  notification(message: string) {
+    const datePattern = /(\d{2}\/\d{2}\/\d{4})/
+    const match = message?.match(datePattern)
+
+    if (match) {
+      const [month, day, year] = match[0].split('/')
+      const formattedDate = `${day}.${month}.${year}`
+
+      return `Ваша подписка активирована и действует до ${formattedDate}`
+    }
+    const messages = {
+      'Your subscription-ws ends in 1 day': 'Ваша подписка истекает через 1 день',
+      'Your subscription ends in 7 days': 'Ваша подписка истекает через 7 дней',
+      'The next subscription payment will be debited from your account after 1 day.':
+        'Следующий платеж у вас спишется через 1 день',
+    }
+
+    return messages[message as keyof typeof messages]
+  },
+  new_notification: 'Новое уведомление!',
+  new_title: 'Новое',
+  today: 'сегодня',
+  hide: 'скрыть',
+  show_more: 'показать',
+  sendMessage: 'Написать',
+  publications: 'Публикаций',
 }

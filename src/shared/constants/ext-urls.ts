@@ -2,9 +2,9 @@ const CLIENT_ID = process.env.google_client_id
 
 export const LOCAL_URL = 'http://localhost:3000'
 
-export const BASE_URL = 'https://incta.online'
+export const BASE_URL = 'https://mypicto.ru'
 
-export const BASE_URL_INCTA = 'https://incta.online'
+export const BASE_URL_INCTA = 'https://mypicto.ru'
 
 export const BASE_WORK_URL = 'https://inctagram.work/api/v1'
 

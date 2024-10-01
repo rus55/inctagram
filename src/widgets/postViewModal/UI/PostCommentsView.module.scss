@@ -3,9 +3,8 @@
   align-items: center;
   justify-content: space-between;
 
+  width: 30.5rem;
   padding: 12px 24px;
-
-  border-bottom: 1px solid var(--color-dark-100);
 }
 
 .headerOnMiddle {
@@ -33,6 +32,11 @@
   background-color: var(--color-dark-300);
 }
 
+.footer {
+  width: 30.5rem;
+  background-color: var(--color-dark-300);
+}
+
 @media (width <= 576px) {
   .main {
     height: 190px;
@@ -55,7 +59,32 @@
 
 .smallAvatarPost {
   transform: translateY(5px);
+
+  min-width: 36px;
+  min-height: 36px;
+  margin-left: 1.5rem;
+  padding-top: 0.3rem;
+
   border-radius: 50%;
+}
+
+.smallAvatarPostHome {
+  transform: translateY(5px);
+
+  min-width: 36px;
+  min-height: 36px;
+  padding-top: 0.3rem;
+
+  border-radius: 50%;
+}
+
+.postContent {
+  margin-right: 5rem;
+}
+
+.postContentHome {
+  width: 30rem;
+  margin-right: 1rem;
 }
 
 .dots {
@@ -70,6 +99,12 @@
   gap: 12px;
   align-items: center;
   justify-content: flex-start;
+}
+
+.imageContainer {
+  width: 710px;
+  height: 491px;
+  padding-right: 13.9rem;
 }
 
 .button {
@@ -89,7 +124,49 @@
 }
 
 .updatedAt {
+  display: initial;
+  padding-left: 5px;
   color: var(--color-light-900);
+}
+
+.allComment {
+  padding-left: 1.5rem;
+  color: var(--color-light-900);
+}
+
+.InputField {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.answer {
+  overflow-x: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  max-width: 480px;
+  margin-left: 3rem;
+}
+
+.answerNone {
+  display: none;
+}
+
+.buttonAnswer {
+  display: flex;
+  justify-content: space-evenly;
+
+  width: 14rem;
+  padding-bottom: 1px;
+
+  font-size: 0.8rem;
+  color: gray;
+
+  &:hover {
+    color: gainsboro;
+  }
 }
 
 .comment {
@@ -102,13 +179,13 @@
 }
 
 .like {
+  cursor: pointer;
   padding: 24px 24px 0 0;
 }
 
 .share {
+  width: 30.5rem;
   padding: 12px 24px;
-  border-top: 1px solid var(--color-dark-100);
-  border-bottom: 1px solid var(--color-dark-100);
 }
 
 .shareIcons {
@@ -163,5 +240,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  width: 30.5rem;
   padding: 12px 24px;
 }

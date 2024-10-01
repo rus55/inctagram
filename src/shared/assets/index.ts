@@ -1,5 +1,6 @@
 import exp from 'constants'
-
+export { default as PostIcon } from './icons/Post'
+export { default as CardsIcon } from './icons/Cards'
 export { default as GithubIcon } from './icons/GitHubIcon.svg'
 export { default as GoogleIcon } from './icons/GoogleIcon.svg'
 export { default as EyeOutlineIcon } from './icons/Eye-outlineIcon.svg'

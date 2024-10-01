@@ -1,0 +1,14 @@
+.postCommentsView {
+  display: flex;
+  justify-content: flex-end;
+
+  width: 50rem;
+  min-height: 350px;
+  padding-top: 10px;
+}
+
+@media (width <= 576px) {
+  .postCommentsView {
+    justify-content: flex-start;
+  }
+}
